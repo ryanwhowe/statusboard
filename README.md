@@ -5,8 +5,8 @@ Setup
 -----
 
 **Install Composer Components** - The components used in the Symfony installation require composer to install the dependencies not stored in the repository for the project.  To install the components run the following command from the project root directory.  
-<code>
-composer install
+</code>
+composer i
 </code>
 
 **Install Yarn resources** - To install the yarn dependencies execute the following in the project root directory.  
@@ -35,3 +35,15 @@ sudo apt-get install yarn build-essential checkinstall libssl-dev
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
 nvm install v8.9.3
 </code>
+
+
+Needed
+------
+
+<code>
+/load_calendar.csv
+/auth.json
+/app/config/parameters.yml
+php bin/console app:buildDatabase
+php bin/console app:loadCsvToDatabase load_calendar.csv
+<code>

@@ -29,7 +29,7 @@ class ClientTest extends WebTestCase
             $group_data = $metaClient->group();
         } catch (\Exception $e) {
             $group_data = array(\null);
-            $this->assertTrue(\false, 'Api Response Failed');
+            $this->assertTrue(\false, $e->getMessage());
         }
         $this->assertArrayHasKey('key', $group_data[0], 'Api Response Testing');
     }
