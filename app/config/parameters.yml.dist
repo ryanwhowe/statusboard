@@ -18,5 +18,6 @@ parameters:
     # A secret key that's used to generate certain security-related tokens
     secret: ThisTokenIsNotSoSecretChangeIt
 
-    api_token: 'ThisNeedsToBeTheSecretApiToken'
-    api_url: ''
+    api_token: ~
+    api_url: ~
+    admin_password: ~
