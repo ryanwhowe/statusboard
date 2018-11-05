@@ -8,7 +8,7 @@ security:
             memory:
               users:
                 axe:
-                    password: $2y$12$5hjzfksSyISaKR5.u39ac.8u0.SZtibP8KRDU92zeE.DXdywBUXqi
+                    password: '%admin_password%'
                     roles: 'ROLE_ADMIN'
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
