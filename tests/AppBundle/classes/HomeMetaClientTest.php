@@ -11,14 +11,20 @@ class ClientTest extends WebTestCase
     public function testGrouping()
     {
         $grouping = 'test';
-        $metaClient = Client::create(ApiController::AUTH, ApiController::BASE_URL, $grouping);
+        $client = static::createClient();
+        $token = $client->getKernel()->getContainer()->getParameter('api_token');
+        $url = $client->getKernel()->getContainer()->getParameter('api_url');
+        $metaClient = Client::create($token, $url, $grouping);
         $this->assertEquals($grouping, $metaClient->getGrouping(),'Grouping Name Check');
     }
 
     public function testApi()
     {
+        $client = static::createClient();
+        $token = $client->getKernel()->getContainer()->getParameter('api_token');
+        $url = $client->getKernel()->getContainer()->getParameter('api_url');
         $grouping = 'SeaGrassShores';
-        $metaClient = Client::create(ApiController::AUTH, ApiController::BASE_URL, $grouping);
+        $metaClient = Client::create($token, $url, $grouping);
         try {
             $group_data = $metaClient->group();
         } catch (\Exception $e) {
