@@ -1,0 +1,13 @@
+{
+  "name": "statusboard",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@bitbucket.org:AxeMan199/statusboard.git",
+  "author": "Ryan W. Howe <ryanwhowe@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "font-awesome": "4.7.x",
+    "jquery": "3.2.x",
+    "moment": "2.19.x"
+  }
+}

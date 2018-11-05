@@ -1,0 +1,340 @@
+{% extends 'base.html.twig' %}
+{% block title %}Howe - Status{% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Dashboard</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-lg-6">
+            <div class="panel panel-info">
+                <div class="panel-heading text-center">
+                    Servers
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-4">
+                            <button style="display: none;" type="button"
+                                    class="btn btn-primary btn-lg btn-block serverinfo" data-server="vmBox"></button>
+                        </div>
+                        <div class="col-md-12 col-lg-4">
+                            <button style="display: none;" type="button"
+                                    class="btn btn-primary btn-lg btn-block serverinfo" data-server="SeaGrassShores" data-disabled="true"></button>
+                        </div>
+                        <div class="col-md-12 col-lg-4">
+                            <button style="display: none;" type="button"
+                                    class="btn btn-primary btn-lg btn-block serverinfo" data-server="deskPi" data-disabled="true"></button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-lg-4">
+                            <button style="display: none;" type="button"
+                                    class="btn btn-primary btn-lg btn-block serverinfo" data-server="raspMPD"></button>
+                        </div>
+                        <div class="col-md-12 col-lg-4">
+                            <button style="display: none;" type="button"
+                                    class="btn btn-primary btn-lg btn-block serverinfo" data-server="picam" data-disabled="true"></button>
+                        </div>
+                        <div class="col-md-12 col-lg-4">
+                            <button style="display: none;" type="button"
+                                    class="btn btn-primary btn-lg btn-block serverinfo" data-server="osmc"></button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-lg-4">
+                            <button style="display: none;" type="button"
+                                    class="btn btn-primary btn-lg btn-block serverinfo" data-server="Bel-Air" data-disabled="true"></button>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <div class="col-md-6 col-lg-6">
+            <div class="panel panel-info">
+                <div class="panel-heading text-center">
+                    Clock
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <h1 class="text-center"><span id="time" class="label label-default"></span></h1>
+                    </div>
+                    <div class="progress">
+                        <div id="dayclock" class="active progress-bar-striped progress-bar" role="progressbar"
+                             aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:0%">0%
+                        </div>
+                    </div>
+                    <div class="progress">
+                        <div id="weekclock" class="active progress-bar-striped progress-bar" role="progressbar"
+                             aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:0%">0%
+                        </div>
+                    </div>
+                    <div class="progress">
+                        <div id="monthclock" class="active progress-bar-striped progress-bar" role="progressbar"
+                             aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:0%">0%
+                        </div>
+                    </div>
+                    <div class="progress">
+                        <div id="quarterclock" class="active progress-bar-striped progress-bar" role="progressbar"
+                             aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:0%">0%
+                        </div>
+                    </div>
+                    <div class="progress">
+                        <div id="yearclock" class="active progress-bar-striped progress-bar" role="progressbar"
+                             aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:0%">0%
+                        </div>
+                    </div>
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <input type="hidden" value="{{ arrival_time }}" id="arrival_time">
+        <input type="hidden" value="{{ add_time }}" id="additional_time">
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-lg-6">
+            <div class="panel panel-info">
+                <div class="panel-heading text-center">
+                    Calendar
+                </div>
+                <div class="panel-body">
+                    <div class="jquery_ui_datepicker_preview"></div>
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+    </div>
+{% endblock %}
+
+{% block style %}
+    <style>
+        .ui-datepicker td.holiday span {
+            background: #7ba7bc;
+            color: #000000;
+            font-weight: bold;
+            pointer-events: all;
+        }
+
+        .ui-datepicker td.sick a {
+            background: #14bf15;
+            color: #000000;
+            font-weight: bold;
+        }
+
+        .ui-datepicker td.pto a {
+            background: #FF9933;
+            color: #000000;
+            font-weight: bold;
+        }
+
+        .ui-datepicker td.payday a {
+            background: #FF3300;
+            color: #000000;
+            font-weight: bold;
+        }
+
+        .ui-datepicker td.ui-datepicker-today a {
+            background: yellow;
+        }
+
+        /*
+        This will stop the weekends from being displayed at ALL on the date picker
+        There is also code in the beforeShowDay that already makes the weekend dates
+        unselectable.  If you want to display the weekend dates again remove this
+        css portion.
+        */
+        th.ui-datepicker-week-end, td.ui-datepicker-week-end {
+            display: none;
+        }
+    </style>
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('assets/js/ServerInfo.js') }}"></script>
+    <script src="{{ asset('assets/js/ClockClass.js') }}"></script>
+    <script>
+        let time_parts = $('#arrival_time').val().split(':');
+        let arrival = new Date(0,0,0,parseInt(time_parts[0],0) ,parseInt(time_parts[1],0),0);
+        TimeSheet.init(arrival, parseFloat($('#additional_time').val()));
+        let base_title = $(document).prop('title');
+
+        let date_data = {{ calendarJson | raw }};
+        $(function () {
+            updateTime();
+            setInterval('updateTime()', 1000);
+            displayTime();
+            setInterval('displayTime()', 1000);
+            $('.serverinfo').ServerInfo();
+            $(".jquery_ui_datepicker_preview").datepicker({
+                defaultDate: null,
+                firstDay: 1, // Set Monday to the first day of the week
+                numberOfMonths: [1, 2], //display a full calendar year
+                showCurrentAtPos: 0, // set the current month to the center position
+                showMonthAfterYear: true,
+                beforeShowDay: function (currentDate) {
+                    return parseDate(currentDate);
+                }
+            });
+        });
+
+        /**
+         * Display the time in the clock id
+         */
+        function displayTime(){
+            let display_data = TimeSheet.getDisplayValue();
+            let display_hour= display_data.display_hour;
+            let work_time;
+            if(display_hour !== ''){
+                work_time = display_hour.toString();
+                $(document).prop('title', base_title + ' (' + work_time + ')');
+            }
+        }
+
+        /**
+         * Update the time progress bars on the page.  This function will be triggered every second
+         */
+        function updateTime() {
+
+            $("#time").html(Clock.currentTimeString());
+
+            Clock.dayStart = (TimeSheet.getStartTime().getHours() + (TimeSheet.getStartTime().getMinutes() / 60)) - TimeSheet.offset;
+            Clock.dayEnd = TimeSheet.getEighthHourTime().getHours() + TimeSheet.getEighthHourTime().getMinutes() / 60;
+
+            updatePercentage($('#dayclock'), Clock.fixPercent(Clock.dayPercent() * 100), 'Day');
+            updatePercentage($('#weekclock'), Clock.fixPercent(Clock.weekPercent() * 100), 'Week');
+            updatePercentage($('#monthclock'), Clock.fixPercent(Clock.monthPercent() * 100), 'Month');
+            updatePercentage($('#quarterclock'), Clock.fixPercent(Clock.quarterPercent() * 100), 'Quarter:' + Clock.quarter());
+            updatePercentage($('#yearclock'), Clock.fixPercent(Clock.yearPercent() * 100), Clock.year());
+        }
+
+        /**
+         * Update the passed element percent information to the passed value
+         *
+         * @param element
+         * @param percentage
+         * @param name
+         */
+        function updatePercentage(element, percentage, name) {
+            var current_percentage = $(element).data('percentage');
+            /* properly initialize the element's percentage value if missing */
+            if (typeof current_percentage === 'undefined') {
+                current_percentage = 0;
+                $(element).data('percentage', current_percentage);
+            }
+            /* skip updating if the percentage is the same, very common on Month, Quarter, Year bars */
+            if (current_percentage !== percentage) {
+                $(element).html(name + ' Complete (' + percentage + '%)').css('width', percentage + '%').attr('aria-valuenow', percentage);
+                $(element).data('percentage', percentage);
+                if (percentage === 0) { // Reset the visual display if statusboard is left on overnight
+                    $(element).addClass('active progress-bar-striped').removeClass('progress-bar-danger');
+                }
+                if (percentage >= 93.8) {
+                    $(element).addClass('progress-bar-warning');
+                }
+                if (percentage === 100) {
+                    $(element).removeClass('active progress-bar-striped progress-bar-warning').addClass('progress-bar-danger');
+                }
+            }
+
+        }
+
+        /**
+         * This contains the parsing logic to return the option array for the datepicker date before it is rendered.
+         * The array return is :
+         *  [
+         *      bool - if the date should be selectable,
+         *      string - css class to apply to the date element,
+         *      string - tooltip text to apply to the date element
+         *  ]
+         *
+         * @param currentDate
+         * @returns array
+         */
+        function parseDate(currentDate) {
+            var parsedDate = currentDate.toISOString().slice(0, 10);
+
+            var noWeekend;
+
+            var result = [true, '', ''];
+
+            /* this order is significant, the least important css can be overwritten by the most important */
+            if (isPayDate(currentDate)) {
+                result[2] += "Bi-weekly Pay Date";
+                result[1] = 'payday';
+            }
+
+            /*
+                WD:RWH - 2017-12-14: change this to be a "better" chain-able object
+
+                This is a chaining from the least important to the most important.  It is important to note that since
+                this runs after the pay day check any of these that fall on the same date as a pay-day will add to that
+                event
+             */
+            result = checkParseDate(parsedDate,
+                date_data.sick,
+                checkParseDate(
+                    parsedDate,
+                    date_data.holiday,
+                    checkParseDate(
+                        parsedDate,
+                        date_data.pto,
+                        result,
+                        "PTO",
+                        "pto"
+                    ),
+                    "Ives Holiday",
+                    "holiday",
+                    false
+                ),
+                "Sick Day",
+                "sick");
+
+            noWeekend = $.datepicker.noWeekends(currentDate);
+            if (noWeekend[0] === false) {
+                return noWeekend;
+            } else {
+                return result;
+            }
+        }
+
+        /**
+         * Modify and return the result_array depending if the parsed date is contained in the check_data array.
+         *
+         * @param parsed_date string
+         * @param check_data array
+         * @param result_array array
+         * @param tip_text string
+         * @param css_text string
+         * @param selectable boolean
+         * @returns {*}
+         */
+        function checkParseDate(parsed_date, check_data, result_array, tip_text, css_text, selectable = true) {
+            if ($.inArray(parsed_date, check_data) !== -1) {
+                if (result_array[2].length > 1) {
+                    result_array[2] = result_array[2] + ', ' + tip_text;
+                } else {
+                    result_array[2] = tip_text;
+                }
+                result_array[1] = css_text;
+                result_array[0] = selectable;
+            }
+            return result_array;
+        }
+
+        /**
+         * Determine if the date is an Ives pay date, basically a friday on a weeknumber that is odd
+         *
+         * @param date
+         * @returns {boolean}
+         */
+        function isPayDate(date) {
+            if (date.getDay() !== 5) return false;
+            return $.datepicker.iso8601Week(date) % 2 !== 0;
+        }
+
+    </script>
+{% endblock %}

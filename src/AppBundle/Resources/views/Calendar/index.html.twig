@@ -1,0 +1,225 @@
+{% extends "::base.html.twig" %}
+{% block title %}Howe - Calendar{% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Calendar</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-lg-6">
+            <div class="jquery_ui_datepicker"></div>
+        </div>
+        <div class="col-md-6 col-lg-6">
+            <form method="post" action="{{ path('calendarUpdate') }}">
+                <div class="row">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <label class="input-group-text" for="type">Select Type:</label>
+                        </div>
+                        <select class="form-control" name="type" id="type">
+                            <option value="{{ type.pto }}" selected>PTO</option>
+                            <option value="{{ type.sick }}">Sick</option>
+                            <option value="{{ type.holiday }}">Holiday</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <label for="event_date">Select Date:</label>
+                        </div>
+                        <input class="form-control" name="event_date" id="date_picker" autocomplete="off">
+                    </div>
+                </div>
+                <div class="row">
+                    <input type="submit" class="btn btn-primary" value="Submit">
+                </div>
+            </form>
+            <input type="hidden" value="{{ arrival_time }}" id="arrival_time">
+            <input type="hidden" value="{{ add_time }}" id="additional_time">
+        </div>
+    </div>
+{% endblock %}
+
+{% block style %}
+    <style>
+        .ui-datepicker td.holiday span {
+            background: #7ba7bc;
+            color: #000000;
+            font-weight: bold;
+            pointer-events: all;
+        }
+
+        .ui-datepicker td.sick a {
+            background: #14bf15;
+            color: #000000;
+            font-weight: bold;
+        }
+
+        .ui-datepicker td.pto a {
+            background: #FF9933;
+            color: #000000;
+            font-weight: bold;
+        }
+
+        .ui-datepicker td.payday a {
+            background: #FF3300;
+            color: #000000;
+            font-weight: bold;
+        }
+
+        .ui-datepicker td.ui-datepicker-today a {
+            background: yellow;
+        }
+
+        /*
+        This will stop the weekends from being displayed at ALL on the date picker
+        There is also code in the beforeShowDay that already makes the weekend dates
+        unselectable.  If you want to display the weekend dates again remove this
+        css portion.
+        */
+        th.ui-datepicker-week-end, td.ui-datepicker-week-end {
+            display: none;
+        }
+    </style>
+{% endblock %}
+{% block javascripts %}
+
+    <script>
+        let time_parts = $('#arrival_time').val().split(':');
+        let arrival = new Date(0,0,0,parseInt(time_parts[0],0) ,parseInt(time_parts[1],0),0);
+        TimeSheet.init(arrival, parseFloat($('#additional_time').val()));
+        let base_title = $(document).prop('title');
+
+
+        var date_data = {{ calendarJson | raw }};
+        var current = new Date();
+        var currentpos = current.getMonth();
+        $(function () {
+            $("#date_picker").datepicker({
+                dateFormat: "yy-mm-dd"
+            });
+            $(".jquery_ui_datepicker").datepicker({
+                defaultDate: null,
+                firstDay: 1, // Set Monday to the first day of the week
+                numberOfMonths: [4, 3], //display a full calendar year
+                showCurrentAtPos: currentpos, // set the current month to the correct position
+                showMonthAfterYear: true,
+                beforeShowDay: function (currentDate) {
+                    return parseDate(currentDate);
+                }
+            });
+            displayTime();
+            setInterval('displayTime()', 1000);
+        });
+
+        /**
+         * Display the time in the clock id
+         */
+        function displayTime(){
+            let display_data = TimeSheet.getDisplayValue();
+            let display_hour= display_data.display_hour;
+            let work_time;
+            if(display_hour !== ''){
+                work_time = display_hour.toString();
+                $(document).prop('title', base_title + ' (' + work_time + ')');
+            }
+        }
+
+        /**
+         * This contains the parsing logic to return the option array for the datepicker date before it is rendered.
+         * The array return is :
+         *  [
+         *      bool - if the date should be selectable,
+         *      string - css class to apply to the date element,
+         *      string - tooltip text to apply to the date element
+         *  ]
+         *
+         * @param currentDate
+         * @returns array
+         */
+        function parseDate(currentDate) {
+            var parsedDate = currentDate.toISOString().slice(0, 10);
+
+            var noWeekend;
+
+            var result = [true, '', ''];
+
+            /* this order is significant, the least important css can be overwritten by the most important */
+            if (isPayDate(currentDate)) {
+                result[2] += "Bi-weekly Pay Date";
+                result[1] = 'payday';
+            }
+
+            /*
+                WD:RWH - 2017-12-14: change this to be a "better" chain-able object
+
+                This is a chaining from the least important to the most important.  It is important to note that since
+                this runs after the pay day check any of these that fall on the same date as a pay-day will add to that
+                event
+             */
+            result = checkParseDate(parsedDate,
+                date_data.sick,
+                checkParseDate(
+                    parsedDate,
+                    date_data.holiday,
+                    checkParseDate(
+                        parsedDate,
+                        date_data.pto,
+                        result,
+                        "PTO",
+                        "pto"
+                    ),
+                    "Ives Holiday",
+                    "holiday",
+                    false
+                ),
+                "Sick Day",
+                "sick");
+
+            noWeekend = $.datepicker.noWeekends(currentDate);
+            if (noWeekend[0] === false) {
+                return noWeekend;
+            } else {
+                return result;
+            }
+        }
+
+        /**
+         * Modify and return the result_array depending if the parsed date is contained in the check_data array.
+         *
+         * @param parsed_date string
+         * @param check_data array
+         * @param result_array array
+         * @param tip_text string
+         * @param css_text string
+         * @param selectable boolean
+         * @returns {*}
+         */
+        function checkParseDate(parsed_date, check_data, result_array, tip_text, css_text, selectable = true) {
+            if ($.inArray(parsed_date, check_data) !== -1) {
+                if (result_array[2].length > 1) {
+                    result_array[2] = result_array[2] + ', ' + tip_text;
+                } else {
+                    result_array[2] = tip_text;
+                }
+                result_array[1] = css_text;
+                result_array[0] = selectable;
+            }
+            return result_array;
+        }
+
+        /**
+         * Determine if the date is an Ives pay date, basically a friday on a weeknumber that is odd
+         *
+         * @param date
+         * @returns {boolean}
+         */
+        function isPayDate(date) {
+            if (date.getDay() !== 5) return false;
+            return $.datepicker.iso8601Week(date) % 2 !== 0;
+        }
+    </script>
+{% endblock %}

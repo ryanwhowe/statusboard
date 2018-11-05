@@ -40,9 +40,19 @@
 
 # Composer PHAR
 /composer.phar
+/auth.json
 
 # Backup entities generated with doctrine:generate:entities command
 **/Entity/*~
 
 # Embedded web-server pid file
 /.web-server-pid
+
+# PhpStorm
+/.idea
+
+# yarm
+/yarn.lock
+
+# custom statusboard
+load_calendar.csv
