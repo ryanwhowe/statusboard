@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace AppBundle\Tests\Controller;
 
@@ -20,10 +20,10 @@ class TimeSheetControllerTest extends WebTestCase
     protected function setUp(){
 
         $this->loggedOutClient = static::createClient();
-        $this->loggedInClient = static::createClient(array(), array(
+        $this->loggedInClient = static::createClient([], [
             'PHP_AUTH_USER' => 'axe',
             'PHP_AUTH_PW'   => 'axe857',
-        ));
+        ]);
     }
 
     public function testTimesheet()

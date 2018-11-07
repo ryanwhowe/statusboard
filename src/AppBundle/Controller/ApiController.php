@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * This file contains the definition for the ApiController class
  *
@@ -49,7 +49,7 @@ class ApiController extends Controller {
         /**
          * @var array The Result storage to be encoded into json and returned upon successful completion
          */
-        $result = array();
+        $result = [];
 
         /* if there is no server/grouping given then there is nothing that can be done */
         if (\null === $grouping) {
@@ -91,7 +91,7 @@ class ApiController extends Controller {
          * @var \Symfony\Component\HttpFoundation\Session\Flash\FlashBag
          */
         $flash_bag = $this->container->get('session')->getFlashBag();
-        $Response = $this->json(\null, JsonResponse::HTTP_OK, array('Content-Type' => 'text/json', 'Cache-control' => 'must-revalidate'));
+        $Response = $this->json(\null, JsonResponse::HTTP_OK, ['Content-Type' => 'text/json', 'Cache-control' => 'must-revalidate']);
         if ($flash_bag->has('error')) {
             $Response->setContent(json_encode($flash_bag->get('error')));
             $Response->setStatusCode(JsonResponse::HTTP_INTERNAL_SERVER_ERROR);

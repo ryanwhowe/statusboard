@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace AppBundle\Controller;
 
@@ -27,7 +27,7 @@ class CalendarController extends Controller {
         $add_time = $request->cookies->get('time_sheet_add_time', 0);
         $calendarRepository = $this->getDoctrine()->getRepository(Calendar::class);
         $calendarEvents = $calendarRepository->findAll();
-        return $this->render('AppBundle:Calendar:index.html.twig', array(
+        return $this->render('AppBundle:Calendar:index.html.twig', [
             'calendarJson' => $this->formatCalendarEventsJson($calendarEvents),
             'type'         => [
                 'pto'     => self::TYPE_PTO,
@@ -36,7 +36,7 @@ class CalendarController extends Controller {
             ],
             'arrival_time' => $arrival_time,
             'add_time' => $add_time
-        ));
+        ]);
     }
 
     /**

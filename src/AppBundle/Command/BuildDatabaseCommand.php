@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace AppBundle\Command;
 
@@ -28,10 +28,10 @@ class BuildDatabaseCommand extends ContainerAwareCommand
         $io->title('Dropping Database file');
         $command = $this->getApplication()->find('doctrine:database:drop');
 
-        $arguments = array(
+        $arguments = [
             'command' => 'doctrine:database:drop',
             '--force'  => true,
-        );
+        ];
 
         $greetInput = new ArrayInput($arguments);
         $returnCode = $command->run($greetInput, $output);
@@ -39,9 +39,9 @@ class BuildDatabaseCommand extends ContainerAwareCommand
         $io->title('Creating Database file');
         $command = $this->getApplication()->find('doctrine:database:create');
 
-        $arguments = array(
+        $arguments = [
             'command' => 'doctrine:database:create',
-        );
+        ];
 
         $greetInput = new ArrayInput($arguments);
         $returnCode = $command->run($greetInput, $output);
@@ -49,10 +49,10 @@ class BuildDatabaseCommand extends ContainerAwareCommand
         $io->title('Updating Database file schema');
         $command = $this->getApplication()->find('doctrine:schema:update');
 
-        $arguments = array(
+        $arguments = [
             'command' => 'doctrine:schema:update',
             '--force' => true,
-        );
+        ];
 
         $greetInput = new ArrayInput($arguments);
         $returnCode = $command->run($greetInput, $output);
