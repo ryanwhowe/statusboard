@@ -208,11 +208,11 @@
             Clock.dayStart = (TimeSheet.getStartTime().getHours() + (TimeSheet.getStartTime().getMinutes() / 60)) - TimeSheet.offset;
             Clock.dayEnd = TimeSheet.getEighthHourTime().getHours() + TimeSheet.getEighthHourTime().getMinutes() / 60;
 
-            updatePercentage($('#dayclock'), Clock.fixPercent(Clock.dayPercent() * 100), 'Day');
-            updatePercentage($('#weekclock'), Clock.fixPercent(Clock.weekPercent() * 100), 'Week');
-            updatePercentage($('#monthclock'), Clock.fixPercent(Clock.monthPercent() * 100), 'Month');
-            updatePercentage($('#quarterclock'), Clock.fixPercent(Clock.quarterPercent() * 100), 'Quarter:' + Clock.quarter());
-            updatePercentage($('#yearclock'), Clock.fixPercent(Clock.yearPercent() * 100), Clock.year());
+            updatePercentage($('#dayclock'), Clock.displayPercent(Clock.dayPercent() * 100), 'Day');
+            updatePercentage($('#weekclock'), Clock.displayPercent(Clock.weekPercent() * 100), 'Week');
+            updatePercentage($('#monthclock'), Clock.displayPercent(Clock.monthPercent() * 100), 'Month');
+            updatePercentage($('#quarterclock'), Clock.displayPercent(Clock.quarterPercent() * 100), 'Quarter:' + Clock.quarter());
+            updatePercentage($('#yearclock'), Clock.displayPercent(Clock.yearPercent() * 100), Clock.year());
         }
 
         /**
