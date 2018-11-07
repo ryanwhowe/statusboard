@@ -16,7 +16,8 @@
                 <div class="row">
                     <div class="input-group">
                         <div class="input-group-addon">
-                            <label class="input-group-text" for="type">Select Type:</label>
+                            <label class="input-group-text" for="type">Select
+                                Type:</label>
                         </div>
                         <select class="form-control" name="type" id="type">
                             <option value="{{ type.pto }}" selected>PTO</option>
@@ -30,7 +31,8 @@
                         <div class="input-group-addon">
                             <label for="event_date">Select Date:</label>
                         </div>
-                        <input class="form-control" name="event_date" id="date_picker" autocomplete="off">
+                        <input class="form-control" name="event_date"
+                               id="date_picker" autocomplete="off">
                     </div>
                 </div>
                 <div class="row">
@@ -89,7 +91,7 @@
 
     <script>
         let time_parts = $('#arrival_time').val().split(':');
-        let arrival = new Date(0,0,0,parseInt(time_parts[0],0) ,parseInt(time_parts[1],0),0);
+        let arrival = new Date(0, 0, 0, parseInt(time_parts[0], 0), parseInt(time_parts[1], 0), 0);
         TimeSheet.init(arrival, parseFloat($('#additional_time').val()));
         let base_title = $(document).prop('title');
 
@@ -118,11 +120,11 @@
         /**
          * Display the time in the clock id
          */
-        function displayTime(){
+        function displayTime() {
             let display_data = TimeSheet.getDisplayValue();
-            let display_hour= display_data.display_hour;
+            let display_hour = display_data.display_hour;
             let work_time;
-            if(display_hour !== ''){
+            if (display_hour !== '') {
                 work_time = display_hour.toString();
                 $(document).prop('title', base_title + ' (' + work_time + ')');
             }

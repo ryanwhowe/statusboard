@@ -8,7 +8,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\Calendar;
 
-class DefaultController extends Controller {
+class DefaultController extends Controller
+{
 
     /**
      * @Route("/", name="homepage")
@@ -27,7 +28,7 @@ class DefaultController extends Controller {
                 'sick'    => CalendarController::TYPE_SICK,
             ],
             'arrival_time' => $arrival_time,
-            'add_time' => $add_time
+            'add_time'     => $add_time
         ]);
     }
 

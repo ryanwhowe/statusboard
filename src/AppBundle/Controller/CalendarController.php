@@ -9,7 +9,8 @@ use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Calendar;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 
-class CalendarController extends Controller {
+class CalendarController extends Controller
+{
 
     const TYPE_HOLIDAY = 1;
     const TYPE_PTO = 2;
@@ -35,13 +36,14 @@ class CalendarController extends Controller {
                 'sick'    => self::TYPE_SICK,
             ],
             'arrival_time' => $arrival_time,
-            'add_time' => $add_time
+            'add_time'     => $add_time
         ]);
     }
 
     /**
      * @Route("/utility/calendarUpdate", name="calendarUpdate")
      * @param Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function updateAction(Request $request)
@@ -74,6 +76,7 @@ class CalendarController extends Controller {
      * format the database data into a json object to be consumed by the datepicker
      *
      * @param array $calendarEvents
+     *
      * @return false|string
      */
     public static function formatCalendarEventsJson(array $calendarEvents)

@@ -17,8 +17,17 @@
         </div>
         <div class="col-lg-12 col-md-12">
             <form method="post" action="{{ path('timeSheetUpdate') }}">
-                <section><label>Arrival Time: <input type="time" name='time' id="arrival_time" min="07:00" max="18:00" value="{{ time }}"></label></section>
-                <section><label>Additional Base Time: <input type="number" name='add_time'  id="additional_time" max="8" min="0" step="0.1" value="{{ add_time }}"></label></section>
+                <section><label>Arrival Time: <input type="time" name='time'
+                                                     id="arrival_time" min="07:00"
+                                                     max="18:00" value="{{ time }}"></label>
+                </section>
+                <section><label>Additional Base Time: <input type="number"
+                                                             name='add_time'
+                                                             id="additional_time"
+                                                             max="8" min="0"
+                                                             step="0.1"
+                                                             value="{{ add_time }}"></label>
+                </section>
                 <p>
                     <button class="green" type="submit">Set Arrival Time</button>
                 </p>
@@ -37,10 +46,10 @@
 {% block javascripts %}
     <script type="text/javascript">
         let time_parts = $('#arrival_time').val().split(':');
-        let arrival = new Date(0,0,0,parseInt(time_parts[0],0) ,parseInt(time_parts[1],0),0);
+        let arrival = new Date(0, 0, 0, parseInt(time_parts[0], 0), parseInt(time_parts[1], 0), 0);
         TimeSheet.init(arrival, parseFloat($('#additional_time').val()));
         let base_title = $(document).prop('title');
-        $(function(){
+        $(function () {
             displayTime();
             setInterval('displayTime()', 1000);
         });
@@ -48,13 +57,13 @@
         /**
          * Display the time in the clock id
          */
-        function displayTime(){
+        function displayTime() {
             let display_html = 'Current Time :-: <time>' + TimeSheet.getFormattedTime() + '</time>';
             let display_data = TimeSheet.getDisplayValue();
             let index_time = display_data.index_time;
-            let display_hour= display_data.display_hour;
+            let display_hour = display_data.display_hour;
             let work_time;
-            if(display_hour !== ''){
+            if (display_hour !== '') {
                 work_time = display_hour.toString();
                 display_html = display_html + ' <time title="Until: ' + TimeSheet.formatTime(index_time) + '">(' + work_time + ' hours)<time>';
                 $(document).prop('title', base_title + ' (' + work_time + ')');

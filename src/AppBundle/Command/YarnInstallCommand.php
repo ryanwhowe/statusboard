@@ -15,11 +15,13 @@ use Symfony\Component\Process\Process;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class YarnInstallCommand extends Command {
+class YarnInstallCommand extends Command
+{
 
     protected $lock_file;
 
-    protected function configure(){
+    protected function configure()
+    {
         $this->
         setName('app:yarninstall')->
         setDescription('Install the Yarn Dependencies')->
@@ -33,18 +35,21 @@ EOF
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
+     *
      * @return int|null|void
      */
-    protected function execute(InputInterface $input, OutputInterface $output){
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
 
-        $io = new SymfonyStyle($input, $output instanceof ConsoleOutputInterface ? $output->getErrorOutput() : $output);
+        $io = new SymfonyStyle($input,
+            $output instanceof ConsoleOutputInterface ? $output->getErrorOutput() : $output);
 
         $io->title("Removing yarn lock file");
-        if(file_exists($this->lock_file)) {
+        if (file_exists($this->lock_file)) {
             $io->success("yarn lock file found");
-            if(unlink($this->lock_file)) {
+            if (unlink($this->lock_file)) {
                 $io->success("yarn lock file removed");
             } else {
                 $io->error("yarn lock file could not be removed, check your permissions");

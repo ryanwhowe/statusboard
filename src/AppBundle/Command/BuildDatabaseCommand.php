@@ -17,20 +17,20 @@ class BuildDatabaseCommand extends ContainerAwareCommand
     {
         $this
             ->setName('app:buildDatabase')
-            ->setDescription('Build the Calendar database')
-        ;
+            ->setDescription('Build the Calendar database');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $io = new SymfonyStyle($input, $output instanceof ConsoleOutputInterface ? $output->getErrorOutput() : $output);
+        $io = new SymfonyStyle($input,
+            $output instanceof ConsoleOutputInterface ? $output->getErrorOutput() : $output);
 
         $io->title('Dropping Database file');
         $command = $this->getApplication()->find('doctrine:database:drop');
 
         $arguments = [
             'command' => 'doctrine:database:drop',
-            '--force'  => true,
+            '--force' => true,
         ];
 
         $greetInput = new ArrayInput($arguments);

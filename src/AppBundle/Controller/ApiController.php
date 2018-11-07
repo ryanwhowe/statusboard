@@ -16,16 +16,18 @@ use theAxeRant\HomeMeta\Client;
 use Symfony\Component\Cache\Simple\FilesystemCache;
 
 
-class ApiController extends Controller {
+class ApiController extends Controller
+{
 
     /**
-     * The internal cache needs to be renewed every half hour since this is when the machines
-     * will updated there status'.  This will calculated when the last half hour passed for
-     * comparing if the cache should still be used or updated
+     * The internal cache needs to be renewed every half hour since this is when the
+     * machines will updated there status'.  This will calculated when the last half
+     * hour passed for comparing if the cache should still be used or updated
      *
      * @return int
      */
-    private function getCacheTimeout(){
+    private function getCacheTimeout()
+    {
         $time = time();
         //Store how many seconds long our rounding interval is
         //1800 equals one half hour
@@ -58,9 +60,11 @@ class ApiController extends Controller {
             switch ($action) {
                 case 'ipCheck':
                     try {
-                        $result = Client::create($this->getParameter('api_token'), $this->getParameter('api_url'), $grouping)->ipCheck();
+                        $result = Client::create($this->getParameter('api_token'),
+                            $this->getParameter('api_url'), $grouping)->ipCheck();
                     } catch (\Exception $e) {
-                        $this->addFlash('error', 'An error occurred getting the internal api data');
+                        $this->addFlash('error',
+                            'An error occurred getting the internal api data');
                         $this->addFlash('error', $e->getMessage());
                         $trace = $e->getTrace();
                         foreach ($trace as $message) {
@@ -70,12 +74,13 @@ class ApiController extends Controller {
                     break;
                 case 'group':
                     /* check to see if there is a cache value and if it is newer than the last passed half hour */
-                    if($cache->has($grouping.'time') && $cache->get($grouping.'time') >= $this->getCacheTimeout()){
-                        $result = $cache->get($grouping.'data');
+                    if ($cache->has($grouping . 'time') && $cache->get($grouping . 'time') >= $this->getCacheTimeout()) {
+                        $result = $cache->get($grouping . 'data');
                     } else {
-                        $result = Client::create($this->getParameter('api_token'), $this->getParameter('api_url'), $grouping)->group();
-                        $cache->set($grouping.'data', $result);
-                        $cache->set($grouping.'time', time());
+                        $result = Client::create($this->getParameter('api_token'),
+                            $this->getParameter('api_url'), $grouping)->group();
+                        $cache->set($grouping . 'data', $result);
+                        $cache->set($grouping . 'time', time());
                     }
                     break;
                 case \null:
@@ -87,7 +92,7 @@ class ApiController extends Controller {
             }
         }
 
-        if(empty($result)){
+        if (empty($result)) {
             $this->addFlash('error', 'No Data');
         }
 
@@ -96,7 +101,8 @@ class ApiController extends Controller {
          */
         $flash_bag = $this->container->get('session')->getFlashBag();
 
-        $Response = $this->json(\null, JsonResponse::HTTP_OK, ['Content-Type' => 'text/json', 'Cache-control' => 'must-revalidate']);
+        $Response = $this->json(\null, JsonResponse::HTTP_OK,
+            ['Content-Type' => 'text/json', 'Cache-control' => 'must-revalidate']);
         if ($flash_bag->has('error')) {
             $Response->setContent(json_encode($flash_bag->get('error')));
             $Response->setStatusCode(JsonResponse::HTTP_INTERNAL_SERVER_ERROR);

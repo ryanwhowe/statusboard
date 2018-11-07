@@ -11,6 +11,7 @@ class TimeSheetController extends Controller
     /**
      * @Route("/timeSheet", name="timeSheet")
      * @param $request Request
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function timeSheetAction(Request $request)
@@ -18,7 +19,7 @@ class TimeSheetController extends Controller
         $time = $request->cookies->get('time_sheet_time', '08:00');
         $add_time = $request->cookies->get('time_sheet_add_time', 0);
         return $this->render('AppBundle:TimeSheet:time_sheet.html.twig', [
-            'time' => $time,
+            'time'     => $time,
             'add_time' => $add_time
         ]);
     }
@@ -26,6 +27,7 @@ class TimeSheetController extends Controller
     /**
      * @Route("/utility/timeSheetUpdate", name="timeSheetUpdate")
      * @param Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function timeSheetUpdateAction(Request $request)
@@ -33,8 +35,10 @@ class TimeSheetController extends Controller
         $time = $request->request->get('time');
         $add_time = $request->request->get('add_time');
         $response = new \Symfony\Component\HttpFoundation\RedirectResponse($this->generateUrl('timeSheet'));
-        $response->headers->setCookie(new \Symfony\Component\HttpFoundation\Cookie('time_sheet_time', $time, new \DateTime('tomorrow')));
-        $response->headers->setCookie(new \Symfony\Component\HttpFoundation\Cookie('time_sheet_add_time', $add_time, new \DateTime('tomorrow')));
+        $response->headers->setCookie(new \Symfony\Component\HttpFoundation\Cookie('time_sheet_time',
+            $time, new \DateTime('tomorrow')));
+        $response->headers->setCookie(new \Symfony\Component\HttpFoundation\Cookie('time_sheet_add_time',
+            $add_time, new \DateTime('tomorrow')));
         return $response;
     }
 

@@ -17,7 +17,8 @@ class TimeSheetControllerTest extends WebTestCase
      */
     protected $loggedOutClient;
 
-    protected function setUp(){
+    protected function setUp()
+    {
 
         $this->loggedOutClient = static::createClient();
         $this->loggedInClient = static::createClient([], [
@@ -43,10 +44,14 @@ class TimeSheetControllerTest extends WebTestCase
     /**
      * Test the logged in time sheet page header
      */
-    public function testTimeSheetLoggedIn(){
+    public function testTimeSheetLoggedIn()
+    {
         $crawler = $this->loggedInClient->request('GET', '/timeSheet');
 
-        $this->assertEquals(Response::HTTP_OK, $this->loggedInClient->getResponse()->getStatusCode(),'Response Code Error');
-        $this->assertContains('Time Sheet', $crawler->filter('.page-header')->text());
+        $this->assertEquals(Response::HTTP_OK,
+            $this->loggedInClient->getResponse()->getStatusCode(),
+            'Response Code Error');
+        $this->assertContains('Time Sheet',
+            $crawler->filter('.page-header')->text());
     }
 }

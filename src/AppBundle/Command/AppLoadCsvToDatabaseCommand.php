@@ -28,16 +28,16 @@ class AppLoadCsvToDatabaseCommand extends ContainerAwareCommand
         $this
             ->setName('app:loadCsvToDatabase')
             ->setDescription('Load the calendar database with data from a csv file, file is expected to have a header row of "type","event_date"')
-            ->addArgument('file', InputArgument::REQUIRED, 'Full path to csv File')
-        ;
+            ->addArgument('file', InputArgument::REQUIRED, 'Full path to csv File');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $io = new SymfonyStyle($input, $output instanceof ConsoleOutputInterface ? $output->getErrorOutput() : $output);
+        $io = new SymfonyStyle($input,
+            $output instanceof ConsoleOutputInterface ? $output->getErrorOutput() : $output);
         $file = $input->getArgument('file');
 
-        if(!\file_exists($file)){
+        if ( ! \file_exists($file)) {
             $io->error("${file} : does not exists");
         } else {
 
