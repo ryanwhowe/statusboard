@@ -87,10 +87,15 @@ class ApiController extends Controller {
             }
         }
 
+        if(empty($result)){
+            $this->addFlash('error', 'No Data');
+        }
+
         /**
          * @var \Symfony\Component\HttpFoundation\Session\Flash\FlashBag
          */
         $flash_bag = $this->container->get('session')->getFlashBag();
+
         $Response = $this->json(\null, JsonResponse::HTTP_OK, ['Content-Type' => 'text/json', 'Cache-control' => 'must-revalidate']);
         if ($flash_bag->has('error')) {
             $Response->setContent(json_encode($flash_bag->get('error')));

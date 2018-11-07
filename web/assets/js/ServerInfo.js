@@ -155,12 +155,12 @@ $.widget("howe.ServerInfo", {
             "               <h4 class='modal-title' id='" + me.my_name + "_ModalLabel'>" + me.options.server + " Details</h4>",
             "           </div>",
             "           <div class='modal-body'>",
-            "               <table>",
+            "               <table id='" + me.my_name + "_table'>",
             "                   <thead>",
             "                       <th>Point</th>",
             "                       <th>Value</th>",
             "                   </thead>",
-            "                   <tbody  id='" + me.my_name + "_tableBody'>",
+            "                   <tbody id='" + me.my_name + "_tableBody'>",
             "                   </tbody>",
             "               </table>",
             "           </div>",
@@ -259,10 +259,11 @@ $.widget("howe.ServerInfo", {
      *@private
      */
     __Error: function (message) {
-        let me = this,
-            error_message = me.widgetFullName + ':' + message;
-        $(me.element).replaceWith('<div class="alert alert-danger"><strong>ALERT: </strong>' + error_message + '</div>');
-
+        let me = this;
+        let error_message = me.widgetFullName + ':' + message;
+        let e = this.element;
+        $(me.element_dialog).find('#' + me.my_name + '_table').first().replaceWith('<div class="alert alert-danger"><strong>ALERT: </strong>' + error_message + '</div>');
+        $(e).removeClass('btn-primary btn-success').addClass('btn-danger');
         clearInterval(me.update_interval);
     },
 
