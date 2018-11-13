@@ -23,6 +23,14 @@ These are future upgrades
 * Custom composer install data pull for internal library from personal repo
 
 
+Security
+--------
+<code>
+php bin/console security:encode-password
+</code>
+
+
+
 Extra
 -----
 install yarn on the dev or production systems
