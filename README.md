@@ -5,7 +5,7 @@ Setup
 -----
 
 **Install Composer Components** - The components used in the Symfony installation require composer to install the dependencies not stored in the repository for the project.  To install the components run the following command from the project root directory.  
-</code>
+<code>
 composer i
 </code>
 
@@ -25,6 +25,8 @@ These are future upgrades
 
 Security
 --------
+The following code is needed for generating a security token for the single log in account
+
 <code>
 php bin/console security:encode-password
 </code>
@@ -47,11 +49,26 @@ nvm install v8.9.3
 
 Needed
 ------
+The following is for creating and loading the database used by the calendar application.  The load is not needed for funcationality.  The database does need to be built however in order to function.  If the model is changed in any way then the database will need to be recreated.
+
+<code>
+svn export $REPO/MachineCode/MachineSettings/RaspberryPi/machines/workPi/trunk/scripts/deploy/load_calendar.csv 
+
+svn export $REPO/MachineCode/MachineSettings/RaspberryPi/machines/workPi/trunk/scripts/deploy/deployment/statusboard/auth.json
+
+rm app/config/parameters.yml
+
+svn export $REPO/MachineCode/MachineSettings/RaspberryPi/machines/workPi/trunk/scripts/deploy/deployment/statusboard/app/config/parameters.yml app/config/parameters.yml
+</code>
 
 <code>
 /load_calendar.csv
+
 /auth.json
+
 /app/config/parameters.yml
+
 php bin/console app:buildDatabase
+
 php bin/console app:loadCsvToDatabase load_calendar.csv
 <code>
