@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Servers list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Isdisabled</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for server in servers %}
+            <tr>
+                <td><a href="{{ path('admin_server_show', { 'id': server.id }) }}">{{ server.id }}</a></td>
+                <td>{{ server.name }}</td>
+                <td>{% if server.isDisabled %}Yes{% else %}No{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('admin_server_show', { 'id': server.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('admin_server_edit', { 'id': server.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('admin_server_new') }}">Create a new server</a>
+        </li>
+    </ul>
+{% endblock %}
