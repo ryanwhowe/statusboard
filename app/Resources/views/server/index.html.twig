@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-
+{% block title %}Server List{% endblock %}
 {% block body %}
     <div class="container">
     <h1>Servers list</h1>
@@ -16,11 +16,10 @@
         <tbody>
         {% for server in servers %}
             <tr>
-                <td><a href="{{ path('admin_server_show', { 'id': server.id }) }}">{{ server.id }}</a></td>
+                <td><a class="btn btn-info" href="{{ path('admin_server_show', { 'id': server.id }) }}">Show {{ server.id }}</a></td>
                 <td>{{ server.name }}</td>
                 <td>{% if server.isDisabled %}Yes{% else %}No{% endif %}</td>
                 <td>
-                    <a class="btn btn-info" href="{{ path('admin_server_show', { 'id': server.id }) }}">show</a>
                     <a class="btn btn-warning" href="{{ path('admin_server_edit', { 'id': server.id }) }}">edit</a>
                 </td>
             </tr>
