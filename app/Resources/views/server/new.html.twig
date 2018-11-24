@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+{% block title %}New Server{% endblock %}
+{% block body %}
+    <h1>Server creation</h1>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <input class="btn btn-primary" type="submit" value="Create" />
+    {{ form_end(form) }}
+
+    <a class="btn" href="{{ path('admin_server_index') }}">Back to the list</a>
+
+{% endblock %}

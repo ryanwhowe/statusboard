@@ -14,45 +14,25 @@
                     Servers
                 </div>
                 <div class="panel-body">
-                    <div class="row">
-                        <div class="col-md-12 col-lg-4">
-                            <button style="display: none;" type="button"
-                                    class="btn btn-primary btn-lg btn-block serverinfo" data-server="vmBox"></button>
+                    {% for server in servers %}
+                        {% if loop.index == 1 %}
+                        <div class="row">
+                        {% endif %}
+                            <div class="col-md-12 col-lg-4">
+                                <button style="display: none;" type="button"
+                                        class="btn btn-primary btn-lg btn-block serverinfo" data-server="{{ server.name }}"{% if server.isDisabled %} data-disabled="true"{% endif %}></button>
+                            </div>
+                        {% if loop.index is divisible by (3) %}
+                            {% if loop.last %}
+                                </div>
+                            {% else %}
+                                </div><div class="row">
+                            {% endif %}
+                        {% endif %}
+                        {% if loop.last and loop.index is not divisible by (3) %}
                         </div>
-                        <div class="col-md-12 col-lg-4">
-                            <button style="display: none;" type="button"
-                                    class="btn btn-primary btn-lg btn-block serverinfo" data-server="SeaGrassShores" data-disabled="true"></button>
-                        </div>
-                        <div class="col-md-12 col-lg-4">
-                            <button style="display: none;" type="button"
-                                    class="btn btn-primary btn-lg btn-block serverinfo" data-server="Bel-Air" data-disabled="true"></button>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12 col-lg-4">
-                            <button style="display: none;" type="button"
-                                    class="btn btn-primary btn-lg btn-block serverinfo" data-server="raspMPD"></button>
-                        </div>
-                        <div class="col-md-12 col-lg-4">
-                            <button style="display: none;" type="button"
-                                    class="btn btn-primary btn-lg btn-block serverinfo" data-server="picam" data-disabled="true"></button>
-                        </div>
-                        <div class="col-md-12 col-lg-4">
-                            <button style="display: none;" type="button"
-                                    class="btn btn-primary btn-lg btn-block serverinfo" data-server="ives-dev"></button>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12 col-lg-4">
-                            <button style="display: none;" type="button"
-                                    class="btn btn-primary btn-lg btn-block serverinfo" data-server="osmc"></button>
-
-                        </div>
-                        <div class="col-md-12 col-lg-4">
-                            <button style="display: none;" type="button"
-                                    class="btn btn-primary btn-lg btn-block serverinfo" data-server="deskPi" data-disabled="true"></button>
-                        </div>
-                    </div>
+                        {% endif %}
+                    {% endfor %}
                 </div>
                 <!-- /.panel-body -->
             </div>

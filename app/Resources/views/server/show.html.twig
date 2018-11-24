@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+{% block title %} Server - {{ server.name }}{% endblock %}
+{% block body %}
+    <div class="container">
+        <h1>Server</h1>
+
+        <table class="table table-condensed table-dark">
+            <tbody>
+                <tr>
+                    <th class="text-right">Id</th>
+                    <td>{{ server.id }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Name</th>
+                    <td>{{ server.name }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Disabled</th>
+                    <td>{% if server.isDisabled %}Yes{% else %}No{% endif %}</td>
+                </tr>
+            </tbody>
+        </table>
+        <a class="btn btn-primary" href="{{ path('admin_server_index') }}">Back to the list</a>
+        <a class="btn btn-warning" href="{{ path('admin_server_edit', { 'id': server.id }) }}">Edit</a>
+        {{ form_start(delete_form) }}
+            <input class="btn btn-danger" type="submit" value="Delete">
+        {{ form_end(delete_form) }}
+    </div>
+{% endblock %}
