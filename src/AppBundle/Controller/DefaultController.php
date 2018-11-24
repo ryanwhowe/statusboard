@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\Calendar;
+use AppBundle\Entity\Server;
 
 class DefaultController extends Controller
 {
@@ -20,6 +21,8 @@ class DefaultController extends Controller
         $add_time = $request->cookies->get('time_sheet_add_time', 0);
         $calendarRepository = $this->getDoctrine()->getRepository(Calendar::class);
         $calendarEvents = $calendarRepository->findAll();
+        $serverRepository = $this->getDoctrine()->getRepository(Server::class);
+        $servers = $serverRepository->findAll();
         return $this->render('statusboard/index.html.twig', [
             'calendarJson' => CalendarController::formatCalendarEventsJson($calendarEvents),
             'type'         => [
@@ -28,7 +31,8 @@ class DefaultController extends Controller
                 'sick'    => CalendarController::TYPE_SICK,
             ],
             'arrival_time' => $arrival_time,
-            'add_time'     => $add_time
+            'add_time'     => $add_time,
+            'servers'      => $servers
         ]);
     }
 
