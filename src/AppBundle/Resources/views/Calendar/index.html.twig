@@ -101,7 +101,11 @@
         var currentpos = current.getMonth();
         $(function () {
             $("#date_picker").datepicker({
-                dateFormat: "yy-mm-dd"
+                dateFormat: "yy-mm-dd",
+                firstDay: 1,
+                beforeShowDay: function (currentDate) {
+                    return parseDate(currentDate);
+                }
             });
             $(".jquery_ui_datepicker").datepicker({
                 defaultDate: null,
