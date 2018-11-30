@@ -17,7 +17,10 @@ class BuildDatabaseCommand extends ContainerAwareCommand
     {
         $this
             ->setName('app:buildDatabase')
-            ->setDescription('Build the Calendar database');
+            ->setDescription('Build the Calendar database')
+            ->addArgument('calendar_file', InputArgument::REQUIRED, 'Full path to calendar csv file')
+            ->addArgument('server_file', InputArgument::REQUIRED, 'Full path to server csv file');
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -56,6 +59,8 @@ class BuildDatabaseCommand extends ContainerAwareCommand
 
         $greetInput = new ArrayInput($arguments);
         $returnCode = $command->run($greetInput, $output);
+
+
 
     }
 
