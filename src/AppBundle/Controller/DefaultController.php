@@ -46,11 +46,11 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/admin", name="admin_main")
+     * @Route("/admin", name="admin")
      */
     public function adminAction()
     {
-        return new Response('<html><body>Admin page!</body></html>');
+        return $this->render('AppBundle:Default:admin.html.twig');
     }
 
     /**
