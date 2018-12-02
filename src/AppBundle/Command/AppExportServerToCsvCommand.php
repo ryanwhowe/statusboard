@@ -11,9 +11,9 @@ use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
-use AppBundle\Entity\Calendar;
+use AppBundle\Entity\Server;
 
-class AppExportDatabaseToCsvCommand extends ContainerAwareCommand
+class AppExportServerToCsvCommand extends ContainerAwareCommand
 {
 
     private $objectManager;
@@ -27,8 +27,8 @@ class AppExportDatabaseToCsvCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('app:ExportDatabaseToCsv')
-            ->setDescription('Pull the contents of the database to a csv file')
+            ->setName('app:ExportServerToCsv')
+            ->setDescription('Pull the contents of the server database to a csv file')
             ->addArgument('file', InputArgument::REQUIRED, 'Full path to csv File')
         ;
     }
@@ -43,15 +43,16 @@ class AppExportDatabaseToCsvCommand extends ContainerAwareCommand
             $io->error("${file} : already exists!");
         } else {
             $handle = fopen($file, 'w');
-            $header = array('type', 'event_date');
+            $header = array('name', 'isDisabled');
             \fputcsv($handle, $header);
-            $calendars = $this->objectManager->getRepository(Calendar::class);
+            $serversRepo = $this->objectManager->getRepository(Server::class);
             /* @var array */
-            $events = $calendars->findAll();
-            $io->progressStart(count($events));
-            /* @var Calendar $event */
-            foreach ($events as $event) {
-                \fputcsv($handle, array($event->getType(), $event->getEventDate()->format("Y-m-d")));
+            $servers = $serversRepo->findAll();
+            $io->progressStart(count($servers));
+            /* @var Server $server */
+            foreach ($servers as $server) {
+
+                \fputcsv($handle, array($server->getName(), (int)$server->getIsDisabled()));
                 $io->progressAdvance();
             }
             \fclose($handle);
