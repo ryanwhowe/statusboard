@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+    <h1>Calendars list</h1>
+
+    <table class="table table-striped table-condensed">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Type</th>
+                <th>Eventdate</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for calendar in calendars %}
+            <tr>
+                <td><a class="btn btn-info" href="{{ path('admin_calendar_show', { 'id': calendar.id }) }}">Show {{ calendar.id }}</a></td>
+                <td>{% if calendar.type == 1 %}Holiday{% elseif calendar.type == 2 %}PTO{% else %}Sick{% endif %}</td>
+                <td>{% if calendar.eventDate %}{{ calendar.eventDate|date('Y-m-d') }}{% endif %}</td>
+                <td>
+                    <a class="btn btn-warning" href="{{ path('admin_calendar_edit', { 'id': calendar.id }) }}">edit</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-primary" href="{{ path('admin_calendar_new') }}">Create a new event</a>
+
+    </div>
+{% endblock %}

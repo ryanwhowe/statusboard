@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Calendar</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ calendar.id }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{% if calendar.type == 1 %}Holiday{% elseif calendar.type == 2 %}PTO{% else %}Sick{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Eventdate</th>
+                <td>{% if calendar.eventDate %}{{ calendar.eventDate|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-primary" href="{{ path('admin_calendar_index') }}">Back to the list</a>
+    <a class="btn btn-warning" href="{{ path('admin_calendar_edit', { 'id': calendar.id }) }}">Edit</a>
+    {{ form_start(delete_form) }}
+    <input class="btn btn-danger" type="submit" value="Delete">
+    {{ form_end(delete_form) }}
+
+{% endblock %}
