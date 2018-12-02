@@ -2,6 +2,8 @@
 
 namespace AppBundle\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
 use AppBundle\Entity\Calendar;
 use AppBundle\Entity\Server;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
@@ -18,6 +20,7 @@ class DefaultController extends Controller
 
     /**
      * @Route("/", name="homepage")
+     *
      * @param Request $request
      * @return Response
      */
