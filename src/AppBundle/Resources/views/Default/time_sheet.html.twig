@@ -9,31 +9,48 @@
     </div>
     <div class="row">
         <div class="col-md-12 col-lg-12">
-            <div class="jquery_ui_datepicker"></div>
-        </div>
-
-        <div class="col-lg-12 col-md-12">
-            <h2 id="clock"></h2>
-        </div>
-        <div class="col-lg-12 col-md-12">
-            <form method="post" action="{{ path('timeSheetUpdate') }}">
-                <section><label>Arrival Time: <input type="time" name='time'
-                                                     id="arrival_time" min="07:00"
-                                                     max="18:00" value="{{ time }}"></label>
-                </section>
-                <section><label>Additional Base Time: <input type="number"
-                                                             name='add_time'
-                                                             id="additional_time"
-                                                             max="8" min="0"
-                                                             step="0.1"
-                                                             value="{{ add_time }}"></label>
-                </section>
-                <p>
-                    <button class="green" type="submit">Set Arrival Time</button>
-                </p>
-            </form>
+            <div class="panel panel-info">
+                <div class="panel-heading text-center">
+                    Status
+                </div>
+                <div class="panel-body text-center">
+                    <h2 id="clock"></h2>
+                </div>
+            </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-12">
+            <div class="panel panel-info">
+                <div class="panel-heading text-center">
+                    Settings
+                </div>
+                <div class="panel-body">
+                    <form method="post" action="{{ path('timeSheetUpdate') }}">
+                        <div class="form-group">
+                            <label>Arrival Time:</label>
+                            <input class="form-control" type="time" name='time' id="arrival_time" min="07:00" max="18:00" value="{{ time }}">
+                         </div>
+                        <div class="form-group">
+                            <label>Additional Base Time:</label>
+                            <input class="form-control" type="number" name='add_time' id="additional_time" max="8" min="0" step="0.1" value="{{ add_time }}">
+                        </div>
+                        <button class="btn btn-default" type="submit">Set Arrival Time</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12">
+            <div class="panel panel-info">
+                <div class="panel-heading text-center">
+                    Info
+                </div>
+                <div class="panel-body">
+                    <h3 id="eight_hours"></h3>
+                </div>
+        </div>
+    </div>
+
 {% endblock %}
 
 {% block style %}
@@ -52,6 +69,7 @@
         $(function () {
             displayTime();
             setInterval('displayTime()', 1000);
+            $('#eight_hours').html('8 Hours: ' + TimeSheet.formatTime(TimeSheet.getEighthHourTime()));
         });
 
         /**
