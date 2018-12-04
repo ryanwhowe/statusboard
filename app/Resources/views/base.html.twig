@@ -15,7 +15,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('vendor/morrisjs/morris.css') }}"/>
     <!-- Custom Fonts -->
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/font-awesome/css/font-awesome.min.css') }}"/>
-    {% block style %}{% endblock %}
+{% block style %}{% endblock %}
 </head>
 <body>
 <div id="wrapper">
@@ -44,7 +44,32 @@
                         <a href="{{ path('timeSheet') }}"><i class="fa fa-clock-o fa-fw"></i> Time Sheet</a>
                     </li>
                     <li>
-                        <a href="{{ path('admin') }}"><i class="fa fa-cogs fa-fw"></i> Settings</a>
+                        <a href="{{ path('admin') }}"><i class="fa fa-cogs fa-fw"></i> Settings<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse">
+                            <li>
+                                <a href="#">Servers <span class="fa arrow"></span></a>
+                                <ul class="nav nav-third-level collapse">
+                                    <li>
+                                        <a href="{{ path('admin_server_index') }}">List Servers</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ path('admin_server_new') }}">Create New Server</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">Calendar Events <span class="fa arrow"></span></a>
+                                <ul class="nav nav-third-level collapse">
+                                    <li>
+                                        <a href="{{ path('admin_calendar_index') }}">List Events</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ path('admin_calendar_new') }}">Create New Event</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <!-- /.nav-second-level -->
                     </li>
                 </ul>
             </div>
