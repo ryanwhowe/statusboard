@@ -1,13 +1,23 @@
 {% extends 'base.html.twig' %}
 {% block title %}New Server{% endblock %}
 {% block body %}
-    <h1>Server creation</h1>
-
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input class="btn btn-primary" type="submit" value="Create" />
-    {{ form_end(form) }}
-
-    <a class="btn" href="{{ path('admin_server_index') }}">Back to the list</a>
-
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Server create</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <input class="btn btn-warning" type="submit" value="Create" />
+        {{ form_end(form) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+        <a class="btn btn-primary" href="{{ path('admin_server_index') }}">Back to the list</a>
+        </div>
+    </div>
 {% endblock %}

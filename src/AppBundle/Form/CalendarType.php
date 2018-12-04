@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use AppBundle\Controller\DefaultController;
 
 class CalendarType extends AbstractType
 {
@@ -19,9 +20,9 @@ class CalendarType extends AbstractType
                 'type',
                 ChoiceType::class,
                 ['choices' => [
-                    'Holiday' => 1,
-                    'PTO' => 2,
-                    'Sick' => 3
+                    'Holiday' => DefaultController::CALENDAR_TYPE_HOLIDAY,
+                    'PTO' => DefaultController::CALENDAR_TYPE_PTO,
+                    'Sick' => DefaultController::CALENDAR_TYPE_SICK
                     ]
                 ]
             )

@@ -1,9 +1,15 @@
 {% extends 'base.html.twig' %}
 {% block title %} Server - {{ server.name }}{% endblock %}
 {% block body %}
-    <div class="container">
-        <h1>Server</h1>
 
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Server</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
         <table class="table table-condensed table-dark">
             <tbody>
                 <tr>
@@ -20,10 +26,23 @@
                 </tr>
             </tbody>
         </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
         <a class="btn btn-primary" href="{{ path('admin_server_index') }}">Back to the list</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
         <a class="btn btn-warning" href="{{ path('admin_server_edit', { 'id': server.id }) }}">Edit</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
         {{ form_start(delete_form) }}
             <input class="btn btn-danger" type="submit" value="Delete">
         {{ form_end(delete_form) }}
+        </div>
     </div>
 {% endblock %}
