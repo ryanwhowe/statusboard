@@ -13,41 +13,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use theAxeRant\HomeMeta\Client;
-use Symfony\Component\Cache\Simple\FilesystemCache;
-
+use AppBundle\Cache\ApiService;
 
 class ApiController extends Controller
 {
 
     /**
-     * The internal cache needs to be renewed every half hour since this is when the
-     * machines will updated there status'.  This will calculated when the last half
-     * hour passed for comparing if the cache should still be used or updated
-     *
-     * @return int
+     * @Route("/api/{action}/{grouping}")
      */
-    private function getCacheTimeout()
+    public function ApiAction($action, $grouping, Request $Request)
     {
-        $time = time();
-        //Store how many seconds long our rounding interval is
-        //1800 equals one half hour
-        $INTERVAL_SECONDS = 1800;
-
-        //Find how far off the prior interval we are
-        $offset = ($time % $INTERVAL_SECONDS);
-
-        //Removing this offset takes us to the "round down" half hour
-        return $time - $offset;
-    }
-
-    /**
-     * @Route("/api/{action}/{grouping}", name="ipcheck")
-     */
-    public function IpcheckAction($action, $grouping, Request $Request)
-    {
-        $cache = new FilesystemCache();
-        $this->container->get('session')->getFlashBag()->all();
-
         /**
          * @var array The Result storage to be encoded into json and returned upon successful completion
          */
@@ -73,15 +48,13 @@ class ApiController extends Controller
                     }
                     break;
                 case 'group':
-                    /* check to see if there is a cache value and if it is newer than the last passed half hour */
-                    if ($cache->has($grouping . 'time') && $cache->get($grouping . 'time') >= $this->getCacheTimeout()) {
-                        $result = $cache->get($grouping . 'data');
-                    } else {
-                        $result = Client::create($this->getParameter('api_token'),
-                            $this->getParameter('api_url'), $grouping)->group();
-                        $cache->set($grouping . 'data', $result);
-                        $cache->set($grouping . 'time', time());
-                    }
+
+                    $result = ApiService::getServerGroupData(
+                        $grouping,
+                        $this->getParameter('api_url'),
+                        $this->getParameter('api_token'),
+                        $this->get('logger')
+                    );
                     break;
                 case \null:
                     $this->addFlash('error', 'No action specified');
