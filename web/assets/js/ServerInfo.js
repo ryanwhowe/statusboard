@@ -211,7 +211,7 @@ $.widget("howe.ServerInfo", {
         let update_data = [];
         $.each(me.data_response, function (index, datapoint) {
             if (datapoint.key === 'heartbeat') {
-                me.data_heartbeat = new Date(me.__convertTimestamp(datapoint.value));
+                me.data_heartbeat = new Date(datapoint.value * 1000);
                 update_data.unshift("<tr><td style='font-weight: bold;text-align: right'>" + me.__textFormat(datapoint.key) + " : </td><td style='padding-left: 1em;text-align: left' title='" + me.__convertTimestamp(datapoint.last_update) + "'>" + me.__formatter(datapoint.key, datapoint.value) + "</td></tr>");
             } else {
                 update_data.push("<tr><td style='font-weight: bold;text-align: right'>" + me.__textFormat(datapoint.key) + " : </td><td style='padding-left: 1em;text-align: left' title='" + me.__convertTimestamp(datapoint.last_update) + "'>" + me.__formatter(datapoint.key, datapoint.value) + "</td></tr>");
@@ -224,7 +224,9 @@ $.widget("howe.ServerInfo", {
 
         let current_date = new Date();
 
-        if (current_date - me.data_heartbeat > o.max_age) {
+        let current_age = (current_date.getTime() - me.data_heartbeat);
+
+        if (current_age > o.max_age) {
             if(o.disabled){
                 $(e).removeClass('btn-danger btn-success').addClass('btn-warning');
             } else {
