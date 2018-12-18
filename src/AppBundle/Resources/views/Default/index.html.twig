@@ -212,7 +212,7 @@
             }
             /* skip updating if the percentage is the same, very common on Month, Quarter, Year bars */
             if (current_percentage !== percentage) {
-                $(element).html(name + ' Complete (' + percentage + '%)').css('width', percentage + '%').attr('aria-valuenow', percentage);
+                $(element).html(percentage + '% of ' + name + ' Complete').css('width', percentage + '%').attr('aria-valuenow', percentage);
                 $(element).data('percentage', percentage);
                 if (percentage === 0) { // Reset the visual display if statusboard is left on overnight
                     $(element).addClass('active progress-bar-striped').removeClass('progress-bar-danger');
