@@ -44,13 +44,13 @@ class DefaultController extends Controller
         foreach ($eventTypes as $eventType){
             switch($eventType){
                 case self::CALENDAR_TYPE_SICK:
-                    $eventName = 'sick';
+                    $eventName = 'Sick';
                     break;
                 case self::CALENDAR_TYPE_PTO:
-                    $eventName = 'pto';
+                    $eventName = 'PTO';
                     break;
                 case self::CALENDAR_TYPE_HOLIDAY:
-                    $eventName = 'holiday';
+                    $eventName = 'Holiday';
                     break;
             }
 
