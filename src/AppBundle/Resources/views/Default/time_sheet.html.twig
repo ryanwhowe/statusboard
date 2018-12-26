@@ -27,15 +27,21 @@
                 </div>
                 <div class="panel-body">
                     <form method="post" action="{{ path('timeSheetUpdate') }}">
-                        <div class="form-group">
-                            <label>Arrival Time:</label>
-                            <input class="form-control" type="time" name='time' id="arrival_time" min="07:00" max="18:00" value="{{ time }}">
-                         </div>
-                        <div class="form-group">
-                            <label>Additional Base Time:</label>
-                            <input class="form-control" type="number" name='add_time' id="additional_time" max="8" min="0" step="0.1" value="{{ add_time }}">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Arrival Time:</label>
+                                <input class="form-control" type="time" name='time' id="arrival_time" min="07:00" max="18:00" value="{{ time }}">
+                             </div>
                         </div>
-                        <button class="btn btn-outline btn-primary" type="submit">Set Arrival Time</button>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Additional Base Time:</label>
+                                <input class="form-control" type="number" name='add_time' id="additional_time" max="8" min="0" step="0.1" value="{{ add_time }}">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <button class="btn btn-outline btn-primary" type="submit">Set Arrival Time</button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -45,10 +51,59 @@
                 <div class="panel-heading text-center">
                     Info
                 </div>
+
                 <div class="panel-body">
-                    <h3 id="eight_hours"></h3>
+                    <div class="col-lg-6">
+                        <div class="input-group">
+                            <input type="number" min="0" max="10" step="0.1" id="today" value="8.0" class="form-control">
+                            <span id="eight_hours" class="input-group-addon"></span>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-6">
+                        <form method="post" action="{{ path('app_default_timesheetcalendarupdate') }}">
+                            <div class="col-lg-12">
+                                <table class="table table-condensed table-bordered">
+                                <thead>
+                                    <tr><th colspan="2" class="text-center info">Weekly Time</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr{% if calendar.monday.is_holiday %} class="warning" title="Not Work Day"{% endif %}>
+                                        <td class="text-center">MON</td>
+                                        <td><input class="cal-sum form-control"{% if calendar.monday.is_holiday %} readonly{% endif %} data-day="1" type="number" max="10" min="0" name="mon" id="mon" step="0.1" value="{{ calendar.monday.value }}"></td>
+                                    </tr>
+                                    <tr{% if calendar.tuesday.is_holiday %} class="warning" title="Not Work Day"{% endif %}>
+                                        <td class="text-center">TUE</td>
+                                        <td><input class="cal-sum form-control"{% if calendar.tuesday.is_holiday %} readonly{% endif %} data-day="2" type="number" max="10" min="0" name="tue" id="tue" step="0.1" value="{{ calendar.tuesday.value }}"></td>
+                                    </tr>
+                                    <tr{% if calendar.wednesday.is_holiday %} class="warning" title="Not Work Day"{% endif %}>
+                                        <td class="text-center">WED</td>
+                                        <td><input class="cal-sum form-control"{% if calendar.wednesday.is_holiday %} readonly{% endif %} data-day="3" type="number" max="10" min="0" name="wed" id="wed" step="0.1" value="{{ calendar.wednesday.value }}"></td>
+                                    </tr>
+                                    <tr{% if calendar.thursday.is_holiday %} class="warning" title="Not Work Day"{% endif %}>
+                                        <td class="text-center">THU</td>
+                                        <td><input class="cal-sum form-control"{% if calendar.thursday.is_holiday %} readonly{% endif %} data-day="4" type="number" max="10" min="0" name="thu" id="thu" step="0.1" value="{{ calendar.thursday.value }}"></td>
+                                    </tr>
+                                    <tr{% if calendar.friday.is_holiday %} class="warning" title="Not Work Day"{% endif %}>
+                                        <td class="text-center">FRI</td>
+                                        <td><input class="cal-sum form-control" data-day="5" type="number" max="10" min="0" name="fri" id="fri" step="0.1" readonly value="{{ calendar.friday.value }}"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">TOTAL</td>
+                                        <td><input class="form-control" type="number" max="10" min="0" name="total" id="total" step="0.1" readonly value=""></td>
+                                    </tr>
+                                </tbody>
+                                </table>
+                            </div>
+                            <div class="col-lg-12">
+                                <button class="btn btn-outline btn-primary" type="submit">Update Calendar</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
+
         </div>
+    </div>
     </div>
 
 {% endblock %}
@@ -66,10 +121,18 @@
         let arrival = new Date(0, 0, 0, parseInt(time_parts[0], 0), parseInt(time_parts[1], 0), 0);
         TimeSheet.init(arrival, parseFloat($('#additional_time').val()));
         let base_title = $(document).prop('title');
+        let today = new Date();
         $(function () {
+            $('.cal-sum').on('change', function(){ updateTotal(); });
+            updateTotal();
             displayTime();
             setInterval('displayTime()', 1000);
-            $('#eight_hours').html('8 Hours: ' + TimeSheet.formatTime(TimeSheet.getEighthHourTime()));
+            $('#eight_hours').html(' Hours: ' + TimeSheet.formatTime(TimeSheet.getGivenOffsetTime(parseFloat($('#today').val()))));
+            $('#today').on('change', function(){
+                let offset = parseFloat($(this).val());
+                $('#eight_hours').html(' Hours: ' + TimeSheet.formatTime(TimeSheet.getGivenOffsetTime(offset)));
+            });
+
         });
 
         /**
@@ -88,6 +151,26 @@
             }
             $('#clock').html(display_html);
         }
+
+        function updateTotal(){
+            let mon = parseFloat($('#mon').val());
+            let tue = parseFloat($('#tue').val());
+            let wed = parseFloat($('#wed').val());
+            let thu = parseFloat($('#thu').val());
+
+            let total = mon + tue + wed + thu;
+
+            $('#total').val(total);
+
+            if(today.getDay() === 5){ //it is Friday
+                $('#fri').removeAttr('readonly').val(40.0 - total);
+                let fri = +parseFloat($('#fri').val()).toFixed(1);
+                $('#today').val(fri).change();
+                $('#total').val(total + fri);
+            }
+
+        }
+
 
     </script>
 {% endblock %}

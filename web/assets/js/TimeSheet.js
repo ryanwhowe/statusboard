@@ -60,17 +60,21 @@ let TimeSheet = {
     },
 
     getEighthHourTime: function() {
+        return this.getGivenOffsetTime(8.0);
+    },
+
+    getGivenOffsetTime: function(offset) {
         let me = this;
         let result;
         $.each(this.stepsArray, function(i, step){
-            if( 8.0 === step.hours + me.offset ){
+            if( offset === step.hours + me.offset ){
                 let parser = step.time_index;
                 result =  new Date(0,0,0,parser.getHours(), parser.getMinutes(), parser.getSeconds());
                 return false;
             }
         });
         return result;
-    }
+    },
 
 };
 

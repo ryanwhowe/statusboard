@@ -10,4 +10,52 @@ namespace AppBundle\Repository;
  */
 class CalendarRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * Return the events that are happening this week
+     *
+     * @return array
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    public function findAllThisWeek(){
+        $connection = $this->getEntityManager()->getConnection();
+
+        $sql = "
+            SELECT
+                id,
+                type,
+                event_date
+            FROM
+                calendar
+            WHERE
+                strftime('%Y-%W', `event_date`) = strftime('%Y-%W', 'now')
+        ";
+
+        $stmt = $connection->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    /**
+     * Get the next calendar occurrence of the passed event type
+     *
+     * @param integer $eventType The event type to search for a next occurrence of
+     *
+     * @return mixed
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function getNextEvent($eventType){
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT c
+                 FROM AppBundle\Entity\Calendar c
+                 WHERE c.eventDate > CURRENT_DATE() AND c.type = :type'
+        )->setParameters(
+            [
+                'type'=> $eventType
+            ]
+        )->setMaxResults(1);
+
+        return $query->execute();
+    }
 }

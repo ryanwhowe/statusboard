@@ -93,6 +93,27 @@
             </div>
             <!-- /.panel -->
         </div>
+        <div class="col-md-6 col-lg-6">
+            <div class="panel panel-info">
+                <div class="panel-heading text-center">
+                    Calendar Upcoming
+                </div>
+                <div class="panel-body">
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead>
+                        <tr class="info"><th>Event</th><td>Days</td></tr>
+                        </thead>
+                        <tbody>
+                        {% for type,event in events %}
+                        <tr><td>{{ type }}</td><td{% if event.days %} title="{{ event.date }}">{{ event.days }}{% else %}>None Scheduled{% endif %}</td></tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
     </div>
 {% endblock %}
 
