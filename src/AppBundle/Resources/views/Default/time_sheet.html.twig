@@ -158,6 +158,11 @@
             let wed = parseFloat($('#wed').val());
             let thu = parseFloat($('#thu').val());
 
+            mon = mon ? mon : 0;
+            tue = tue ? tue : 0;
+            wed = wed ? wed : 0;
+            thu = thu ? thu : 0;
+
             let total = mon + tue + wed + thu;
 
             $('#total').val(total);
