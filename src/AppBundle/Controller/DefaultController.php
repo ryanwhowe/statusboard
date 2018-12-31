@@ -24,8 +24,7 @@ class DefaultController extends Controller
      * @param Request $request
      *
      * @return Response
-     * @throws \Doctrine\ORM\NoResultException
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Exception
      */
     public function indexAction(Request $request)
     {
@@ -76,6 +75,8 @@ class DefaultController extends Controller
             }
 
         }
+
+        $nextEvents['Pay Day'] = $this->nextPayDate();
 
         return $this->render('AppBundle:Default:index.html.twig', [
             'calendarJson' => $this->formatCalendarEventsJson($calendarEvents),
@@ -292,6 +293,31 @@ class DefaultController extends Controller
         $response->headers->setCookie(new \Symfony\Component\HttpFoundation\Cookie('time_sheet_calendar_wed', $wed, new \DateTime('next sunday')));
         $response->headers->setCookie(new \Symfony\Component\HttpFoundation\Cookie('time_sheet_calendar_thu', $thu, new \DateTime('next sunday')));
         return $response;
+    }
+
+    /**
+     * Calculate the next pay date
+     *
+     * @return array
+     * @throws \Exception
+     */
+    protected function nextPayDate(){
+        $current_day = date('N');
+        //$days_from_friday = 5 - $current_day;
+        $this_friday = strtotime("this friday");
+
+        if(date('W',$this_friday) % 2 === 0) {
+            $this_friday = strtotime("+1 week ". date('Y-m-d', $this_friday));
+            dump($this_friday);
+        }
+        $days_until = date_diff(
+            new \DateTime('now'),
+            new \DateTime(date('Y-m-d',$this_friday))
+        );
+        return [
+            'date' => date('Y-m-d', $this_friday),
+            'days' => $days_until->format('%a') + 1
+        ];
     }
 
 }

@@ -2,6 +2,8 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\Calendar;
+
 /**
  * CalendarRepository
  *
@@ -19,15 +21,33 @@ class CalendarRepository extends \Doctrine\ORM\EntityRepository
     public function findAllThisWeek(){
         $connection = $this->getEntityManager()->getConnection();
 
+        /* This is to deal with the quirk of sqlite and the way it handles week numbers */
         $sql = "
             SELECT
                 id,
                 type,
-                event_date
+                event_date,
+                strftime('%Y-%W', `event_date`),
+                CAST(strftime('%Y','now')+1 AS TEXT) || '-00'
             FROM
                 calendar
             WHERE
                 strftime('%Y-%W', `event_date`) = strftime('%Y-%W', 'now')
+               OR
+                (
+                    (
+                        strftime('%W', 'now') = '53' 
+                            AND
+                        strftime('%Y-%W', `event_date`) = CAST(strftime('%Y', 'now') + 1 AS TEXT) || '-00'
+                    )
+        
+                        OR
+                    (
+                        strftime('%W','now') = '00' 
+                            AND 
+                        strftime('%Y-%W', `event_date`) = CAST(strftime('%Y', 'now') - 1 AS TEXT) || '-53'
+                    )
+                )
         ";
 
         $stmt = $connection->prepare($sql);
@@ -40,8 +60,7 @@ class CalendarRepository extends \Doctrine\ORM\EntityRepository
      *
      * @param integer $eventType The event type to search for a next occurrence of
      *
-     * @return mixed
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @return Calendar[]
      */
     public function getNextEvent($eventType){
         $entityManager = $this->getEntityManager();
