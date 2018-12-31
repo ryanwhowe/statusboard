@@ -41,8 +41,8 @@ class DefaultController extends Controller
 
         $nextEvents = [];
         $eventTypes = [self::CALENDAR_TYPE_HOLIDAY, self::CALENDAR_TYPE_PTO, self::CALENDAR_TYPE_SICK];
-        foreach ($eventTypes as $eventType){
-            switch($eventType){
+        foreach ($eventTypes as $eventType) {
+            switch ($eventType) {
                 case self::CALENDAR_TYPE_SICK:
                     $eventName = 'Sick';
                     break;
@@ -64,13 +64,13 @@ class DefaultController extends Controller
                     $calendar->getEventDate());
 
                 $nextEvents[$eventName] = [
-                    'date'  => $calendar->getEventDate()->format('Y-m-d'),
-                    'days' => $days_until->format('%a')
+                    'date' => $calendar->getEventDate()->format('Y-m-d'),
+                    'days' => $days_until->format('%a') + 1
                 ];
             }
-            if(!count($calendars)){
+            if ( ! count($calendars)) {
                 $nextEvents[$eventName] = [
-                    'date'  => null,
+                    'date' => null,
                     'days' => null
                 ];
             }
