@@ -302,13 +302,10 @@ class DefaultController extends Controller
      * @throws \Exception
      */
     protected function nextPayDate(){
-        $current_day = date('N');
-        //$days_from_friday = 5 - $current_day;
         $this_friday = strtotime("this friday");
 
         if(date('W',$this_friday) % 2 === 0) {
             $this_friday = strtotime("+1 week ". date('Y-m-d', $this_friday));
-            dump($this_friday);
         }
         $days_until = date_diff(
             new \DateTime('now'),
