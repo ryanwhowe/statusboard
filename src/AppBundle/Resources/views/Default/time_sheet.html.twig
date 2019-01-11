@@ -95,7 +95,7 @@
                                     </tr>
                                     <tr>
                                         <td class="text-center">TOTAL</td>
-                                        <td><input class="form-control" type="number" max="10" min="0" name="total" id="total" step="0.1" readonly value=""></td>
+                                        <td><input class="form-control" max="10" min="0" name="total" id="total" step="0.1" readonly value=""></td>
                                         <td><input class="form-control" type="number" max="10" min="0" name="total_" id="total_" step="0.1" readonly value=""></td>
                                     </tr>
                                 </tbody>
@@ -172,10 +172,12 @@
             let total = mon + tue + wed + thu;
 
             $('#total').val(total);
-
+            let fri_ = parseFloat($('#fri_').val());
+            if(isNaN(fri_)){ fri_ = 0; }
+            $('#total_').val(total + fri_);
             if(today.getDay() === 5){ //it is Friday
-                $('#fri').removeAttr('readonly').val(40.0 - total);
-                let fri = +parseFloat($('#fri').val()).toFixed(1);
+                $('#fri').val(40.0 - total);
+                let fri = 40.0 - total;
                 $('#today').val(fri).change();
                 $('#total').val(total + fri);
             }
