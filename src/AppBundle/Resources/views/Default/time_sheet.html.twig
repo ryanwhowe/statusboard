@@ -173,10 +173,11 @@
 
             $('#total').val(total);
             let fri_ = parseFloat($('#fri_').val());
-            if(isNaN(fri_)){ fri_ = 0; }
-            $('#total_').val(total + fri_);
+            if(!isNaN(fri_)) {
+                $('#total_').val(total + fri_);
+            }
             if(today.getDay() === 5){ //it is Friday
-                $('#fri').removeAttr('readonly').val(parseFloat(40.0 - total).toFixed(1));
+                $('#fri').val(parseFloat(40.0 - total).toFixed(1));
                 let fri = +parseFloat($('#fri').val()).toFixed(1);
                 $('#today').val(fri).change();
                 $('#total').val(total + fri);
