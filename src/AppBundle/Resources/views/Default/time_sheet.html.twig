@@ -90,7 +90,7 @@
                                     </tr>
                                     <tr{% if calendar.friday.is_holiday %} class="warning" title="Not Work Day"{% endif %}>
                                         <td class="text-center">FRI</td>
-                                        <td><input class="cal-sum form-control" data-day="5" type="number" max="10" min="0" name="fri" id="fri" step="0.1" readonly value="{{ calendar.friday.value }}"></td>
+                                        <td><input class="cal-sum form-control" data-day="5" name="fri" id="fri" readonly value="{{ calendar.friday.value }}"></td>
                                         <td><input class="cal-sum form-control" data-day="5" type="number" max="10" min="0" name="fri_" id="fri_" step="0.1" value="{{ calendar.friday.value }}"></td>
                                     </tr>
                                     <tr>
@@ -176,8 +176,8 @@
             if(isNaN(fri_)){ fri_ = 0; }
             $('#total_').val(total + fri_);
             if(today.getDay() === 5){ //it is Friday
-                $('#fri').val(40.0 - total);
-                let fri = 40.0 - total;
+                $('#fri').removeAttr('readonly').val(parseFloat(40.0 - total).toFixed(1));
+                let fri = +parseFloat($('#fri').val()).toFixed(1);
                 $('#today').val(fri).change();
                 $('#total').val(total + fri);
             }
