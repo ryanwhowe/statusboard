@@ -2,13 +2,14 @@
 let TimeSheet = {
 
     init: function(startTime, offset){
-        this.setStartTime(startTime);
         this.setHourOffset(offset);
+        this.setStartTime(startTime);
     },
 
     getStartTime: function(){ return this.startTime; },
 
     setStartTime: function(startTime){
+        /* @todo This needs to adjust the start time based off of the offset */
         this.startTime = startTime;
         this.stepsArray = this.generateStepsArray()
     },

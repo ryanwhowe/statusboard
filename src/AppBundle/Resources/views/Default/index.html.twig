@@ -104,9 +104,10 @@
                         <tr class="info"><th class="text-center">Event</th><th class="text-center">Days</th></tr>
                         </thead>
                         <tbody>
-                        {% for type,event in events %}
-                        <tr><td>{{ type }}</td><td{% if event.days %} title="{{ event.date }}">{{ event.days }}{% else %}>None Scheduled{% endif %}</td></tr>
-                        {% endfor %}
+                            <tr><td>Holiday</td><td{% if events['Holiday'].days %} title="{{ events['Holiday'].date }}">{{ events['Holiday'].days }}{% else %}>None Scheduled{% endif %}</td></tr>
+                            <tr><td>Pay Day</td><td{% if events['Pay Day'].days %} title="{{ events['Pay Day'].date }}">{{ events['Pay Day'].days }}{% else %}>None Scheduled{% endif %}</td></tr>
+                            <tr><td>PTO</td><td{% if events['PTO'].days %} title="{{ events['PTO'].date }}">{{ events['PTO'].days }}{% else %}>None Scheduled{% endif %}</td></tr>
+                            <tr><td>Sick</td><td{% if events['Sick'].days %} title="{{ events['Sick'].date }}">{{ events['Sick'].days }}{% else %}>None Scheduled{% endif %}</td></tr>
                         </tbody>
                     </table>
                 </div>
