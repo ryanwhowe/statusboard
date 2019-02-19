@@ -4,7 +4,7 @@ namespace Tests\AppBundle\Controller;
 
 use AppBundle\Controller\ApiController;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use theAxeRant\HomeMeta\Client;
+use AppBundle\theAxeRant\Client;
 
 class ClientTest extends WebTestCase
 {
