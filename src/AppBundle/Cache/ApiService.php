@@ -8,7 +8,7 @@
 
 namespace AppBundle\Cache;
 
-use theAxeRant\HomeMeta\Client;
+use AppBundle\theAxeRant\Client;
 use Symfony\Component\Cache\Simple\FilesystemCache;
 use Psr\Log\LoggerInterface;
 

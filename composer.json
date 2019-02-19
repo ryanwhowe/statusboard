@@ -25,7 +25,6 @@
         "symfony/polyfill-apcu": "^1.0",
         "symfony/swiftmailer-bundle": "^2.3.10",
         "symfony/symfony": "~3.4",
-        "theAxeRant": "2.0.0",
         "twig/twig": "^1.0||^2.0"
     },
     "require-dev": {
@@ -72,12 +71,5 @@
         "branch-alias": {
             "dev-master": "3.3-dev"
         }
-    },
-    "repositories": [{
-        "type": "svn",
-        "url": "http://www.theaxerant.com/svn/personal/Projects/linux/composer/theAxeRant/",
-        "trunk-path": "trunk",
-        "branches-path": "branches",
-        "tags-path": "tags"
-    }]
+    }
 }
