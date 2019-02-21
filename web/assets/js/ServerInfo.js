@@ -69,11 +69,18 @@ $.widget("howe.ServerInfo", {
             dataType: 'json',
             async: true,
             cache: false,
-            success: function (data) {
+            timeout: 30*1000,
+            success: function (data, status) {
+                if(status === 'timeout'){
+                    me.__Error('Ajax Request Timeout');
+                }
                 me.data_response = data;
                 me.__formatData();
             },
-            error: function (xhr) {
+            error: function (xhr, status) {
+                if(status === 'timeout'){
+                    me.__Error('Ajax Request Timeout');
+                }
                 let error = JSON.parse(xhr.responseText);
                 let error_text = 'Invalid Server Name: ' + o.server;
                 $.each(error.error, function (index, value) {
