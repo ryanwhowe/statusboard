@@ -76,7 +76,7 @@ class ServerWarmer implements CacheWarmerInterface
          * @var Server $server
          */
         foreach ($servers as $server) {
-            ApiService::getServerGroupData(
+            ApiService::updateServerCacheData(
                 $server->getName(),
                 $url,
                 $token,

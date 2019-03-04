@@ -104,16 +104,17 @@ $.widget("howe.ServerInfo", {
      * @private
      */
     __intervalRefreshTime: function () {
-        let refreshInterval;
+        let refreshInterval = 5; // minutes
         let now = new Date();
         let next = new Date();
-        next.setMinutes(Math.ceil(next.getMinutes() / 30) * 30);
+        let result;
+        next.setMinutes(Math.ceil(next.getMinutes() / refreshInterval) * refreshInterval);
 
-        refreshInterval = next - now;
+        result = next - now;
 
-        /* between 1 and 5 minutes */
-        refreshInterval += this.__randomTime(60 * 1000, 5 * 60 * 1000);
-        return refreshInterval;
+        /* between 0 and 1 minutes */
+        result += this.__randomTime(0, 60 * 1000);
+        return result;
 
     },
 
