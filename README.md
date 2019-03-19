@@ -1,5 +1,5 @@
 # statusboard
-This is a personal status board project that is not really written to be shared
+This is a personal status board project that is not really written to be shared, the documentation is very spotty and the front end is in need of a makeover, which is going to be rewritten utilizing AngularJS.
 
 Setup
 -----
@@ -19,9 +19,7 @@ yarn --modules-folder web/bundles
 Future
 ------
 These are future upgrades
-* Database Storage
-* Custom composer install data pull for internal library from personal repo
-
+* Rewrite front end utilizing Angular
 
 Security
 --------
