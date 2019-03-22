@@ -39,20 +39,12 @@ class DefaultController extends Controller
         $servers = $serverRepository->findAll();
 
         $nextEvents = [];
-        $eventTypes = [self::CALENDAR_TYPE_HOLIDAY, self::CALENDAR_TYPE_PTO, self::CALENDAR_TYPE_SICK];
-        foreach ($eventTypes as $eventType) {
-            switch ($eventType) {
-                case self::CALENDAR_TYPE_SICK:
-                    $eventName = 'Sick';
-                    break;
-                case self::CALENDAR_TYPE_PTO:
-                    $eventName = 'PTO';
-                    break;
-                case self::CALENDAR_TYPE_HOLIDAY:
-                    $eventName = 'Holiday';
-                    break;
-            }
-
+        $eventTypes = [
+            self::CALENDAR_TYPE_HOLIDAY => 'Holiday',
+            self::CALENDAR_TYPE_PTO     => 'PTO',
+            self::CALENDAR_TYPE_SICK    => 'Sick'
+        ];
+        foreach ($eventTypes as $eventType => $eventName) {
             /**
              * @var Calendar $calendar
              */
@@ -296,23 +288,24 @@ class DefaultController extends Controller
     }
 
     /**
-     * Calculate the next pay date
+     * Calculate the next pay date, this is bases on the current cycle of being paid on the friday of even calendar
+     * weeks numbers.
      *
      * @return array
      * @throws \Exception
      */
     protected function nextPayDate(){
-        $this_friday = strtotime("this friday");
+        $pay_friday = strtotime("this friday");
 
-        if(date('W',$this_friday) % 2 === 0) {
-            $this_friday = strtotime("+1 week ". date('Y-m-d', $this_friday));
+        if(date('W',$pay_friday) % 2 === 0) {
+            $pay_friday = strtotime("+1 week ". date('Y-m-d', $pay_friday));
         }
         $days_until = date_diff(
             new \DateTime('now'),
-            new \DateTime(date('Y-m-d',$this_friday))
+            new \DateTime(date('Y-m-d',$pay_friday))
         );
         return [
-            'date' => date('Y-m-d', $this_friday),
+            'date' => date('Y-m-d', $pay_friday),
             'days' => $days_until->format('%a') + 1
         ];
     }
