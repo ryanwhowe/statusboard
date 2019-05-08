@@ -8,8 +8,8 @@ let Clock = {
 
     CurrentDate: new Date(),
 
-    dayStart: 8.0,
-    dayEnd: 16.0,
+    dayStart: 9.0,
+    dayEnd: 17.0,
     weekStart: 1,
     weekEnd: 6,
 
