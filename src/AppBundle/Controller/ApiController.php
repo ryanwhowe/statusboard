@@ -49,37 +49,12 @@ class ApiController extends Controller
                     }
                     break;
                 case 'group':
-                    $refresh = $Request->query->getInt('update');
-                    if($refresh === 1){
-                        $result = ApiService::updateServerCacheData(
-                            $grouping,
-                            $this->getParameter('api_url'),
-                            $this->getParameter('api_token'),
-                            $this->get('logger')
-                        );
-                    } else {
-                        $result = ApiService::getServerGroupData(
-                            $grouping,
-                            $this->getParameter('api_url'),
-                            $this->getParameter('api_token'),
-                            $this->get('logger')
-                        );
-                    }
-                    break;
-                case 'refreshGroups':
-                    $serverRepo = $this->getDoctrine()->getManager()->getRepository(Server::class);
-                    $servers = $serverRepo->findAll();
-                    /**
-                     * @var Server $server
-                     */
-                    foreach ($servers as $server) {
-                        $result[] = ApiService::updateServerCacheData(
-                            $server->getName(),
-                            $this->getParameter('api_url'),
-                            $this->getParameter('api_token'),
-                            $this->get('logger')
-                        );
-                    }
+                    $result = ApiService::getServerGroupData(
+                        $grouping,
+                        $this->getParameter('api_url'),
+                        $this->getParameter('api_token'),
+                        $this->get('logger')
+                    );
                     break;
                 case \null:
                     $this->addFlash('error', 'No action specified');
