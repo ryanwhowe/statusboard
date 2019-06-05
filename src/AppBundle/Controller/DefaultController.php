@@ -18,6 +18,8 @@ class DefaultController extends Controller
     const CALENDAR_TYPE_PTO = 2;
     const CALENDAR_TYPE_SICK = 3;
 
+    const ONE_DAY_SECONDS = 86400;
+
     /**
      * @Route("/", name="homepage")
      *
@@ -41,8 +43,7 @@ class DefaultController extends Controller
         $nextEvents = [];
         $eventTypes = [
             self::CALENDAR_TYPE_HOLIDAY => 'Holiday',
-            self::CALENDAR_TYPE_PTO     => 'PTO',
-            self::CALENDAR_TYPE_SICK    => 'Sick'
+            self::CALENDAR_TYPE_PTO     => 'PTO'
         ];
         foreach ($eventTypes as $eventType => $eventName) {
             /**
@@ -68,7 +69,7 @@ class DefaultController extends Controller
 
         }
 
-        $nextEvents['Pay Day'] = $this->nextPayDate();
+        $nextEvents['Pay Day'] = $this->TrueCar_nextPayDate();
 
         return $this->render('AppBundle:Default:index.html.twig', [
             'calendarJson' => $this->formatCalendarEventsJson($calendarEvents),
@@ -294,7 +295,7 @@ class DefaultController extends Controller
      * @return array
      * @throws \Exception
      */
-    protected function nextPayDate(){
+    protected function Ives_nextPayDate(){
         $pay_friday = strtotime("this friday");
 
         if(date('W',$pay_friday) % 2 === 0) {
@@ -310,4 +311,46 @@ class DefaultController extends Controller
         ];
     }
 
+    protected function TrueCar_nextPayDate(){
+        $now = new \DateTime('now');
+
+        $fifteenth = mktime(0,0,0,(int)$now->format('m'),15,(int)$now->format('Y'));
+        $fifteenth_pay_day = self::last_working_day_before_timestamp($fifteenth);
+
+        if($now->format('d') <= date('d', $fifteenth_pay_day)){
+            $pay_date = date('Y-m-d', $fifteenth_pay_day);
+            $days_until = date_diff(
+                $now,
+                new \DateTime($pay_date)
+            );
+        } else {
+            $end_of_month = mktime(0,0,0,$now->format('m'),$now->format('t'),$now->format('Y'));
+            $end_of_month_pay_day = self::last_working_day_before_timestamp($end_of_month);
+            $pay_date = date('Y-m-d', $end_of_month_pay_day);
+            $days_until = date_diff(
+                $now,
+                new \DateTime($pay_date)
+            );
+        }
+        return [
+            'date' => $pay_date,
+            'days' => $days_until->format('%a') + 1
+        ];
+    }
+
+    /**
+     * @param int $timestamp
+     * @return int
+     */
+    protected static function last_working_day_before_timestamp(int $timestamp): int{
+
+        $weekday = date('w', $timestamp);
+        if($weekday == 0){
+            return $timestamp - self::ONE_DAY_SECONDS - self::ONE_DAY_SECONDS;
+        }
+        if($weekday == 6){
+            return $timestamp - self::ONE_DAY_SECONDS;
+        }
+        return $timestamp;
+    }
 }
