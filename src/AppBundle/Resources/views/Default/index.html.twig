@@ -107,7 +107,6 @@
                             <tr><td>Holiday</td><td{% if events['Holiday'].days %} title="{{ events['Holiday'].date }}">{{ events['Holiday'].days }}{% else %}>None Scheduled{% endif %}</td></tr>
                             <tr><td>Pay Day</td><td{% if events['Pay Day'].days %} title="{{ events['Pay Day'].date }}">{{ events['Pay Day'].days }}{% else %}>None Scheduled{% endif %}</td></tr>
                             <tr><td>PTO</td><td{% if events['PTO'].days %} title="{{ events['PTO'].date }}">{{ events['PTO'].days }}{% else %}>None Scheduled{% endif %}</td></tr>
-                            <tr><td>Sick</td><td{% if events['Sick'].days %} title="{{ events['Sick'].date }}">{{ events['Sick'].days }}{% else %}>None Scheduled{% endif %}</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -333,14 +332,33 @@
         }
 
         /**
-         * Determine if the date is an Ives pay date, basically a friday on a weeknumber that is odd
+         * Determine if the date is a paydate.  Paydays are on the weekdays of or before the 15th and last day of the
+         * month
          *
          * @param date
          * @returns {boolean}
          */
         function isPayDate(date) {
-            if (date.getDay() !== 5) return false;
-            return $.datepicker.iso8601Week(date) % 2 !== 0;
+
+            // weekends can never be paydays
+            if(date.getDay() === 0 || date.getDay() === 6) return false;
+
+            // check if today is the 15th
+            if (date.getDate() === 15) return true;
+
+            // if it is the last day of the month
+            let last_day_of_month = new Date(date.getFullYear(), date.getMonth()+1, 1);
+            last_day_of_month = new Date(last_day_of_month - (24*60*60*1000));
+
+            if (date.getTime() === last_day_of_month.getTime()) return true;
+
+            // simple cases are done, we only need to peek at Fridays to ensure they are not before a weekend paydate
+            if(date.getDay() === 5){
+                if(date.getDate() === 13 || date.getDate() === 14) return true;
+                if((last_day_of_month.getDate() - date.getDate()) <= 2) return true;
+            }
+
+            return false;
         }
 
     </script>
