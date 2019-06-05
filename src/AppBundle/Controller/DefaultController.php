@@ -30,7 +30,7 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $arrival_time = $request->cookies->get('time_sheet_time', '08:00');
+        $arrival_time = $request->cookies->get('time_sheet_time', '09:00');
         $add_time = $request->cookies->get('time_sheet_add_time', 0);
         /**
          * @var \AppBundle\Repository\CalendarRepository $calendarRepository;
@@ -101,7 +101,7 @@ class DefaultController extends Controller
      */
     public function calendarIndexAction(Request $request)
     {
-        $arrival_time = $request->cookies->get('time_sheet_time', '08:00');
+        $arrival_time = $request->cookies->get('time_sheet_time', '09:00');
         $add_time = $request->cookies->get('time_sheet_add_time', 0);
         $calendarRepository = $this->getDoctrine()->getRepository(Calendar::class);
         $calendarEvents = $calendarRepository->findAll();
@@ -191,7 +191,7 @@ class DefaultController extends Controller
      */
     public function timeSheetAction(Request $request)
     {
-        $time = $request->cookies->get('time_sheet_time', '08:00');
+        $time = $request->cookies->get('time_sheet_time', '09:00');
         $add_time = $request->cookies->get('time_sheet_add_time', 0);
         $this_week = [
             'monday'    => [
