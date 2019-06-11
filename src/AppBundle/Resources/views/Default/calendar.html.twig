@@ -151,13 +151,7 @@
 
             var noWeekend;
 
-            var result = [true, '', ''];
-
-            /* this order is significant, the least important css can be overwritten by the most important */
-            if (isPayDate(currentDate)) {
-                result[2] += "Bi-weekly Pay Date";
-                result[1] = 'payday';
-            }
+            var result = isPayDay(currentDate);
 
             /*
                 WD:RWH - 2017-12-14: change this to be a "better" chain-able object
@@ -218,14 +212,58 @@
         }
 
         /**
-         * Determine if the date is a paydate.  Paydays are on the weekdays of or before the 15th and last day of the
+         * Determine if this date is a pay date, if not return the default result array
+         *
+         * @param date
+         * @returns []
+         */
+        function isPayDay(date){
+            if(isTrueCarPayDate(date)) return [true, 'payday',"Bi-monthly Pay Date"];
+            if(isIvesPayDate(date)) return [true, 'payday',"Bi-weekly Pay Date"];
+            if(isAventionPayDate(date)) return [true, 'payday',"Bi-weekly Pay Date"];
+            return [true,'',''];
+        }
+
+        /**
+         * Determine if the date is an Avention pay date, a friday on a week number that is even
+         *
+         * @param date
+         * @returns {boolean}
+         */
+        function isAventionPayDate(date) {
+            let start_date = new Date(2007, 5, 1, 0, 0, 0);
+            let end_date = new Date(2015, 7, 1, 0, 0, 0);
+            if (end_date - date < 0) return false;
+            if (date - start_date < 0) return false;
+            if (date.getDay() !== 5) return false;
+            return $.datepicker.iso8601Week(date) % 2 === 0;
+        }
+
+        /**
+         * Determine if the date is an Ives pay date, a friday on a weeknumber that is odd
+         *
+         * @param date
+         * @returns {boolean}
+         */
+        function isIvesPayDate(date) {
+            let start_date = new Date(2015, 7, 31, 0, 0, 0);
+            let end_date = new Date(2019, 2, 7, 0, 0, 0);
+            if (end_date - date < 0) return false;
+            if (date - start_date < 0) return false;
+            if (date.getDay() !== 5) return false;
+            return $.datepicker.iso8601Week(date) % 2 !== 0;
+        }
+
+        /**
+         * Determine if the date is a TRUECar by monthly pay date.  Paydays are on the weekdays of or before the 15th and last day of the
          * month
          *
          * @param date
          * @returns {boolean}
          */
-        function isPayDate(date) {
-
+        function isTrueCarPayDate(date) {
+            let start_date = new Date(2019, 4, 28, 0, 0, 0);
+            if(date - start_date < 0) return false;
             // weekends can never be paydays
             if(date.getDay() === 0 || date.getDay() === 6) return false;
 
