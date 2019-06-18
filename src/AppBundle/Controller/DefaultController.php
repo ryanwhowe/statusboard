@@ -324,7 +324,7 @@ class DefaultController extends Controller
                 new \DateTime($pay_date)
             );
         } else {
-            $end_of_month = mktime(0,0,0,$now->format('m'),$now->format('t'),$now->format('Y'));
+            $end_of_month = mktime(0,0,0,(int)$now->format('m'),(int)$now->format('t'),(int)$now->format('Y'));
             $end_of_month_pay_day = self::last_working_day_before_timestamp($end_of_month);
             $pay_date = date('Y-m-d', $end_of_month_pay_day);
             $days_until = date_diff(

@@ -43,12 +43,10 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
         ],
         "post-install-cmd": [
-            "@symfony-scripts",
-            "php bin/console app:yarninstall"
+            "@symfony-scripts"
         ],
         "post-update-cmd": [
-            "@symfony-scripts",
-            "php bin/console app:yarninstall"
+            "@symfony-scripts"
         ]
     },
     "config": {
