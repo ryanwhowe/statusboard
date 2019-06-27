@@ -19,18 +19,19 @@ let Clock = {
      */
     dayPercent: function () {
         let dayPercent = ((this.CurrentDate.getHours() + this.CurrentDate.getMinutes() / 60 + this.CurrentDate.getSeconds() / 3600) - this.dayStart) / (this.dayEnd - this.dayStart);
-        dayPercent = dayPercent > 1.0 ? 1.0 : dayPercent;
-        dayPercent = dayPercent < 0.0 ? 0.0 : dayPercent;
-        return dayPercent;
+        return this._boundPercentages(dayPercent);
+    },
+
+    _boundPercentages: function(percentage){
+        percentage = percentage > 1.0 ? 1.0 : percentage;
+        return (percentage < 0.0) ? 0.0 : percentage;
     },
 
     weekPercent: function () {
         //Determine the WeekPercent Values
         let weekPercent = (this.CurrentDate.getDay() - this.weekStart) / (this.weekEnd - this.weekStart);
         weekPercent = weekPercent + (this.dayPercent() / (this.weekEnd - this.weekStart));
-        weekPercent = weekPercent > 1.0 ? 1.0 : weekPercent;
-        weekPercent = weekPercent < 0.0 ? 0.0 : weekPercent;
-        return weekPercent;
+        return this._boundPercentages(weekPercent);
     },
 
     monthPercent: function () {
