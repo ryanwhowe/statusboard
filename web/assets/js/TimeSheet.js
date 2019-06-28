@@ -1,43 +1,62 @@
+'use strict';
 
-let TimeSheet = {
+/**
+ * Refactored from the TimeSheet object for better performance and readibility
+ *
+ */
+class TimeSheet {
 
-    init: function(startTime, offset){
+    static MINUTE_MILLISECONDS = 60 * 1000;
+    static HOUR_MILLISECTIONS = 60 * 60 * 1000;
+
+    constructor(startTime, offset){
         this.setHourOffset(offset);
         this.setStartTime(startTime);
-    },
+    }
 
-    getStartTime: function(){ return this.startTime; },
+    getStartTime(){ return this.startTime; }
 
-    setStartTime: function(startTime){
+    setStartTime(startTime){
         /* @todo This needs to adjust the start time based off of the offset */
         this.startTime = startTime;
         this.stepsArray = this.generateStepsArray()
-    },
+    }
 
-    setHourOffset: function(offset){ this.offset = offset; },
+    setHourOffset(offset){ this.offset = offset; }
 
-    generateStepsArray: function(){
+    /**
+     * todo: unfuck this thing into something better
+     * @returns {Array}
+     */
+    generateStepsArray(){
         let hours;
-        let steps = [...Array(100).keys()];
+        let arrayLength = 24 * 10; // hours * steps
+        let steps = [...Array(arrayLength).keys()];
         steps.unshift(0);
         let output = [];
         let arrival = this.startTime;
         output.push({ time_index :  arrival, hours : 0 });
-        let me = this;
         $.each(steps, function(i){
             if(i !== 0) {
                 hours = (i / 10);
-                arrival = me.addMinutes(arrival, 6);
+                arrival = TimeSheet.addMinutes(arrival, 6);
                 output.push({ time_index: arrival, hours: hours });
             }
         });
         return output;
-    },
+    }
 
-    addMinutes: function(date, minutes){ return new Date(date.getTime() + minutes*60000); },
+    /**
+     * Add minutes to the provided date object
+     *
+     * @param date
+     * @param minutes
+     * @returns {Date}
+     */
+    static addMinutes(date, minutes){ return new Date(date.getTime() + minutes * TimeSheet.MINUTE_MILLISECONDS); }
 
-    getDisplayValue: function(){
-        let current_time = this.getTime();
+    getDisplayValue(){
+        let current_time = TimeSheet.getTime();
         let display_hour = 0, index_time = new Date(0,0,0,0,0,0);
         let me = this;
         $.each(this.stepsArray, function(i, step){
@@ -47,35 +66,34 @@ let TimeSheet = {
             }
         });
         return {'display_hour': display_hour.toFixed(1), 'index_time': index_time }
-    },
+    }
 
-    getTime: function(){
+    static getTime(){
         let parser = new Date();
         return new Date(0,0,0,parser.getHours(), parser.getMinutes(), parser.getSeconds());
-    },
+    }
 
-    getFormattedTime: function(){ return this.formatTime(this.getTime()); },
+    getFormattedTime(){ return TimeSheet.formatTime(TimeSheet.getTime()); }
 
-    formatTime: function(date) {
+    static formatTime(date) {
         return date.getHours().toString().padStart(2, '0') + ':' + date.getMinutes().toString().padStart(2, '0') + ':' + date.getSeconds().toString().padStart(2, '0');
-    },
+    }
 
-    getEighthHourTime: function() {
-        return this.getGivenOffsetTime(8.0);
-    },
+    getEighthHourTime() {
+        return TimeSheet.addMinutes( this.startTime, 8 * 60 );
+    }
 
-    getGivenOffsetTime: function(offset) {
+    getGivenOffsetTime(offset) {
         let me = this;
-        let result;
+        let result = false;
         $.each(this.stepsArray, function(i, step){
             if( offset === step.hours + me.offset ){
                 let parser = step.time_index;
-                result =  new Date(0,0,0,parser.getHours(), parser.getMinutes(), parser.getSeconds());
+                result = new Date(0,0,0,parser.getHours(), parser.getMinutes(), parser.getSeconds());
                 return false;
             }
         });
         return result;
-    },
+    }
 
-};
-
+}
