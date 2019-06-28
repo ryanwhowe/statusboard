@@ -164,10 +164,13 @@
     <script src="{{ asset('assets/js/ClockClass.js') }}"></script>
     <script src="{{ asset('assets/js/PersonalCalendar.js') }}"></script>
     <script>
+        'use strict';
         let time_parts = $('#arrival_time').val().split(':');
         let arrival = new Date(0,0,0,parseInt(time_parts[0],0) ,parseInt(time_parts[1],0),0);
-        TimeSheet.init(arrival, parseFloat($('#additional_time').val()));
+        let timeSheet = new TimeSheet(arrival, parseFloat($('#additional_time').val()));
         let base_title = $(document).prop('title');
+
+        let metaClock = new MetaClock();
 
         let date_data = {{ calendarJson | raw }};
         PersonalCalendar.init(date_data);
@@ -193,7 +196,7 @@
          * Display the time in the clock id
          */
         function displayTime(){
-            let display_data = TimeSheet.getDisplayValue();
+            let display_data = timeSheet.getDisplayValue();
             let display_hour= display_data.display_hour;
             let work_time;
             if(display_hour !== ''){
@@ -207,16 +210,16 @@
          */
         function updateTime() {
 
-            $("#time").html(Clock.currentTimeString());
+            $("#time").html(metaClock.currentTimeString());
 
-            Clock.dayStart = (TimeSheet.getStartTime().getHours() + (TimeSheet.getStartTime().getMinutes() / 60)) - TimeSheet.offset;
-            Clock.dayEnd = TimeSheet.getEighthHourTime().getHours() + TimeSheet.getEighthHourTime().getMinutes() / 60;
+            metaClock.dayStart = (timeSheet.getStartTime().getHours() + (timeSheet.getStartTime().getMinutes() / 60)) - timeSheet.offset;
+            metaClock.dayEnd = timeSheet.getEighthHourTime().getHours() + timeSheet.getEighthHourTime().getMinutes() / 60;
 
-            updatePercentage($('#dayclock'), Clock.displayPercent(Clock.dayPercent() * 100), 'Day');
-            updatePercentage($('#weekclock'), Clock.displayPercent(Clock.weekPercent() * 100), 'Week');
-            updatePercentage($('#monthclock'), Clock.displayPercent(Clock.monthPercent() * 100), 'Month');
-            updatePercentage($('#quarterclock'), Clock.displayPercent(Clock.quarterPercent() * 100), 'Quarter:' + Clock.quarter());
-            updatePercentage($('#yearclock'), Clock.displayPercent(Clock.yearPercent() * 100), Clock.year());
+            updatePercentage($('#dayclock'), metaClock.displayPercent(metaClock.dayPercent() * 100), 'Day');
+            updatePercentage($('#weekclock'), metaClock.displayPercent(metaClock.weekPercent() * 100), 'Week');
+            updatePercentage($('#monthclock'), metaClock.displayPercent(metaClock.monthPercent() * 100), 'Month');
+            updatePercentage($('#quarterclock'), metaClock.displayPercent(metaClock.quarterPercent() * 100), 'Quarter:' + metaClock.quarter());
+            updatePercentage($('#yearclock'), metaClock.displayPercent(metaClock.yearPercent() * 100), metaClock.year());
         }
 
         /**
@@ -227,7 +230,7 @@
          * @param name
          */
         function updatePercentage(element, percentage, name) {
-            var current_percentage = $(element).data('percentage');
+            let current_percentage = $(element).data('percentage');
             /* properly initialize the element's percentage value if missing */
             if (typeof current_percentage === 'undefined') {
                 current_percentage = 0;
@@ -247,7 +250,6 @@
                     $(element).removeClass('active progress-bar-striped progress-bar-warning').addClass('progress-bar-danger');
                 }
             }
-
         }
 
     </script>
