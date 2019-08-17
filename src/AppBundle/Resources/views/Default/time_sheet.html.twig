@@ -125,7 +125,7 @@
     <script type="text/javascript">
         let time_parts = $('#arrival_time').val().split(':');
         let arrival = new Date(0, 0, 0, parseInt(time_parts[0], 0), parseInt(time_parts[1], 0), 0);
-        let timeSheet = new TimeSheet(arrival, parseFloat($('#additional_time').val()));
+        TimeSheet.init(arrival, parseFloat($('#additional_time').val()));
         let base_title = $(document).prop('title');
         let today = new Date();
         $(function () {
@@ -133,12 +133,10 @@
             updateTotal();
             displayTime();
             setInterval('displayTime()', 1000);
-            let today = parseFloat($('#today').val());
-            today = (today <= 12) ? today : 12;
-            $('#eight_hours').html(' Hours: ' + TimeSheet.formatTime(timeSheet.getGivenOffsetTime(today)));
+            $('#eight_hours').html(' Hours: ' + TimeSheet.formatTime(TimeSheet.getGivenOffsetTime(parseFloat($('#today').val()))));
             $('#today').on('change', function(){
                 let offset = parseFloat($(this).val());
-                $('#eight_hours').html(' Hours: ' + TimeSheet.formatTime(timeSheet.getGivenOffsetTime(offset)));
+                $('#eight_hours').html(' Hours: ' + TimeSheet.formatTime(TimeSheet.getGivenOffsetTime(offset)));
             });
 
         });
@@ -147,8 +145,8 @@
          * Display the time in the clock id
          */
         function displayTime() {
-            let display_html = 'Current Time :-: <time>' + timeSheet.getFormattedTime() + '</time>';
-            let display_data = timeSheet.getDisplayValue();
+            let display_html = 'Current Time :-: <time>' + TimeSheet.getFormattedTime() + '</time>';
+            let display_data = TimeSheet.getDisplayValue();
             let index_time = display_data.index_time;
             let display_hour = display_data.display_hour;
             let work_time;

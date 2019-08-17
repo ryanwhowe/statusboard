@@ -1,66 +1,64 @@
-'use strict';
-class MetaClock {
+/**
+ * The Clock object is used to determine the percentage of various durations of time that have passed for the
+ * current time.
+ *
+ * @type {{CurrentDate: Date, dayStart: number, dayEnd: number, weekStart: number, weekEnd: number, dayPercent: (function(): number), weekPercent: (function(): number), monthPercent: (function(): number), quarter: (function(): number), quarterPercent: (function(): number), yearPercent: (function(): number), year: (function(): number), currentTimeString: (function(): string), update: Clock.update, workingMonthDays: (function(): number), workedMonthDays: (function(): number), displayPercent: (function(*): number)}}
+ */
+let Clock = {
 
-    CurrentDate;
+    CurrentDate: new Date(),
 
-    dayStart= 9.0;
-    dayEnd= 17.0;
-    weekStart= 1;
-    weekEnd= 6;
+    dayStart: 9.0,
+    dayEnd: 17.0,
+    weekStart: 1,
+    weekEnd: 6,
 
-    workedDays= {};
-    workingDays= {};
-
-    constructor(day_start = 9.0){
-        this.CurrentDate = new Date();
-        this.dayStart = day_start;
-        this.workedMonthDays();
-        this.workingMonthDays();
-    }
-
-    dayPercent() {
+    /**
+     *
+     * @returns {number}
+     */
+    dayPercent: function () {
         let dayPercent = ((this.CurrentDate.getHours() + this.CurrentDate.getMinutes() / 60 + this.CurrentDate.getSeconds() / 3600) - this.dayStart) / (this.dayEnd - this.dayStart);
-        return this._boundPercentages(dayPercent);
-    }
+        dayPercent = dayPercent > 1.0 ? 1.0 : dayPercent;
+        dayPercent = dayPercent < 0.0 ? 0.0 : dayPercent;
+        return dayPercent;
+    },
 
-    _boundPercentages(percentage){
-        percentage = percentage > 1.0 ? 1.0 : percentage;
-        return (percentage < 0.0) ? 0.0 : percentage;
-    }
-
-    weekPercent() {
+    weekPercent: function () {
         //Determine the WeekPercent Values
         let weekPercent = (this.CurrentDate.getDay() - this.weekStart) / (this.weekEnd - this.weekStart);
         weekPercent = weekPercent + (this.dayPercent() / (this.weekEnd - this.weekStart));
-        return this._boundPercentages(weekPercent);
-    }
+        weekPercent = weekPercent > 1.0 ? 1.0 : weekPercent;
+        weekPercent = weekPercent < 0.0 ? 0.0 : weekPercent;
+        return weekPercent;
+    },
 
-    monthPercent() {
+    monthPercent: function () {
         //Determine the Month Values
         let workedMonthDays = this.workedMonthDays();
         let workingMonthDays = this.workingMonthDays();
         let dayPercent = this.dayPercent();
         return workedMonthDays / workingMonthDays + (dayPercent / workingMonthDays );
-    }
+    },
 
-    quarter() {
+    quarter: function () {
         //Determine the Quarter Values
         return Math.round(Math.ceil((this.CurrentDate.getMonth() + 1) / 3));
-    }
+    },
 
-    quarterPercent() {
+    quarterPercent: function () {
         return (((this.CurrentDate.getMonth() % 3)) / 3) + (this.monthPercent() / 3);
-    }
+    },
 
-    yearPercent() {
+    yearPercent: function () {
         return (Math.round(((this.CurrentDate - (new Date(this.CurrentDate.getFullYear(), 0, 1))) / 1000 / 60 / 60 / 24) + .5) / 365) + (this.dayPercent() / 365) - (1 / 365);
-    }
+    },
 
-    year(){
+    year: function(){
         return this.CurrentDate.getFullYear();
-    }
+    },
 
-    currentTimeString() {
+    currentTimeString: function () {
 
         this.update();
 
@@ -83,48 +81,36 @@ class MetaClock {
 
         // Compose the string for display
         return currentHours + ":" + currentMinutes + ":" + currentSeconds + " " + timeOfDay;
-    }
+    },
 
-    update() {
+    update: function () {
         this.CurrentDate = new Date();
-    }
+    },
 
-    workingMonthDays() {
-        if(this.CurrentDate.getMonth() in this.workingDays){
-            return this.workingDays[this.CurrentDate.getMonth()];
-        } else {
-            let workingMonthDays = 0;
-            let StartOfMonth = new Date(this.CurrentDate.getFullYear(), this.CurrentDate.getMonth(), 1);
-            let EndOfMonth = new Date(this.CurrentDate.getFullYear(), this.CurrentDate.getMonth() + 1, 0);
-            for (let d = StartOfMonth; d <= EndOfMonth; d.setDate(d.getDate() + 1)) {
-                if (d.getDay() !== 0 && d.getDay() !== 6) {
-                    workingMonthDays++;
-                }
+    workingMonthDays: function () {
+        let workingMonthDays = 0;
+        let StartOfMonth = new Date(this.CurrentDate.getFullYear(), this.CurrentDate.getMonth(), 1);
+        let EndOfMonth = new Date(this.CurrentDate.getFullYear(), this.CurrentDate.getMonth() + 1, 0);
+        for (let d = StartOfMonth; d <= EndOfMonth; d.setDate(d.getDate() + 1)) {
+            if (d.getDay() !== 0 && d.getDay() !== 6) {
+                workingMonthDays++;
             }
-            this.workingDays[this.CurrentDate.getMonth()] = workingMonthDays;
-            return this.workingDays[this.CurrentDate.getMonth()];
         }
-    }
-
-    workedMonthDays() {
-        if(this.CurrentDate.getMonth() in this.workedDays){
-            return this.workedDays[this.CurrentDate.getMonth()];
-        } else {
-            let totalMonthDays = 0;
-            let StartOfMonth = new Date(this.CurrentDate.getFullYear(), this.CurrentDate.getMonth(), 1);
-            let EndOfMonth = new Date(this.CurrentDate.getFullYear(), this.CurrentDate.getMonth() + 1, 0);
-            for (let d = StartOfMonth; d <= EndOfMonth; d.setDate(d.getDate() + 1)) {
-                if (d.getDay() !== 0 && d.getDay() !== 6 && d.getDate() < this.CurrentDate.getDate()) {
-                    totalMonthDays++;
-                }
+        return workingMonthDays;
+    },
+    workedMonthDays: function () {
+        let totalMonthDays = 0;
+        let StartOfMonth = new Date(this.CurrentDate.getFullYear(), this.CurrentDate.getMonth(), 1);
+        let EndOfMonth = new Date(this.CurrentDate.getFullYear(), this.CurrentDate.getMonth() + 1, 0);
+        for (let d = StartOfMonth; d <= EndOfMonth; d.setDate(d.getDate() + 1)) {
+            if (d.getDay() !== 0 && d.getDay() !== 6 && d.getDate() < this.CurrentDate.getDate()) {
+                totalMonthDays++;
             }
-            this.workedDays[this.CurrentDate.getMonth()] = totalMonthDays;
-            return this.workedDays[this.CurrentDate.getMonth()];
         }
-    }
+        return totalMonthDays;
+    },
 
-    displayPercent(value) {
+    displayPercent: function (value) {
         return Math.floor(value * 10) / 10;
     }
-
-}
+};
