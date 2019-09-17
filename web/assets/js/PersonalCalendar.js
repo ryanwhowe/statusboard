@@ -148,7 +148,9 @@ let PersonalCalendar = {
 
             This is a chaining from the least important to the most important.  It is important to note that since
             this runs after the pay day check any of these that fall on the same date as a pay-day will add to that
-            event
+            event.  Though none of these really should stack with each other logically since it would not make sense to
+            have any of these events fall on the same date, which could allow them to function more in line with the
+            method that the PayDay class functions.
          */
         result = this.checkParseDate(parsedDate,
             this.date_data.sick,
