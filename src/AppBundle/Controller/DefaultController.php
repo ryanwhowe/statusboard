@@ -2,6 +2,8 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Repository\CalendarRepository;
+use AppBundle\Repository\ServerRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 use AppBundle\Entity\Calendar;
@@ -33,42 +35,17 @@ class DefaultController extends Controller
         $arrival_time = $request->cookies->get('time_sheet_time', '09:00');
         $add_time = $request->cookies->get('time_sheet_add_time', 0);
         /**
-         * @var \AppBundle\Repository\CalendarRepository $calendarRepository;
+         * @var CalendarRepository $calendarRepository;
          */
         $calendarRepository = $this->getDoctrine()->getRepository(Calendar::class);
         $calendarEvents = $calendarRepository->findAll();
+        /**
+         * @var ServerRepository $serverRepository
+         */
         $serverRepository = $this->getDoctrine()->getRepository(Server::class);
         $servers = $serverRepository->findAll();
 
-        $nextEvents = [];
-        $eventTypes = [
-            self::CALENDAR_TYPE_HOLIDAY => 'Holiday',
-            self::CALENDAR_TYPE_PTO     => 'PTO'
-        ];
-        foreach ($eventTypes as $eventType => $eventName) {
-            /**
-             * @var Calendar $calendar
-             */
-            $calendars = $calendarRepository->getNextEvent($eventType);
-
-            foreach ($calendars as $calendar) {
-                $days_until = date_diff(new \DateTime('now'),
-                    $calendar->getEventDate());
-
-                $nextEvents[$eventName] = [
-                    'date' => $calendar->getEventDate()->format('Y-m-d'),
-                    'days' => $days_until->format('%a') + 1
-                ];
-            }
-            if ( ! count($calendars)) {
-                $nextEvents[$eventName] = [
-                    'date' => null,
-                    'days' => null
-                ];
-            }
-
-        }
-
+        $nextEvents = $this->formatNextEvents($calendarRepository);
         $nextEvents['Pay Day'] = $this->TrueCar_nextPayDate();
 
         return $this->render('AppBundle:Default:index.html.twig', [
@@ -311,22 +288,26 @@ class DefaultController extends Controller
         ];
     }
 
+    /**
+     * @return array
+     * @throws \Exception
+     */
     protected function TrueCar_nextPayDate(){
         $now = new \DateTime('now');
 
-        $fifteenth = mktime(0,0,0,(int)$now->format('m'),15,(int)$now->format('Y'));
-        $fifteenth_pay_day = self::last_working_day_before_timestamp($fifteenth);
+        $fourteenth = mktime(0,0,0,(int)$now->format('m'),14,(int)$now->format('Y'));
+        $fourteenth_pay_day = self::last_working_day_before_timestamp($fourteenth);
 
-        if($now->format('d') <= date('d', $fifteenth_pay_day)){
-            $pay_date = date('Y-m-d', $fifteenth_pay_day);
+        if($now->format('d') <= date('d', $fourteenth_pay_day)){
+            $pay_date = date('Y-m-d', $fourteenth_pay_day);
             $days_until = date_diff(
                 $now,
                 new \DateTime($pay_date)
             );
         } else {
-            $end_of_month = mktime(0,0,0,(int)$now->format('m'),(int)$now->format('t'),(int)$now->format('Y'));
-            $end_of_month_pay_day = self::last_working_day_before_timestamp($end_of_month);
-            $pay_date = date('Y-m-d', $end_of_month_pay_day);
+            $second_to_last_day = mktime(0,0,0,(int)$now->format('m'),(int)$now->format('t')-1,(int)$now->format('Y'));
+            $second_to_last_pay_day = self::last_working_day_before_timestamp($second_to_last_day);
+            $pay_date = date('Y-m-d', $second_to_last_pay_day);
             $days_until = date_diff(
                 $now,
                 new \DateTime($pay_date)
@@ -352,5 +333,42 @@ class DefaultController extends Controller
             return $timestamp - self::ONE_DAY_SECONDS;
         }
         return $timestamp;
+    }
+
+    /**
+     * @param CalendarRepository $calendarRepository
+     * @return array
+     * @throws \Exception
+     */
+    private function formatNextEvents(CalendarRepository $calendarRepository): array {
+        $eventTypes = [
+            self::CALENDAR_TYPE_HOLIDAY => 'Holiday',
+            self::CALENDAR_TYPE_PTO => 'PTO'
+        ];
+        $return = [];
+        foreach ($eventTypes as $eventType => $eventName) {
+            /**
+             * @var Calendar $calendar
+             */
+            $calendars = $calendarRepository->getNextEvent($eventType);
+
+            foreach ($calendars as $calendar) {
+                $days_until = date_diff(new \DateTime('now'),
+                    $calendar->getEventDate());
+
+                $return[$eventName] = [
+                    'date' => $calendar->getEventDate()->format('Y-m-d'),
+                    'days' => $days_until->format('%a') + 1
+                ];
+            }
+            if (!count($calendars)) {
+                $return[$eventName] = [
+                    'date' => null,
+                    'days' => null
+                ];
+            }
+
+        }
+        return $return;
     }
 }
