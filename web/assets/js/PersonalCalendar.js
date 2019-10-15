@@ -131,8 +131,8 @@ let PersonalCalendar = {
     },
 
     /**
-     * Determine if the date is a TRUECar by monthly pay date.  Paydays are on the weekdays of or before the 15th and last day of the
-     * month
+     * Determine if the date is a TRUECar by monthly pay date.  Paydays are on the weekdays of or before the 14th and
+     * the 2nd to last day of the month
      *
      * @param date
      * @returns {boolean}
@@ -144,18 +144,18 @@ let PersonalCalendar = {
         if (date.getDay() === 0 || date.getDay() === 6) return false;
 
         // check if today is the 15th
-        if (date.getDate() === 15) return true;
+        if (date.getDate() === 14) return true;
 
         // if it is the last day of the month
-        let last_day_of_month = new Date(date.getFullYear(), date.getMonth() + 1, 1);
-        last_day_of_month = new Date(last_day_of_month - (24 * 60 * 60 * 1000));
+        let second_to_last_day = new Date(date.getFullYear(), date.getMonth() + 1, 1);
+        second_to_last_day = new Date(second_to_last_day - (2 * 24 * 60 * 60 * 1000));
 
-        if (date.getTime() === last_day_of_month.getTime()) return true;
+        if (date.getTime() === second_to_last_day.getTime()) return true;
 
         // simple cases are done, we only need to peek at Fridays to ensure they are not before a weekend paydate
         if (date.getDay() === 5) {
             if (date.getDate() === 13 || date.getDate() === 14) return true;
-            if ((last_day_of_month.getDate() - date.getDate()) <= 2) return true;
+            if ((second_to_last_day.getDate() - date.getDate()) <= 2) return true;
         }
 
         return false;

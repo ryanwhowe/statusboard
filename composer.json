@@ -16,6 +16,7 @@
     "require": {
         "php": ">=7.0",
         "ext-json": "*",
+        "calendarific/php-calendarific": "^2.0",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/orm": "^2.5",
         "guzzlehttp/guzzle": "^6.3",

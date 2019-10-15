@@ -4,8 +4,58 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "748beedb2f89902b033c00a4e180e916",
+    "content-hash": "06d778e224dbcfbf018b7f00e3dda0cb",
     "packages": [
+        {
+            "name": "calendarific/php-calendarific",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/calendarific/php-calendarific.git",
+                "reference": "a6741ae6224e3df83f2e75791269ea3aeca9d9e1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/calendarific/php-calendarific/zipball/a6741ae6224e3df83f2e75791269ea3aeca9d9e1",
+                "reference": "a6741ae6224e3df83f2e75791269ea3aeca9d9e1",
+                "shasum": ""
+            },
+            "require": {
+                "jedkirby/json": "0.1.0",
+                "php": ">=7.0.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Calendarific\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Calendarific Team",
+                    "email": "hello@calendarific.com",
+                    "homepage": "https://calendarific.com"
+                }
+            ],
+            "description": "PHP library for Calendarific.com",
+            "homepage": "https://calendarific.com",
+            "keywords": [
+                "calendar",
+                "calendarific",
+                "calendarindex",
+                "date",
+                "holiday",
+                "holidays"
+            ],
+            "time": "2019-05-30T18:10:33+00:00"
+        },
         {
             "name": "composer/ca-bundle",
             "version": "1.1.4",
@@ -1175,6 +1225,41 @@
                 "sql"
             ],
             "time": "2014-01-12T16:20:24+00:00"
+        },
+        {
+            "name": "jedkirby/json",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jedkirby/json.git",
+                "reference": "51df6cc9f38a38bb700146cda593b0eb52fd6efd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jedkirby/json/zipball/51df6cc9f38a38bb700146cda593b0eb52fd6efd",
+                "reference": "51df6cc9f38a38bb700146cda593b0eb52fd6efd",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.5"
+            },
+            "type": "project",
+            "autoload": {
+                "psr-4": {
+                    "Jedkirby\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "keywords": [
+                "json"
+            ],
+            "time": "2019-04-17T15:37:39+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -3183,6 +3268,7 @@
                 "mock",
                 "xunit"
             ],
+            "abandoned": true,
             "time": "2015-10-02T06:51:40+00:00"
         },
         {
