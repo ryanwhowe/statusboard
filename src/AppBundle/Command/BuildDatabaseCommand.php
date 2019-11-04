@@ -3,7 +3,9 @@
 namespace AppBundle\Command;
 
 use AppBundle\Entity\Calendar;
+use AppBundle\Entity\Holiday;
 use AppBundle\Entity\Server;
+use Calendarific\Calendarific;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -70,7 +72,36 @@ class BuildDatabaseCommand extends ContainerAwareCommand
         $greetInput = new ArrayInput($arguments);
         $returnCode = $command->run($greetInput, $output);
 
+        $holidays = Calendarific::make(
+            '0a0d2b5a2250b5b98f36f734a1a029b3351f20b7'
+            ,'US'
+            ,(int)date('Y')
+            ,null
+            ,null
+            ,null
+            ,['national']
+        );
+        $results = $holidays['response']['holidays'];
+
+        $holidays = array_map(function($v){
+            return [$v['date']['iso'] => $v['name']];
+        }, $results);
+
+        $io->progressStart(count($holidays));
+        foreach ($holidays as $index => $holiday) {
+            $h = new Holiday();
+            $this->objectManager->getManager()->persist($h);
+            $date = key($holiday);
+            $h->setName($holiday[$date]);
+            $h->setObservedDate(new \DateTime($date));
+            $this->objectManager->getManager()->flush();
+            $this->objectManager->getManager()->detach($h);
+            $io->progressAdvance();
+        }
+        $io->progressFinish();
+
         $file = $input->getArgument('calendar_file');
+        $io->note('Holiday Load Process Completed');
 
         if ($file !== \null) {
 
@@ -125,7 +156,7 @@ class BuildDatabaseCommand extends ContainerAwareCommand
                     }
                     $io->progressFinish();
 
-                    $io->note('Calendar Load Process Completed');
+                    $io->note('Server Load Process Completed');
                 }
             }
         }
