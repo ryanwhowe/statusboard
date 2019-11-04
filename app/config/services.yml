@@ -34,7 +34,7 @@ services:
     #     arguments:
     #         $someArgument: 'some_value'
 
-    app.warmer.server_warmer:
-        class: AppBundle\Cache\ServerWarmer
-        tags:
-            - { name: kernel.cache_warmer, priority: 30 }
+#    app.warmer.server_warmer:
+#        class: AppBundle\Cache\ServerWarmer
+#        tags:
+#            - { name: kernel.cache_warmer, priority: 30 }
