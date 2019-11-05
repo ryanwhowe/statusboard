@@ -109,11 +109,7 @@ class BuildDatabaseCommand extends ContainerAwareCommand
                 $io->error("${file} : does not exists");
             } else {
 
-                $csv = array_map('str_getcsv', file($file));
-                \array_walk($csv, function (&$a) use ($csv) {
-                    $a = \array_combine($csv[0], $a);
-                });
-                array_shift($csv);
+                $csv = $this->CsvToAssociativeArray($file);
 
                 $io->progressStart(count($csv));
                 foreach ($csv as $row) {
@@ -138,11 +134,7 @@ class BuildDatabaseCommand extends ContainerAwareCommand
                     $io->error("${file} : does not exists");
                 } else {
 
-                    $csv = array_map('str_getcsv', file($file));
-                    \array_walk($csv, function (&$a) use ($csv) {
-                        $a = \array_combine($csv[0], $a);
-                    });
-                    array_shift($csv);
+                    $csv = $this->CsvToAssociativeArray($file);
 
                     $io->progressStart(count($csv));
                     foreach ($csv as $row) {
@@ -160,6 +152,20 @@ class BuildDatabaseCommand extends ContainerAwareCommand
                 }
             }
         }
+    }
+
+    /**
+     * @param $file
+     * @return array
+     */
+    protected function CsvToAssociativeArray($file): array
+    {
+        $csv = array_map('str_getcsv', file($file));
+        \array_walk($csv, function (&$a) use ($csv) {
+            $a = \array_combine($csv[0], $a);
+        });
+        array_shift($csv);
+        return $csv;
     }
 
 }
