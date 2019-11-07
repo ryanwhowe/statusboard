@@ -96,8 +96,9 @@
         let base_title = $(document).prop('title');
 
 
-        var date_data = {{ calendarJson | raw }};
-        PersonalCalendar.init(date_data);
+        let date_data = {{ calendarJson | raw }};
+        let holiday_data = {{ holidayJson | raw }};
+        PersonalCalendar.init(date_data, holiday_data);
         var current = new Date();
         var currentpos = current.getMonth();
         $(function () {

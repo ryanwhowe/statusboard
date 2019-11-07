@@ -2,9 +2,9 @@ let PersonalCalendar = {
 
     date_data: null,
 
-    init: function(dateData){
+    init: function(dateData, holidays){
         this.setDateDate(dateData);
-
+        this.holidays = holidays;
     },
 
     setDateDate: function(dateData){
@@ -27,7 +27,7 @@ let PersonalCalendar = {
 
         let noWeekend;
 
-        let result = this.isPayDay(currentDate);
+        let result = this.isPayDay(currentDate, this.holidays);
 
         /*
             WD:RWH - 2017-12-14: change this to be a "better" chain-able object
@@ -93,8 +93,8 @@ let PersonalCalendar = {
      * @param date
      * @returns []
      */
-    isPayDay: function (date) {
-        if (this.isTrueCarPayDate(date)) return [true, 'payday', "Bi-monthly Pay Date"];
+    isPayDay: function (date, holidays) {
+        if (this.isTrueCarPayDate(date, holidays)) return [true, 'payday', "Bi-monthly Pay Date"];
         if (this.isIvesPayDate(date)) return [true, 'payday', "Bi-weekly Pay Date"];
         if (this.isAventionPayDate(date)) return [true, 'payday', "Bi-weekly Pay Date"];
         return [true, '', ''];
@@ -137,27 +137,37 @@ let PersonalCalendar = {
      * @param date
      * @returns {boolean}
      */
-    isTrueCarPayDate: function (date) {
+    isTrueCarPayDate: function (date, holidays) {
         let start_date = new Date(2019, 4, 28, 0, 0, 0);
         if (date - start_date < 0) return false;
-        // weekends can never be paydays
-        if (date.getDay() === 0 || date.getDay() === 6) return false;
+        let pay_dates = this.generateFourteenthSecondToLastPayDates(date, holidays);
+        return pay_dates.fourteehth_day.valueOf() === date.valueOf() || pay_dates.second_to_last_day.valueOf() === date.valueOf();
+    },
 
-        // check if today is the 15th
-        if (date.getDate() === 14) return true;
-
-        // if it is the last day of the month
+    generateFourteenthSecondToLastPayDates(date, holidays){
+        let fourteenth_day = new Date(date.getFullYear(), date.getMonth(), 14);
         let second_to_last_day = new Date(date.getFullYear(), date.getMonth() + 1, 1);
         second_to_last_day = new Date(second_to_last_day - (2 * 24 * 60 * 60 * 1000));
 
-        if (date.getTime() === second_to_last_day.getTime()) return true;
+        return {
+            'fourteehth_day': this.payDate(fourteenth_day, holidays),
+            'second_to_last_day': this.payDate(second_to_last_day, holidays)
+        };
+    },
 
-        // simple cases are done, we only need to peek at Fridays to ensure they are not before a weekend paydate
-        if (date.getDay() === 5) {
-            if (date.getDate() === 13 || date.getDate() === 14) return true;
-            if ((second_to_last_day.getDate() - date.getDate()) <= 2) return true;
+    payDate: function(date, holidays) {
+        let new_date = date;
+        let moved = false;
+        if(date.getDay() === 0 || date.getDay() === 6){
+            new_date = new Date(date - (24 * 60 * 60 * 1000));
+            moved = true;
         }
-
-        return false;
+        if(!moved){
+            if ($.inArray(date.toISOString().slice(0, 10), holidays) !== -1) {
+                new_date = new Date(date - (24 * 60 * 60 * 1000));
+            }
+        }
+        if(new_date.valueOf() === date.valueOf()) { return new_date; }
+        return this.payDate(new_date, holidays);
     }
 };
