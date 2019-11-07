@@ -170,7 +170,8 @@
         let base_title = $(document).prop('title');
 
         let date_data = {{ calendarJson | raw }};
-        PersonalCalendar.init(date_data);
+        let holiday_data = {{ holidayJson | raw }};
+        PersonalCalendar.init(date_data, holiday_data);
         $(function () {
             updateTime();
             setInterval('updateTime()', 1000);
