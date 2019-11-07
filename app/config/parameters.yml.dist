@@ -22,3 +22,4 @@ parameters:
     api_url: ~
     admin_password: ~
     container.autowiring.strict_mode: true
+    calendarific_api_key: ~

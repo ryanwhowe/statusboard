@@ -54,7 +54,7 @@ class AppImportHolidayCommand extends ContainerAwareCommand
         if($this->validateYear($year)) {
 
             $holidays = Calendarific::make(
-                '0a0d2b5a2250b5b98f36f734a1a029b3351f20b7'
+                $this->getContainer()->getParameter('calendarific_api_key')
                 , 'US'
                 , (int)$year
                 , null
