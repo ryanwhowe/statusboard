@@ -96,6 +96,7 @@ class Calendar
      * @return string
      */
     public function getDescription(): string {
+        if($this->description === null) return '';
         return $this->description;
     }
 

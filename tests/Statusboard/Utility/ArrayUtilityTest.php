@@ -3,9 +3,10 @@
 namespace Tests\Statusboard\Utility;
 
 use Statusboard\Utility\ArrayUtility;
+use PHPUnit\Framework\TestCase;
 use \DateTime;
 
-class ArrayUtilityTest extends \PHPUnit_Framework_TestCase {
+class ArrayUtilityTest extends TestCase {
 
     public function formatArrayDataProvider(){
         return [

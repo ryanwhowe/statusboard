@@ -3,9 +3,10 @@
 namespace Tests\AppBundle\Entity;
 
 use AppBundle\Entity\Calendar;
+use PHPUnit\Framework\TestCase;
 use \DateTime;
 
-class CalendarTest extends \PHPUnit_Framework_TestCase {
+class CalendarTest extends TestCase {
 
     public function translateTypeDescriptionDataProvider(){
         return [

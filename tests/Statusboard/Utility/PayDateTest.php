@@ -3,9 +3,10 @@
 namespace Tests\Statusboard\Utility;
 
 use Statusboard\Utility\PayDate;
+use PHPUnit\Framework\TestCase;
 use \DateTime;
 
-class PayDateTest extends \PHPUnit_Framework_TestCase {
+class PayDateTest extends TestCase {
 
     public static function getTestHolidays(int $year = 2019){
         switch ($year){
