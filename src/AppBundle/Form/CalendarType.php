@@ -2,6 +2,7 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Entity\Calendar;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -20,9 +21,9 @@ class CalendarType extends AbstractType
                 'type',
                 ChoiceType::class,
                 ['choices' => [
-                    'Holiday' => DefaultController::CALENDAR_TYPE_HOLIDAY,
-                    'PTO' => DefaultController::CALENDAR_TYPE_PTO,
-                    'Sick' => DefaultController::CALENDAR_TYPE_SICK
+                    'Company Holiday' => Calendar::TYPE_COMPANY_HOLIDAY,
+                    'PTO' => Calendar::TYPE_PTO,
+                    'Sick' => Calendar::TYPE_SICK
                     ]
                 ]
             )

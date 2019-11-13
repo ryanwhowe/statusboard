@@ -2,9 +2,8 @@ let PersonalCalendar = {
 
     date_data: null,
 
-    init: function(dateData, holidays){
+    init: function(dateData){
         this.setDateDate(dateData);
-        this.holidays = holidays;
     },
 
     setDateDate: function(dateData){
@@ -24,38 +23,8 @@ let PersonalCalendar = {
      */
     parseDate: function (currentDate) {
         let parsedDate = currentDate.toISOString().slice(0, 10);
-
-        let noWeekend;
-
-        let result = this.isPayDay(currentDate, this.holidays);
-
-        /*
-            WD:RWH - 2017-12-14: change this to be a "better" chain-able object
-
-            This is a chaining from the least important to the most important.  It is important to note that since
-            this runs after the pay day check any of these that fall on the same date as a pay-day will add to that
-            event
-         */
-        result = this.checkParseDate(parsedDate,
-            this.date_data.sick,
-            this.checkParseDate(
-                parsedDate,
-                this.date_data.holiday,
-                this.checkParseDate(
-                    parsedDate,
-                    this.date_data.pto,
-                    result,
-                    "PTO",
-                    "pto"
-                ),
-                "TRUECar Holiday",
-                "holiday",
-                false
-            ),
-            "Sick Day",
-            "sick");
-
-        noWeekend = $.datepicker.noWeekends(currentDate);
+        let result = this.checkDate(parsedDate);
+        let noWeekend = $.datepicker.noWeekends(currentDate);
         if (noWeekend[0] === false) {
             return noWeekend;
         } else {
@@ -64,110 +33,41 @@ let PersonalCalendar = {
     },
 
     /**
-     * Modify and return the result_array depending if the parsed date is contained in the check_data array.
-     *
-     * @param parsed_date string
-     * @param check_data array
-     * @param result_array array
-     * @param tip_text string
-     * @param css_text string
-     * @param selectable boolean
-     * @returns {*}
+     * check the date
+     * @param parsed_date
+     * @returns {[boolean, string, string]}
      */
-    checkParseDate: function (parsed_date, check_data, result_array, tip_text, css_text, selectable = true) {
-        if ($.inArray(parsed_date, check_data) !== -1) {
-            if (result_array[2].length > 1) {
-                result_array[2] = result_array[2] + ', ' + tip_text;
-            } else {
-                result_array[2] = tip_text;
-            }
-            result_array[1] = css_text;
-            result_array[0] = selectable;
-        }
-        return result_array;
-    },
-
-    /**
-     * Determine if this date is a pay date, if not return the default result array
-     *
-     * @param date
-     * @returns []
-     */
-    isPayDay: function (date, holidays) {
-        if (this.isTrueCarPayDate(date, holidays)) return [true, 'payday', "Bi-monthly Pay Date"];
-        if (this.isIvesPayDate(date)) return [true, 'payday', "Bi-weekly Pay Date"];
-        if (this.isAventionPayDate(date)) return [true, 'payday', "Bi-weekly Pay Date"];
-        return [true, '', ''];
-    },
-
-    /**
-     * Determine if the date is an Avention pay date, a friday on a week number that is even
-     *
-     * @param date
-     * @returns {boolean}
-     */
-    isAventionPayDate: function (date) {
-        let start_date = new Date(2007, 5, 1, 0, 0, 0);
-        let end_date = new Date(2015, 7, 1, 0, 0, 0);
-        if (end_date - date < 0) return false;
-        if (date - start_date < 0) return false;
-        if (date.getDay() !== 5) return false;
-        return $.datepicker.iso8601Week(date) % 2 === 0;
-    },
-
-    /**
-     * Determine if the date is an Ives pay date, a friday on a weeknumber that is odd
-     *
-     * @param date
-     * @returns {boolean}
-     */
-    isIvesPayDate: function (date) {
-        let start_date = new Date(2015, 7, 31, 0, 0, 0);
-        let end_date = new Date(2019, 2, 7, 0, 0, 0);
-        if (end_date - date < 0) return false;
-        if (date - start_date < 0) return false;
-        if (date.getDay() !== 5) return false;
-        return $.datepicker.iso8601Week(date) % 2 !== 0;
-    },
-
-    /**
-     * Determine if the date is a TRUECar by monthly pay date.  Paydays are on the weekdays of or before the 14th and
-     * the 2nd to last day of the month
-     *
-     * @param date
-     * @returns {boolean}
-     */
-    isTrueCarPayDate: function (date, holidays) {
-        let start_date = new Date(2019, 4, 28, 0, 0, 0);
-        if (date - start_date < 0) return false;
-        let pay_dates = this.generateFourteenthSecondToLastPayDates(date, holidays);
-        return pay_dates.fourteehth_day.valueOf() === date.valueOf() || pay_dates.second_to_last_day.valueOf() === date.valueOf();
-    },
-
-    generateFourteenthSecondToLastPayDates(date, holidays){
-        let fourteenth_day = new Date(date.getFullYear(), date.getMonth(), 14);
-        let second_to_last_day = new Date(date.getFullYear(), date.getMonth() + 1, 1);
-        second_to_last_day = new Date(second_to_last_day - (2 * 24 * 60 * 60 * 1000));
-
-        return {
-            'fourteehth_day': this.payDate(fourteenth_day, holidays),
-            'second_to_last_day': this.payDate(second_to_last_day, holidays)
+    checkDate: function (parsed_date) {
+        let selectable = true;
+        var tooltips='';
+        let css = '';
+        let css_class = '';
+        let company_holiday = false;
+        let css_selector = function(calendarItem){
+            if(calendarItem['type'] === 1) return 'companyholiday';
+            if(calendarItem['type'] === 2) return 'pto';
+            if(calendarItem['type'] === 3) return 'sick';
+            if(calendarItem['type'] === 4) return 'nationalholiday';
+            if(calendarItem['type'] === 99) return 'payday';
         };
-    },
+        if(parsed_date in this.date_data){
+            let event = this.date_data[parsed_date];
+            tooltips = [];
+            $.each(event.events, function(index, item){
+                selectable = selectable ? !(item['type'] === 1) : selectable;
 
-    payDate: function(date, holidays) {
-        let new_date = date;
-        let moved = false;
-        if(date.getDay() === 0 || date.getDay() === 6){
-            new_date = new Date(date - (24 * 60 * 60 * 1000));
-            moved = true;
+                css_class = css_selector(item);
+                if(css_class === 'companyholiday'){
+                    company_holiday = true;
+                    css = css_class;
+                }
+                if(!company_holiday) {
+                    css = css_class;
+                }
+                tooltips.push(item['description']);
+            });
+            tooltips = tooltips.join(', ');
         }
-        if(!moved){
-            if ($.inArray(date.toISOString().slice(0, 10), holidays) !== -1) {
-                new_date = new Date(date - (24 * 60 * 60 * 1000));
-            }
-        }
-        if(new_date.valueOf() === date.valueOf()) { return new_date; }
-        return this.payDate(new_date, holidays);
+        return [selectable, css, tooltips];
     }
 };
