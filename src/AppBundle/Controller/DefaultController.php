@@ -2,29 +2,21 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Holiday;
 use AppBundle\Repository\CalendarRepository;
 use AppBundle\Repository\ServerRepository;
-use DateTime;
+use \DateTime;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 use AppBundle\Entity\Calendar;
 use AppBundle\Entity\Server;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
+use Statusboard\Utility\PayDate;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {
-
-    const CALENDAR_TYPE_HOLIDAY = 1;
-    const CALENDAR_TYPE_PTO = 2;
-    const CALENDAR_TYPE_SICK = 3;
-
-    const ONE_DAY_SECONDS = 86400;
-
     /**
      * @Route("/", name="homepage")
      *
@@ -41,7 +33,6 @@ class DefaultController extends Controller
          * @var CalendarRepository $calendarRepository;
          */
         $calendarRepository = $this->getDoctrine()->getRepository(Calendar::class);
-        $calendarEvents = $calendarRepository->findAll();
         /**
          * @var ServerRepository $serverRepository
          */
@@ -49,16 +40,13 @@ class DefaultController extends Controller
         $servers = $serverRepository->findAll();
 
         $nextEvents = $this->formatNextEvents($calendarRepository);
-        $nextEvents['Pay Day'] = $this->TrueCar_nextPayDate();
+        //$nextEvents['Pay Day'] = $this->TrueCar_nextPayDate();
+
+        $calendarEvents = json_encode($this->getCalendarData());
+
 
         return $this->render('AppBundle:Default:index.html.twig', [
-            'calendarJson' => $this->formatCalendarEventsJson($calendarEvents),
-            'holidayJson' => json_encode($this->getHolidayArray()),
-            'type'         => [
-                'pto' => self::CALENDAR_TYPE_PTO,
-                'holiday' => self::CALENDAR_TYPE_HOLIDAY,
-                'sick' => self::CALENDAR_TYPE_SICK,
-            ],
+            'calendarJson' => $calendarEvents,
             'arrival_time' => $arrival_time,
             'add_time'     => $add_time,
             'servers'      => $servers,
@@ -84,15 +72,13 @@ class DefaultController extends Controller
     {
         $arrival_time = $request->cookies->get('time_sheet_time', '09:00');
         $add_time = $request->cookies->get('time_sheet_add_time', 0);
-        $calendarRepository = $this->getDoctrine()->getRepository(Calendar::class);
-        $calendarEvents = $calendarRepository->findAll();
+        $calendarEvents = json_encode($this->getCalendarData());
         return $this->render('AppBundle:Default:calendar.html.twig', [
-            'calendarJson' => $this->formatCalendarEventsJson($calendarEvents),
-            'holidayJson' => json_encode($this->getHolidayArray()),
+            'calendarJson' => $calendarEvents,
             'type' => [
-                'pto' => self::CALENDAR_TYPE_PTO,
-                'holiday' => self::CALENDAR_TYPE_HOLIDAY,
-                'sick' => self::CALENDAR_TYPE_SICK,
+                'pto' => Calendar::TYPE_PTO,
+                'holiday' => Calendar::TYPE_COMPANY_HOLIDAY,
+                'sick' => Calendar::TYPE_SICK,
             ],
             'arrival_time' => $arrival_time,
             'add_time' => $add_time
@@ -130,48 +116,6 @@ class DefaultController extends Controller
         $response = new \Symfony\Component\HttpFoundation\RedirectResponse($this->generateUrl('calendar'));
         return $response;
     }
-
-
-    /**
-     * format the database data into a json object to be consumed by the datepicker
-     *
-     * @param array $calendarEvents
-     *
-     * @return false|string
-     */
-    protected static function formatCalendarEventsJson(array $calendarEvents)
-    {
-        $response = [
-            'pto' => [],
-            'holiday' => [],
-            'sick' => []
-        ];
-
-        foreach ($calendarEvents as $calendarEvent) {
-            switch ($calendarEvent->getType()) {
-                case self::CALENDAR_TYPE_HOLIDAY:
-                    $response['holiday'][] = $calendarEvent->getEventDate()->format("Y-m-d");
-                    break;
-                case self::CALENDAR_TYPE_PTO:
-                    $response['pto'][] = $calendarEvent->getEventDate()->format("Y-m-d");
-                    break;
-                case self::CALENDAR_TYPE_SICK:
-                    $response['sick'][] = $calendarEvent->getEventDate()->format("Y-m-d");
-                    break;
-            }
-        }
-
-        return \json_encode($response);
-    }
-
-    public static function formatArray(array $array, callable $accessor){
-        $response = [];
-        foreach ($array as $item) {
-            $response[] = call_user_func($accessor, $item);
-        }
-        return $response;
-    }
-
 
     /**
      * @Route("/timeSheet", name="timeSheet")
@@ -280,102 +224,15 @@ class DefaultController extends Controller
     }
 
     /**
-     * @return array an array of 'Y-m-d' unique holiday events
-     */
-    public function getHolidayArray(): array {
-        $holidays = $this->getDoctrine()->getRepository(Holiday::class)->findAll();
-        $calendars = $this->getDoctrine()->getRepository(Calendar::class)->findBy(['type' => self::CALENDAR_TYPE_HOLIDAY]);
-
-        $calendar_formatted = self::formatArray($calendars, function ($v) {
-            return $v->getEventDate()->format('Y-m-d');
-        });
-        $holiday_formatted = self::formatArray($holidays, function ($v) {
-            return $v->getObservedDate()->format('Y-m-d');
-        });
-        $result = array_merge($calendar_formatted, $holiday_formatted);
-        sort($result);
-        $holidays = array_unique($result);
-        return array_values($holidays);
-    }
-
-    /**
-     * Calculate the next pay date, this is bases on the current cycle of being paid on the friday of even calendar
-     * weeks numbers.
-     *
-     * @return array
-     * @throws \Exception
-     */
-    protected function Ives_nextPayDate(){
-        $pay_friday = strtotime("this friday");
-
-        if(date('W',$pay_friday) % 2 === 0) {
-            $pay_friday = strtotime("+1 week ". date('Y-m-d', $pay_friday));
-        }
-        $days_until = date_diff(
-            new DateTime('now'),
-            new DateTime(date('Y-m-d',$pay_friday))
-        );
-        return [
-            'date' => date('Y-m-d', $pay_friday),
-            'days' => $days_until->format('%a') + 1
-        ];
-    }
-
-    /**
-     * @return array
-     * @throws \Exception
-     */
-    public function TrueCar_nextPayDate(){
-        $holidays = $this->getHolidayArray();
-        return $this->nextPayDateFourteenthSecondToLast(new Datetime('now'), $holidays);
-    }
-
-
-    public function nextPayDateFourteenthSecondToLast(DateTime $now, array $holidays){
-        $fourteenth = new DateTime ($now->format('Y') . "-" . $now->format('m') . "-14");
-        $fourteenth_pay_day = self::checkPayDate($fourteenth, $holidays);
-
-        if($now->format('d') <= $fourteenth_pay_day->format('d')){
-            $pay_date = $fourteenth_pay_day;
-        } else {
-            $second_to_last_day = new DateTime($now->format('Y') . '-' . $now->format('m' . '-' . $now->format('t')-1));
-            $second_to_last_pay_day = self::checkPayDate($second_to_last_day, $holidays);
-            $pay_date = $second_to_last_pay_day;
-        }
-
-        $days_until = date_diff($now, $pay_date);
-
-        return [
-            'date' => $pay_date->format('Y-m-d'),
-            'days' => $days_until->format('%a') + 1
-        ];
-    }
-
-    public static function checkPayDate(DateTime $pay_date, array $holidays){
-        $moved = false;
-        $new_date = $pay_date;
-        if(in_array(date('w', $pay_date->getTimeStamp()), [0,6])){
-            $new_date = new DateTime(date('Y-m-d',$pay_date->getTimestamp() - self::ONE_DAY_SECONDS));
-            $moved = true;
-        }
-        if(!$moved){
-            if(in_array($pay_date->format('Y-m-d'), $holidays)){
-                $new_date = new DateTime(date('Y-m-d',$pay_date->getTimestamp() - self::ONE_DAY_SECONDS));
-            }
-        }
-        if($new_date === $pay_date) return $new_date;
-        return self::checkPayDate($new_date, $holidays);
-    }
-
-    /**
      * @param CalendarRepository $calendarRepository
      * @return array
      * @throws \Exception
      */
     private function formatNextEvents(CalendarRepository $calendarRepository): array {
         $eventTypes = [
-            self::CALENDAR_TYPE_HOLIDAY => 'Holiday',
-            self::CALENDAR_TYPE_PTO => 'PTO'
+            Calendar::TYPE_NATIONAL_HOLIDAY => 'Holiday',
+            Calendar::TYPE_PTO => 'PTO',
+            Calendar::TYPE_PAY_DATE => Calendar::translateTypeDescription(new Calendar(['eventDate' => new DateTime(), 'type' => Calendar::TYPE_PAY_DATE]))
         ];
         $return = [];
         foreach ($eventTypes as $eventType => $eventName) {
@@ -403,4 +260,27 @@ class DefaultController extends Controller
         }
         return $return;
     }
+
+    /**
+     * @return array
+     * @throws \Exception
+     */
+    public function getCalendarData(){
+        $calendars = $this->getDoctrine()->getRepository(Calendar::class)->findAll();
+        $calendar_data = [];
+
+        /**
+         * @var Calendar $calendar
+         */
+        foreach ($calendars as $calendar) {
+            $event_date = $calendar->getEventDate()->format('Y-m-d');
+            if(isset($calendar_data[$event_date])){
+                $calendar_data[$event_date]['events'][] = ['type' => $calendar->getType(), 'description' => Calendar::translateTypeDescription($calendar)];
+            } else {
+                $calendar_data[$event_date] = ['events' => [['type' => $calendar->getType(), 'description' => Calendar::translateTypeDescription($calendar)]]];
+            }
+        }
+        return $calendar_data;
+    }
+
 }

@@ -105,7 +105,7 @@
                         </thead>
                         <tbody>
                             <tr><td>Holiday</td><td{% if events['Holiday'].days %} title="{{ events['Holiday'].date }}">{{ events['Holiday'].days }}{% else %}>None Scheduled{% endif %}</td></tr>
-                            <tr><td>Pay Day</td><td{% if events['Pay Day'].days %} title="{{ events['Pay Day'].date }}">{{ events['Pay Day'].days }}{% else %}>None Scheduled{% endif %}</td></tr>
+                            <tr><td>TRUECar Pay Day</td><td{% if events['TRUECar Pay Date'].days %} title="{{ events['TRUECar Pay Date'].date }}">{{ events['TRUECar Pay Date'].days }}{% else %}>None Scheduled{% endif %}</td></tr>
                             <tr><td>PTO</td><td{% if events['PTO'].days %} title="{{ events['PTO'].date }}">{{ events['PTO'].days }}{% else %}>None Scheduled{% endif %}</td></tr>
                         </tbody>
                     </table>
@@ -118,46 +118,7 @@
 {% endblock %}
 
 {% block style %}
-    <style>
-        .ui-datepicker td.holiday span {
-            background: #7ba7bc;
-            color: #000000;
-            font-weight: bold;
-            pointer-events: all;
-        }
-
-        .ui-datepicker td.sick a {
-            background: #14bf15;
-            color: #000000;
-            font-weight: bold;
-        }
-
-        .ui-datepicker td.pto a {
-            background: #FF9933;
-            color: #000000;
-            font-weight: bold;
-        }
-
-        .ui-datepicker td.payday a {
-            background: #FF3300;
-            color: #000000;
-            font-weight: bold;
-        }
-
-        .ui-datepicker td.ui-datepicker-today a {
-            background: yellow;
-        }
-
-        /*
-        This will stop the weekends from being displayed at ALL on the date picker
-        There is also code in the beforeShowDay that already makes the weekend dates
-        unselectable.  If you want to display the weekend dates again remove this
-        css portion.
-        */
-        th.ui-datepicker-week-end, td.ui-datepicker-week-end {
-            display: none;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/calendar.css') }}"/>
 {% endblock %}
 {% block javascripts %}
     <script src="{{ asset('assets/js/ServerInfo.js') }}"></script>
@@ -170,8 +131,7 @@
         let base_title = $(document).prop('title');
 
         let date_data = {{ calendarJson | raw }};
-        let holiday_data = {{ holidayJson | raw }};
-        PersonalCalendar.init(date_data, holiday_data);
+        PersonalCalendar.init(date_data);
         $(function () {
             updateTime();
             setInterval('updateTime()', 1000);

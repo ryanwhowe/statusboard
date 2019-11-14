@@ -3,18 +3,18 @@
 namespace AppBundle\Command;
 
 use AppBundle\Entity\Calendar;
-use Calendarific\Calendarific;
-use Composer\Package\Package;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Statusboard\Utility\ArrayUtility;
+use Statusboard\Utility\PayDate;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\ConsoleOutputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class AppImportHolidayCommand extends ContainerAwareCommand
+class AppGeneratePayDatesCommand extends ContainerAwareCommand
 {
 
     /**
@@ -35,8 +35,10 @@ class AppImportHolidayCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('app:ImportHoliday')
-            ->setDescription('Add holidays from the Calenderific API provider for the passed year')
+            ->setName('app:GeneratePayDates')
+            ->setDescription('...')
+            ->setDescription('Add pay dates to database')
+            ->addArgument('year', InputArgument::OPTIONAL, 'Year to import')
         ;
     }
 
@@ -47,40 +49,29 @@ class AppImportHolidayCommand extends ContainerAwareCommand
 
         $min_year = 2007;
         $max_year = (int)date('Y');
-        $max_year += 1;
 
         foreach(range($min_year, $max_year) as $year) {
 
             $io->title("Processing Year ${year}");
 
-            $holidays = Calendarific::make(
-                $this->getContainer()->getParameter('calendarific_api_key')
-                , 'US'
-                , (int)$year
-                , null
-                , null
-                , null
-                , ['national']
-            );
-            $results = $holidays['response']['holidays'];
-            $holidays = array_map(function($v){
-                return [$v['date']['iso'] => $v['name']];
-            }, $results);
+            $all_holidays = $this->objectManager->getRepository(Calendar::class)->findBy(['type' => [Calendar::TYPE_NATIONAL_HOLIDAY, Calendar::TYPE_COMPANY_HOLIDAY]]);
 
-            //dump($holidays); die();
+            $holidays = ArrayUtility::formatArray($all_holidays, function($v){
+                return $v->getEventDate()->format('Y-m-d');
+            });
+            $holidays = array_values(array_unique($holidays));
 
-            $io->progressStart(count($holidays));
-            foreach ($holidays as $index => $holiday) {
-                $date = key($holiday);
+            $pay_dates = PayDate::generatePayDatesInYear($year, $holidays);
 
-                $existing_holiday = $this->objectManager->getRepository(Calendar::class)->findOneBy(['eventDate' => new \DateTime($date), 'type' => Calendar::TYPE_NATIONAL_HOLIDAY]);
-                if($existing_holiday === null) {
+            $io->progressStart(count($pay_dates));
+            foreach ($pay_dates as $date) {
+
+                $existing_paydate = $this->objectManager->getRepository(Calendar::class)->findOneBy(['eventDate' => $date, 'type' => Calendar::TYPE_PAY_DATE]);
+                if($existing_paydate === null) {
                     $calendar = new Calendar();
                     $this->objectManager->getManager()->persist($calendar);
-
-                    $calendar->setDescription($holiday[$date]);
-                    $calendar->setEventDate(new \DateTime($date));
-                    $calendar->setType(Calendar::TYPE_NATIONAL_HOLIDAY);
+                    $calendar->setEventDate($date);
+                    $calendar->setType(Calendar::TYPE_PAY_DATE);
                     $this->objectManager->getManager()->flush();
                     $this->objectManager->getManager()->detach($calendar);
                 }
@@ -89,7 +80,13 @@ class AppImportHolidayCommand extends ContainerAwareCommand
             $io->progressFinish();
 
         }
+
         $output->writeln('Command result.');
+    }
+
+    private function validateYear(string $year){
+        if(substr($year, 0, 2) !== '20') return false;
+        return true;
     }
 
 }

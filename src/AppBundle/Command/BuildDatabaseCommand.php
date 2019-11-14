@@ -3,10 +3,10 @@
 namespace AppBundle\Command;
 
 use AppBundle\Entity\Calendar;
-use AppBundle\Entity\Holiday;
 use AppBundle\Entity\Server;
 use Calendarific\Calendarific;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Statusboard\Utility\ArrayUtility;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
@@ -72,36 +72,7 @@ class BuildDatabaseCommand extends ContainerAwareCommand
         $greetInput = new ArrayInput($arguments);
         $returnCode = $command->run($greetInput, $output);
 
-        $holidays = Calendarific::make(
-            $this->getContainer()->getParameter('calendarific_api_key')
-            ,'US'
-            ,(int)date('Y')
-            ,null
-            ,null
-            ,null
-            ,['national']
-        );
-        $results = $holidays['response']['holidays'];
-
-        $holidays = array_map(function($v){
-            return [$v['date']['iso'] => $v['name']];
-        }, $results);
-
-        $io->progressStart(count($holidays));
-        foreach ($holidays as $index => $holiday) {
-            $h = new Holiday();
-            $this->objectManager->getManager()->persist($h);
-            $date = key($holiday);
-            $h->setName($holiday[$date]);
-            $h->setObservedDate(new \DateTime($date));
-            $this->objectManager->getManager()->flush();
-            $this->objectManager->getManager()->detach($h);
-            $io->progressAdvance();
-        }
-        $io->progressFinish();
-
         $file = $input->getArgument('calendar_file');
-        $io->note('Holiday Load Process Completed');
 
         if ($file !== \null) {
 
@@ -109,7 +80,7 @@ class BuildDatabaseCommand extends ContainerAwareCommand
                 $io->error("${file} : does not exists");
             } else {
 
-                $csv = $this->CsvToAssociativeArray($file);
+                $csv = ArrayUtility::csvToAssociativeArray(file($file));
 
                 $io->progressStart(count($csv));
                 foreach ($csv as $row) {
@@ -134,7 +105,7 @@ class BuildDatabaseCommand extends ContainerAwareCommand
                     $io->error("${file} : does not exists");
                 } else {
 
-                    $csv = $this->CsvToAssociativeArray($file);
+                    $csv = ArrayUtility::csvToAssociativeArray(file($file));
 
                     $io->progressStart(count($csv));
                     foreach ($csv as $row) {
@@ -153,19 +124,4 @@ class BuildDatabaseCommand extends ContainerAwareCommand
             }
         }
     }
-
-    /**
-     * @param $file
-     * @return array
-     */
-    protected function CsvToAssociativeArray($file): array
-    {
-        $csv = array_map('str_getcsv', file($file));
-        \array_walk($csv, function (&$a) use ($csv) {
-            $a = \array_combine($csv[0], $a);
-        });
-        array_shift($csv);
-        return $csv;
-    }
-
 }

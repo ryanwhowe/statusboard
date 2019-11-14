@@ -3,6 +3,8 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\Calendar;
+use \DateTime;
+use Doctrine\ORM\Repository\RepositoryFactory;
 
 /**
  * CalendarRepository
@@ -76,5 +78,19 @@ class CalendarRepository extends \Doctrine\ORM\EntityRepository
         )->setMaxResults(1);
 
         return $query->execute();
+    }
+
+    /**
+     * @return array
+     * @throws \Exception
+     */
+    public function getMinMaxEventDates(){
+        $query = $this->getEntityManager()->createQuery(
+            '
+            SELECT min(c.eventDate) as minEventDate, max(c.eventDate) as maxEventDate
+            FROM AppBundle\Entity\Calendar c
+            ')->setMaxResults(1);
+        $return = $query->execute();
+        return ['min' => new DateTime($return[0]['minEventDate']), 'max' => new DateTime($return[0]['maxEventDate'])];
     }
 }

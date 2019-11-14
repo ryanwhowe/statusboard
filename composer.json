@@ -5,7 +5,8 @@
     "description": "TheAxeRant statusboard",
     "autoload": {
         "psr-4": {
-            "AppBundle\\": "src/AppBundle"
+            "AppBundle\\": "src/AppBundle",
+            "Statusboard\\": "src/Statusboard"
         },
         "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
     },
