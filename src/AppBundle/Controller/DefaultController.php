@@ -17,8 +17,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {
-    const ONE_DAY_SECONDS = 86400;
-
     /**
      * @Route("/", name="homepage")
      *
@@ -118,39 +116,6 @@ class DefaultController extends Controller
         $response = new \Symfony\Component\HttpFoundation\RedirectResponse($this->generateUrl('calendar'));
         return $response;
     }
-
-
-//    /**
-//     * format the database data into a json object to be consumed by the datepicker
-//     *
-//     * @param array $calendarEvents
-//     *
-//     * @return false|string
-//     */
-//    protected static function formatCalendarEventsJson(array $calendarEvents)
-//    {
-//        $response = [
-//            'pto' => [],
-//            'holiday' => [],
-//            'sick' => []
-//        ];
-//
-//        foreach ($calendarEvents as $calendarEvent) {
-//            switch ($calendarEvent->getType()) {
-//                case Calendar::TYPE_COMPANY_HOLIDAY:
-//                    $response['holiday'][] = $calendarEvent->getEventDate()->format("Y-m-d");
-//                    break;
-//                case Calendar::TYPE_PTO:
-//                    $response['pto'][] = $calendarEvent->getEventDate()->format("Y-m-d");
-//                    break;
-//                case Calendar::TYPE_SICK:
-//                    $response['sick'][] = $calendarEvent->getEventDate()->format("Y-m-d");
-//                    break;
-//            }
-//        }
-//
-//        return \json_encode($response);
-//    }
 
     /**
      * @Route("/timeSheet", name="timeSheet")
@@ -257,75 +222,6 @@ class DefaultController extends Controller
         $response->headers->setCookie(new \Symfony\Component\HttpFoundation\Cookie('time_sheet_calendar_thu', $thu, new DateTime('next sunday')));
         return $response;
     }
-
-//    /**
-//     * Calculate the next pay date, this is bases on the current cycle of being paid on the friday of even calendar
-//     * weeks numbers.
-//     *
-//     * @return array
-//     * @throws \Exception
-//     */
-//    protected function Ives_nextPayDate(){
-//        $pay_friday = strtotime("this friday");
-//
-//        if(date('W',$pay_friday) % 2 === 0) {
-//            $pay_friday = strtotime("+1 week ". date('Y-m-d', $pay_friday));
-//        }
-//        $days_until = date_diff(
-//            new DateTime('now'),
-//            new DateTime(date('Y-m-d',$pay_friday))
-//        );
-//        return [
-//            'date' => date('Y-m-d', $pay_friday),
-//            'days' => $days_until->format('%a') + 1
-//        ];
-//    }
-
-//    /**
-//     * @return array
-//     * @throws \Exception
-//     */
-//    public function TrueCar_nextPayDate(){
-//        $holidays = [];
-//        return $this->nextPayDateFourteenthSecondToLast(new Datetime('now'), $holidays);
-//    }
-//
-//
-//    public function nextPayDateFourteenthSecondToLast(DateTime $now, array $holidays){
-//        $fourteenth = new DateTime ($now->format('Y') . "-" . $now->format('m') . "-14");
-//        $fourteenth_pay_day = self::checkPayDate($fourteenth, $holidays);
-//
-//        if($now->format('d') <= $fourteenth_pay_day->format('d')){
-//            $pay_date = $fourteenth_pay_day;
-//        } else {
-//            $second_to_last_day = new DateTime($now->format('Y') . '-' . $now->format('m' . '-' . $now->format('t')-1));
-//            $second_to_last_pay_day = self::checkPayDate($second_to_last_day, $holidays);
-//            $pay_date = $second_to_last_pay_day;
-//        }
-//
-//        $days_until = date_diff($now, $pay_date);
-//
-//        return [
-//            'date' => $pay_date->format('Y-m-d'),
-//            'days' => $days_until->format('%a') + 1
-//        ];
-//    }
-//
-//    public static function checkPayDate(DateTime $pay_date, array $holidays){
-//        $moved = false;
-//        $new_date = $pay_date;
-//        if(in_array(date('w', $pay_date->getTimeStamp()), [0,6])){
-//            $new_date = new DateTime(date('Y-m-d',$pay_date->getTimestamp() - self::ONE_DAY_SECONDS));
-//            $moved = true;
-//        }
-//        if(!$moved){
-//            if(in_array($pay_date->format('Y-m-d'), $holidays)){
-//                $new_date = new DateTime(date('Y-m-d',$pay_date->getTimestamp() - self::ONE_DAY_SECONDS));
-//            }
-//        }
-//        if($new_date === $pay_date) return $new_date;
-//        return self::checkPayDate($new_date, $holidays);
-//    }
 
     /**
      * @param CalendarRepository $calendarRepository

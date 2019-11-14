@@ -8,40 +8,11 @@
         <!-- /.col-lg-12 -->
     </div>
     <div class="row">
-        <div class="col-md-12 col-lg-6">
+        <div class="col-md-12 col-lg-12">
             <div class="jquery_ui_datepicker"></div>
         </div>
-        <div class="col-md-6 col-lg-6">
-{#            <form method="post" action="{{ path('calendarUpdate') }}">#}
-{#                <div class="row">#}
-{#                    <div class="input-group">#}
-{#                        <div class="input-group-addon">#}
-{#                            <label class="input-group-text" for="type">Select#}
-{#                                Type:</label>#}
-{#                        </div>#}
-{#                        <select class="form-control" name="type" id="type">#}
-{#                            <option value="{{ type.pto }}" selected>PTO</option>#}
-{#                            <option value="{{ type.sick }}">Sick</option>#}
-{#                            <option value="{{ type.holiday }}">Holiday</option>#}
-{#                        </select>#}
-{#                    </div>#}
-{#                </div>#}
-{#                <div class="row">#}
-{#                    <div class="input-group">#}
-{#                        <div class="input-group-addon">#}
-{#                            <label for="event_date">Select Date:</label>#}
-{#                        </div>#}
-{#                        <input class="form-control" name="event_date"#}
-{#                               id="date_picker" autocomplete="off">#}
-{#                    </div>#}
-{#                </div>#}
-{#                <div class="row">#}
-{#                    <input type="submit" class="btn btn-primary" value="Submit">#}
-{#                </div>#}
-{#            </form>#}
-            <input type="hidden" value="{{ arrival_time }}" id="arrival_time">
-            <input type="hidden" value="{{ add_time }}" id="additional_time">
-        </div>
+        <input type="hidden" value="{{ arrival_time }}" id="arrival_time">
+        <input type="hidden" value="{{ add_time }}" id="additional_time">
     </div>
 {% endblock %}
 
@@ -56,19 +27,11 @@
         TimeSheet.init(arrival, parseFloat($('#additional_time').val()));
         let base_title = $(document).prop('title');
 
-
         let date_data = {{ calendarJson | raw }};
         PersonalCalendar.init(date_data);
         var current = new Date();
         var currentpos = current.getMonth();
         $(function () {
-            // $("#date_picker").datepicker({
-            //     dateFormat: "yy-mm-dd",
-            //     firstDay: 1,
-            //     beforeShowDay: function (currentDate) {
-            //         return parseDate(currentDate);
-            //     }
-            // });
             $(".jquery_ui_datepicker").datepicker({
                 defaultDate: null,
                 firstDay: 1, // Set Monday to the first day of the week
