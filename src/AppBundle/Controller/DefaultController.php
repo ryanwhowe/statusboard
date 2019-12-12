@@ -168,7 +168,10 @@ class DefaultController extends Controller
                  * @var Calendar $calendarEvent
                  */
                 foreach ($calendarEvents as $calendarEvent) {
-                    if($this_date === $calendarEvent['event_date']){
+                    if(
+                        $this_date === $calendarEvent['event_date'] &&
+                        in_array($calendarEvent['type'],[Calendar::TYPE_COMPANY_HOLIDAY, Calendar::TYPE_PTO, Calendar::TYPE_SICK])
+                    ){
                         $day_data['is_holiday'] = true;
                         $day_data['value'] = 8.0;
                     }
