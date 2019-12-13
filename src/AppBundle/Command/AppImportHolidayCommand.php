@@ -37,6 +37,7 @@ class AppImportHolidayCommand extends ContainerAwareCommand
         $this
             ->setName('app:ImportHoliday')
             ->setDescription('Add holidays from the Calenderific API provider for the passed year')
+            ->addArgument('year', InputArgument::OPTIONAL, 'Year to import', false)
         ;
     }
 
@@ -45,9 +46,14 @@ class AppImportHolidayCommand extends ContainerAwareCommand
         $io = new SymfonyStyle($input,
             $output instanceof ConsoleOutputInterface ? $output->getErrorOutput() : $output);
 
-        $min_year = 2007;
-        $max_year = (int)date('Y');
-        $max_year += 1;
+        $requested_year = $input->getArgument('year');
+        if($requested_year){
+            $min_year = $max_year = (int)$requested_year;
+        } else {
+            $min_year = 2007;
+            $max_year = (int)date('Y');
+            $max_year += 1;
+        }
 
         foreach(range($min_year, $max_year) as $year) {
 

@@ -38,7 +38,7 @@ class AppGeneratePayDatesCommand extends ContainerAwareCommand
             ->setName('app:GeneratePayDates')
             ->setDescription('...')
             ->setDescription('Add pay dates to database')
-            ->addArgument('year', InputArgument::OPTIONAL, 'Year to import')
+            ->addArgument('year', InputArgument::OPTIONAL, 'Year to import', false)
         ;
     }
 
@@ -47,9 +47,13 @@ class AppGeneratePayDatesCommand extends ContainerAwareCommand
         $io = new SymfonyStyle($input,
             $output instanceof ConsoleOutputInterface ? $output->getErrorOutput() : $output);
 
-        $min_year = 2007;
-        $max_year = (int)date('Y');
-
+        $requested_year = $input->getArgument('year');
+        if($requested_year){
+            $min_year = $max_year = (int)$requested_year;
+        } else {
+            $min_year = 2007;
+            $max_year = (int)date('Y');
+        }
         foreach(range($min_year, $max_year) as $year) {
 
             $io->title("Processing Year ${year}");
