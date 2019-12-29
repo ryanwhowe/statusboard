@@ -115,6 +115,20 @@
             <!-- /.panel -->
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-6 col-lg-6">
+            <div class="panel panel-info">
+                <div class="panel-heading text-center">
+                    Weather
+                </div>
+                <div class="panel-body">
+                    <div class="weather"></div>
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+    </div>
 {% endblock %}
 
 {% block style %}
@@ -124,6 +138,7 @@
     <script src="{{ asset('assets/js/ServerInfo.js') }}"></script>
     <script src="{{ asset('assets/js/ClockClass.js') }}"></script>
     <script src="{{ asset('assets/js/PersonalCalendar.js') }}"></script>
+    <script src="{{ asset('assets/js/Weather.js') }}"></script>
     <script>
         let time_parts = $('#arrival_time').val().split(':');
         let arrival = new Date(0,0,0,parseInt(time_parts[0],0) ,parseInt(time_parts[1],0),0);
@@ -137,6 +152,7 @@
             setInterval('updateTime()', 1000);
             displayTime();
             setInterval('displayTime()', 1000);
+            $('.weather').WeatherInfo();
             $('.serverinfo').ServerInfo();
             $(".jquery_ui_datepicker_preview").datepicker({
                 defaultDate: null,

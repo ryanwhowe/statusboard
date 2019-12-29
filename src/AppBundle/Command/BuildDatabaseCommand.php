@@ -4,7 +4,6 @@ namespace AppBundle\Command;
 
 use AppBundle\Entity\Calendar;
 use AppBundle\Entity\Server;
-use Calendarific\Calendarific;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Statusboard\Utility\ArrayUtility;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;

@@ -41,8 +41,9 @@ class Transform implements ApiResponseInterface {
     public static function responseProcessor(array $body): array {
         $output = [];
         foreach (range(0, 4) as $day) {
-            $output[$body['DailyForecasts'][$day]['Date']] = [
+            $output[$day] = [
                 'date' => $body['DailyForecasts'][$day]['EpochDate'],
+                'day' => date('l', $body['DailyForecasts'][$day]['EpochDate']),
                 'hightemp' => self::formatNumber($body['DailyForecasts'][$day]['Temperature']['Maximum']['Value']),
                 'lowtemp' => self::formatNumber($body['DailyForecasts'][$day]['Temperature']['Minimum']['Value']),
                 'icons' => [
