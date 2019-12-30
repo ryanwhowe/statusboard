@@ -7,18 +7,25 @@ use Statusboard\Weather\ApiResponseInterface;
 
 class Transform implements ApiResponseInterface {
 
+    const RESPONSE_KEY = 'key';
+    const RESPONSE_TIMEOUT = 'timeout';
+
     /**
      * @param string $api_key
      * @param string $postal
      * @return string
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public static function getLocation(string $api_key, string $postal): string {
+    public static function getLocation(string $api_key, string $postal): array {
         $client = new \GuzzleHttp\Client(['base_uri' => 'http://dataservice.accuweather.com/locations/v1/postalcodes/search?apikey=okYccfVSHvQKQb0yJkFwx8AUKElmXFRH&q=01757', 'timeout' => 2.0]);
         $req = new \GuzzleHttp\Psr7\Request('get', '?apikey=' . $api_key . '&q=' . $postal);
         $resp = $client->send($req);
+        $timeout = $resp->getHeader('Expires');
         $body = \json_decode((string)$resp->getBody(), true);
-        return $body[0]['Key'];
+        return [
+            self::RESPONSE_KEY => $body[0]['Key'],
+            self::RESPONSE_TIMEOUT => strtotime($timeout[0])
+        ];
     }
 
     /**
@@ -27,11 +34,14 @@ class Transform implements ApiResponseInterface {
      * @return array
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public static function getFiveDayForcast(string $location, string $api_key): array {
+    public static function getFiveDayForecast(string $api_key, string $location): array {
         $client = new \GuzzleHttp\Client(['base_uri' => 'http://dataservice.accuweather.com/forecasts/v1/daily/5day/', 'timeout' => 2.0]);
         $req = new \GuzzleHttp\Psr7\Request('get', $location . '?apikey=' . $api_key);
         $resp = $client->send($req);
-        return \json_decode((string)$resp->getBody(), true);
+        $timeout = $resp->getHeader('Expires');
+        $response = \json_decode((string)$resp->getBody(), true);
+        $response[self::RESPONSE_TIMEOUT] = strtotime($timeout[0]);
+        return $response;
     }
 
     /**

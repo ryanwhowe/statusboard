@@ -9,8 +9,10 @@
 namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Statusboard\Weather\Accuweather\Cache;
 use Statusboard\Weather\Accuweather\Transform AS Accuweather;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Cache\Simple\FilesystemCache;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use AppBundle\theAxeRant\Client;
@@ -89,10 +91,28 @@ class ApiController extends Controller
      */
     public function weather(Request $request){
 
+        $cache = new Cache($this->get('logger'));
+
         $api_key = $this->getParameter('accuweather_api_key');
         $postal = $this->getParameter('postal_code');
-        $location = Accuweather::getLocation($api_key, $postal);
-        $body = Accuweather::getFiveDayForcast($location, $api_key);
+
+        if($cache->checkCacheTime($cache::CACHE_TYPE_LOCATION)){
+            $location = (string)$cache->getCache($cache::CACHE_TYPE_LOCATION);
+        } else {
+            $data = Accuweather::getLocation($api_key, $postal);
+            $location = (string)$data[Accuweather::RESPONSE_KEY];
+            $timeout = $data[Accuweather::RESPONSE_TIMEOUT];
+            $cache->updateCache($cache::CACHE_TYPE_LOCATION, $timeout, $location);
+        }
+
+        if($cache->checkCacheTime($cache::CACHE_TYPE_WEATHER)){
+            $body = unserialize($cache->getCache($cache::CACHE_TYPE_WEATHER));
+        } else {
+            $data = Accuweather::getFiveDayForecast($api_key, $location);
+            $body = $data;
+            $timeout = $data[Accuweather::RESPONSE_TIMEOUT];
+            $cache->updateCache($cache::CACHE_TYPE_WEATHER, $timeout, serialize( $body));
+        }
 
         $output = Accuweather::responseProcessor($body);
         $Response = $this->json(\null, JsonResponse::HTTP_OK,
@@ -104,5 +124,4 @@ class ApiController extends Controller
 
         return $Response;
     }
-
 }
