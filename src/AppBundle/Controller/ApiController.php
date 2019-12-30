@@ -9,6 +9,7 @@
 namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Statusboard\Weather\Accuweather\Transform AS Accuweather;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -20,53 +21,26 @@ class ApiController extends Controller
 {
 
     /**
-     * @Route("/api/{action}/{grouping}")
+     * @Route("/api/ipCheck/{grouping}")
      */
-    public function ApiAction($action, $grouping, Request $Request)
-    {
+    public function ipCheck($grouping, Request $request){
+
         /**
          * @var array The Result storage to be encoded into json and returned upon successful completion
          */
         $result = [];
 
-        /* if there is no server/grouping given then there is nothing that can be done */
-        if (\null === $grouping) {
-            $this->addFlash('error', 'No server specified');
-        } else {
-            switch ($action) {
-                case 'ipCheck':
-                    try {
-                        $result = Client::create($this->getParameter('api_token'),
-                            $this->getParameter('api_url'), $grouping)->ipCheck();
-                    } catch (\Exception $e) {
-                        $this->addFlash('error',
-                            'An error occurred getting the internal api data');
-                        $this->addFlash('error', $e->getMessage());
-                        $trace = $e->getTrace();
-                        foreach ($trace as $message) {
-                            $this->addFlash('error', $message);
-                        }
-                    }
-                    break;
-                case 'group':
-                    $result = ApiService::getServerGroupData(
-                        $grouping,
-                        $this->getParameter('api_url'),
-                        $this->getParameter('api_token'),
-                        $this->get('logger')
-                    );
-                    break;
-                case \null:
-                    $this->addFlash('error', 'No action specified');
-                    break;
-                default:
-                    $this->addFlash('error', 'Unknown action specified');
-                    break;
+        try {
+            $result = Client::create($this->getParameter('api_token'),
+                $this->getParameter('api_url'), $grouping)->ipCheck();
+        } catch (\Exception $e) {
+            $this->addFlash('error',
+                'An error occurred getting the internal api data');
+            $this->addFlash('error', $e->getMessage());
+            $trace = $e->getTrace();
+            foreach ($trace as $message) {
+                $this->addFlash('error', $message);
             }
-        }
-
-        if (empty($result)) {
-            $this->addFlash('error', 'No Data');
         }
 
         /**
@@ -83,8 +57,50 @@ class ApiController extends Controller
             $Response->setContent(json_encode($result));
         }
 
-        $Response->prepare($Request)->setPrivate();
+        $Response->prepare($request)->setPrivate();
 
+        return $Response;
+    }
+
+    /**
+     * @Route("/api/group/{grouping}")
+     */
+    public function group($grouping, Request $request){
+
+        $result = ApiService::getServerGroupData(
+            $grouping,
+            $this->getParameter('api_url'),
+            $this->getParameter('api_token'),
+            $this->get('logger')
+        );
+
+        $Response = $this->json(\null, JsonResponse::HTTP_OK,
+            ['Content-Type' => 'text/json', 'Cache-control' => 'must-revalidate']);
+
+        $Response->setContent(json_encode($result));
+        $Response->prepare($request)->setPrivate();
+
+        return $Response;
+
+    }
+
+    /**
+     * @Route("/api/weather")
+     */
+    public function weather(Request $request){
+
+        $api_key = $this->getParameter('accuweather_api_key');
+        $postal = $this->getParameter('postal_code');
+        $location = Accuweather::getLocation($api_key, $postal);
+        $body = Accuweather::getFiveDayForcast($location, $api_key);
+
+        $output = Accuweather::responseProcessor($body);
+        $Response = $this->json(\null, JsonResponse::HTTP_OK,
+            ['Content-Type' => 'text/json', 'Cache-control' => 'must-revalidate']);
+
+        $Response->setContent(json_encode($output));
+
+        $Response->prepare($request)->setPrivate();
 
         return $Response;
     }
