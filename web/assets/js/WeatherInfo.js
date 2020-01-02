@@ -9,6 +9,11 @@ $.widget("howe.WeatherInfo",{
         update_interval: 10*60*1000, /* update the weather every 10 minutes unless there is an expires flag present */
     },
 
+    /**
+     * The widget create script, this is fired on widget creation
+     * 
+     * @private
+     */
     _create: function(){
         let me = this,
             e = this.element;
@@ -17,6 +22,11 @@ $.widget("howe.WeatherInfo",{
         me._updateData();
     },
 
+    /**
+     * Update the widget's data from the api, then call the render method
+     * 
+     * @private
+     */
     _updateData: function(){
         let me = this;
         $.ajax({
@@ -56,6 +66,11 @@ $.widget("howe.WeatherInfo",{
         });
     },
 
+    /**
+     * Render the widget's html and css
+     * 
+     * @private
+     */
     __renderWidget: function(){
         let me = this;
         let $e = $(this.element);
@@ -63,11 +78,11 @@ $.widget("howe.WeatherInfo",{
         me.widget = $([
             "<div class='col-lg-8 col-lg-offset-2 col-md-12 col-sm-12'><div class='panel panel-success'><div class='panel-heading text-center'>" + me.data_response['headline'] + "</div></div></div>",
             "<div class='col-lg-3 col-md-6 col-sm-12'>",
-            "<div class='panel panel-info'>",
-            "<div class='panel-heading text-center border-bottom-primary '>Today</div>",
+            "<div class='panel panel-warning'>",
+            "<div class='panel-heading text-center'>Today</div>",
             "<div class='panel-body text-center'>",
-            "High: " + me.data_response[0]['hightemp'] + " &deg;<br>",
-            "Low: " + me.data_response[0]['lowtemp'] + " &deg;<br>",
+            "High: " + me.data_response[0]['hightemp'] + " &deg;F<br>",
+            "Low: " + me.data_response[0]['lowtemp'] + " &deg;F<br>",
             "<img src='" + me.data_response[0]['icons']['day'] + "' alt='" + me.data_response[0]['icontext']['day'] + "'><br>",
             me.data_response[0]['icontext']['day'] + "<br>",
             "<img src='" + me.data_response[0]['icons']['night'] + "' alt='" + me.data_response[0]['icontext']['night'] + "'><br>",
@@ -79,8 +94,8 @@ $.widget("howe.WeatherInfo",{
             "<div class='panel panel-info'>",
             "<div class='panel-heading text-center'>" + me.data_response[1]['day'] + "</div>",
             "<div class='panel-body text-center'>",
-            "High: " + me.data_response[1]['hightemp'] + " &deg;<br>",
-            "Low: " + me.data_response[1]['lowtemp'] + " &deg;<br>",
+            "High: " + me.data_response[1]['hightemp'] + " &deg;F<br>",
+            "Low: " + me.data_response[1]['lowtemp'] + " &deg;F<br>",
             "<img src='" + me.data_response[1]['icons']['day'] + "' alt='" + me.data_response[1]['icontext']['day'] + "'><br>",
             me.data_response[1]['icontext']['day'] + "<br>",
             "<img src='" + me.data_response[1]['icons']['night'] + "' alt='" + me.data_response[1]['icontext']['night'] + "'><br>",
@@ -92,8 +107,8 @@ $.widget("howe.WeatherInfo",{
             "<div class='panel panel-info'>",
             "<div class='panel-heading text-center'>" + me.data_response[2]['day'] + "</div>",
             "<div class='panel-body text-center'>",
-            "High: " + me.data_response[2]['hightemp'] + " &deg;<br>",
-            "Low: " + me.data_response[2]['lowtemp'] + " &deg;<br>",
+            "High: " + me.data_response[2]['hightemp'] + " &deg;F<br>",
+            "Low: " + me.data_response[2]['lowtemp'] + " &deg;F<br>",
             "<img src='" + me.data_response[2]['icons']['day'] + "' alt='" + me.data_response[2]['icontext']['day'] + "'><br>",
             me.data_response[2]['icontext']['day'] + "<br>",
             "<img src='" + me.data_response[2]['icons']['night'] + "' alt='" + me.data_response[2]['icontext']['night'] + "'><br>",
@@ -105,8 +120,8 @@ $.widget("howe.WeatherInfo",{
             "<div class='panel panel-info'>",
             "<div class='panel-heading text-center'>" + me.data_response[3]['day'] + "</div>",
             "<div class='panel-body text-center'>",
-            "High: " + me.data_response[3]['hightemp'] + " &deg;<br>",
-            "Low: " + me.data_response[3]['lowtemp'] + " &deg;<br>",
+            "High: " + me.data_response[3]['hightemp'] + " &deg;F<br>",
+            "Low: " + me.data_response[3]['lowtemp'] + " &deg;F<br>",
             "<img src='" + me.data_response[3]['icons']['day'] + "' alt='" + me.data_response[3]['icontext']['day'] + "'><br>",
             me.data_response[3]['icontext']['day'] + "<br>",
             "<img src='" + me.data_response[3]['icons']['night'] + "' alt='" + me.data_response[3]['icontext']['night'] + "'><br>",
@@ -118,25 +133,31 @@ $.widget("howe.WeatherInfo",{
         ].join("\n"));
         $e.replaceWith(me.widget);
 
-        let update_interval = me.__setUpdateInterval();
+        let update_interval = me.__getUpdateInterval();
 
         me.update_interval = setInterval(function() {
             me._updateData();
         }, update_interval);
     },
 
-    __setUpdateInterval: function(){
+    /**
+     * return the update interval to use for the api based off the data expiration time returned in the response
+     * 
+     * @returns {number} update interval to use in microseconds
+     * @private
+     */
+    __getUpdateInterval: function(){
         let me = this;
-        let expires = me.data_response['expires'];
-        let current_time = Math.floor(new Date().getTime()/1000.0);
-        let delta = expires - current_time;
-        if(delta >= 1) return delta * 1000;
+        let expires_epoch = me.data_response['expires'];
+        let current_epoch = Math.floor(new Date().getTime()/1000.0);
+        let delta_in_seconds = expires_epoch - current_epoch;
+        if(delta_in_seconds >= 0) return (delta_in_seconds + 60) * 1000; /* add a minute to the response and convert to microseconds */
         return me.options.update_interval;
     },
 
     /**
      * Error handling method for the widget
-     *@private
+     * @private
      */
     __Error: function (message) {
         let me = this;
