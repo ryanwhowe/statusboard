@@ -6,7 +6,7 @@
 $.widget("howe.WeatherInfo",{
     url: 'api/weather',
     options: {
-        update_interval: 60*60*1000, /* update the weather every hour */
+        update_interval: 10*60*1000, /* update the weather every 10 minutes unless there is an expires flag present */
     },
 
     _create: function(){
@@ -61,7 +61,7 @@ $.widget("howe.WeatherInfo",{
         let $e = $(this.element);
 
         me.widget = $([
-            "<div class='col-lg-12 col-md-12 col-sm-12 text-center'>" + me.data_response[0]['headline'] + "</div>",
+            "<div class='col-lg-8 col-lg-offset-2 col-md-12 col-sm-12'><div class='panel panel-success'><div class='panel-heading text-center'>" + me.data_response['headline'] + "</div></div></div>",
             "<div class='col-lg-3 col-md-6 col-sm-12'>",
             "<div class='panel panel-info'>",
             "<div class='panel-heading text-center border-bottom-primary '>Today</div>",
@@ -118,9 +118,20 @@ $.widget("howe.WeatherInfo",{
         ].join("\n"));
         $e.replaceWith(me.widget);
 
+        let update_interval = me.__setUpdateInterval();
+
         me.update_interval = setInterval(function() {
             me._updateData();
-        }, me.options.update_interval);
+        }, update_interval);
+    },
+
+    __setUpdateInterval: function(){
+        let me = this;
+        let expires = me.data_response['expires'];
+        let current_time = Math.floor(new Date().getTime()/1000.0);
+        let delta = expires - current_time;
+        if(delta >= 1) return delta * 1000;
+        return me.options.update_interval;
     },
 
     /**

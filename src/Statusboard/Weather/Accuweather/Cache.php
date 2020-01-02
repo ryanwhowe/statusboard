@@ -31,6 +31,8 @@ class Cache
     CONST CACHE_TYPE_LOCATION = 'location';
     CONST CACHE_TYPE_WEATHER = 'weather';
 
+    CONST TIMEOUT_BUFFER = 60 * 60;
+
     /**
      * @var LoggerInterface
      */
@@ -100,9 +102,10 @@ class Cache
     public function updateCache(string $cacheType, int $timeout, string $value){
         $this->logger->info('Updated '. $cacheType,[
             'timeout'=> $timeout,
+            'added timeout buffer' => self::TIMEOUT_BUFFER,
             'value' => $value
         ]);
-        $this->cache->set($this->generateCacheToken(self::TOKEN_TYPE_TIME, $cacheType), $timeout + (60 * 60));
+        $this->cache->set($this->generateCacheToken(self::TOKEN_TYPE_TIME, $cacheType), $timeout + self::TIMEOUT_BUFFER);
         $this->cache->set($this->generateCacheToken(self::TOKEN_TYPE_DATA, $cacheType), $value);
     }
 
@@ -117,4 +120,14 @@ class Cache
         return $cache;
     }
 
+    /**
+     * @param string $cacheType
+     * @return int
+     * @throws \Psr\SimpleCache\InvalidArgumentException
+     */
+    public function getTimeout(string $cacheType){
+        $cache = $this->cache->get($this->generateCacheToken(self::TOKEN_TYPE_TIME, $cacheType));
+        $this->logger->info('timeout value', [$cache]);
+        return (int)$cache;
+    }
 }
