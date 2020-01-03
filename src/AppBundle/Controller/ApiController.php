@@ -10,6 +10,7 @@ namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Statusboard\Weather\Accuweather\Cache;
+use Statusboard\Weather\Accuweather\RequestLimitExceededException;
 use Statusboard\Weather\Accuweather\Transform AS Accuweather;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Cache\Simple\FilesystemCache;
@@ -101,14 +102,14 @@ class ApiController extends Controller
         if($cache->checkCacheTime($cache::CACHE_TYPE_LOCATION)){
             $location = (string)$cache->getCache($cache::CACHE_TYPE_LOCATION);
         } else {
-            $data = Accuweather::getLocation($api_key, $postal);
-            if(isset($data[0]) && $data[0] === Response::HTTP_FORBIDDEN){
-                $json_response = Response::HTTP_FORBIDDEN;
-                $location = $this->getParameter('accuweather_api_location');
-            } else {
+            try{
+                $data = Accuweather::getLocation($api_key, $postal);
                 $location = $data[Accuweather::RESPONSE_KEY];
                 $timeout = $data[Accuweather::RESPONSE_TIMEOUT];
                 $cache->updateCache($cache::CACHE_TYPE_LOCATION, $timeout, $location);
+            } catch (RequestLimitExceededException $e){
+                $json_response = Response::HTTP_FORBIDDEN;
+                $location = $this->getParameter('accuweather_api_location');
             }
         }
 
@@ -116,14 +117,13 @@ class ApiController extends Controller
             $body = unserialize($cache->getCache($cache::CACHE_TYPE_WEATHER));
             $body[Accuweather::RESPONSE_TIMEOUT] = $cache->getTimeout($cache::CACHE_TYPE_WEATHER);
         } else {
-            $data = Accuweather::getFiveDayForecast($api_key, $location);
-            if(isset($data[0]) && $data[0] === Response::HTTP_FORBIDDEN){
-                $json_response = Response::HTTP_FORBIDDEN;
-            } else {
-                $body = $data;
+            try {
+                $body = Accuweather::getFiveDayForecast($api_key, $location);
                 $timeout = $body[Accuweather::RESPONSE_TIMEOUT];
                 $cache->updateCache($cache::CACHE_TYPE_WEATHER, $timeout, serialize($body));
                 $body[Accuweather::RESPONSE_TIMEOUT] = $cache->getTimeout($cache::CACHE_TYPE_WEATHER);
+            } catch (RequestLimitExceededException $e){
+                $json_response = Response::HTTP_FORBIDDEN;
             }
         }
 

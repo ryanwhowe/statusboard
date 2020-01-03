@@ -3,8 +3,10 @@
 
 namespace Statusboard\Weather\Accuweather;
 
+use GuzzleHttp\Client;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
+use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\ResponseInterface;
 use Statusboard\Weather\ApiResponseInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,24 +24,17 @@ class Transform implements ApiResponseInterface {
      * @param string $postal
      * @return string
      * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws RequestLimitExceededException
      */
     public static function getLocation(string $api_key, string $postal): array {
-        $client = new \GuzzleHttp\Client([
-            'base_uri' => 'http://dataservice.accuweather.com/locations/v1/postalcodes/search?apikey=okYccfVSHvQKQb0yJkFwx8AUKElmXFRH&q=01757',
-            'timeout' => self::RESPONSE_TIMEOUT_INTERVAL
-        ]);
-        $req = new \GuzzleHttp\Psr7\Request('get', '?apikey=' . $api_key . '&q=' . $postal);
-        $resp = $client->send($req);
-        $statusCode = $resp->getStatusCode();
-        if($statusCode === Response::HTTP_FORBIDDEN){
-            return [Response::HTTP_FORBIDDEN];
-        } else {
-            $timeout = $resp->getHeader('Expires');
-            $body = \json_decode((string)$resp->getBody(), true);
-        }
+        $base_uri = 'http://dataservice.accuweather.com/locations/v1/postalcodes/search?apikey=okYccfVSHvQKQb0yJkFwx8AUKElmXFRH&q=01757';
+        $uri = '?apikey=' . $api_key . '&q=' . $postal;
+
+        $body = self::getResponse($base_uri, $uri);
+
         return [
             self::RESPONSE_KEY => $body[0]['Key'],
-            self::RESPONSE_TIMEOUT => strtotime($timeout[0])
+            self::RESPONSE_TIMEOUT => $body[self::RESPONSE_TIMEOUT]
         ];
     }
 
@@ -48,23 +43,38 @@ class Transform implements ApiResponseInterface {
      * @param string $api_key
      * @return array
      * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws RequestLimitExceededException
      */
     public static function getFiveDayForecast(string $api_key, string $location): array {
-        $client = new \GuzzleHttp\Client([
-            'base_uri' => 'http://dataservice.accuweather.com/forecasts/v1/daily/5day/',
+        $base_uri = 'http://dataservice.accuweather.com/forecasts/v1/daily/5day/';
+        $uri = $location . '?apikey=' . $api_key;
+
+        return self::getResponse($base_uri, $uri);
+    }
+
+    /**
+     * @param string $base_uri
+     * @param string $uri
+     * @return int|array
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws RequestLimitExceededException
+     */
+    private static function getResponse(string $base_uri, string $uri){
+        $client = new Client([
+            'base_uri' => $base_uri,
             'timeout' => self::RESPONSE_TIMEOUT_INTERVAL
         ]);
-        $req = new \GuzzleHttp\Psr7\Request('get', $location . '?apikey=' . $api_key);
-        $resp = $client->send($req);
-        $statusCode = $resp->getStatusCode();
+        $request = new Request('get', $uri);
+        $response = $client->send($request);
+        $statusCode = $response->getStatusCode();
         if($statusCode === Response::HTTP_FORBIDDEN){
-            return [Response::HTTP_FORBIDDEN];
+            throw new RequestLimitExceededException();
         } else {
-            $timeout = $resp->getHeader('Expires');
-            $response = \json_decode((string)$resp->getBody(), true);
-            $response[self::RESPONSE_TIMEOUT] = strtotime($timeout[0]);
+            $timeout = $response->getHeader('Expires');
+            $return = \json_decode((string)$response->getBody(), true);
+            $return[self::RESPONSE_TIMEOUT] = strtotime($timeout[0]);
         }
-        return $response;
+        return $return;
     }
 
     /**

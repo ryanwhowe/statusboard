@@ -61,7 +61,7 @@ class Cache
      * @return string
      * @throws \Exception
      */
-    private function generateCacheToken(int $tokenType, string $cacheType): string {
+    public function generateCacheToken(int $tokenType, string $cacheType): string {
         switch ($tokenType){
             case self::TOKEN_TYPE_TIME:
                 return $this->token . $this->time_token . $cacheType;
@@ -129,5 +129,15 @@ class Cache
         $cache = $this->cache->get($this->generateCacheToken(self::TOKEN_TYPE_TIME, $cacheType));
         $this->logger->info('timeout value', [$cache]);
         return (int)$cache;
+    }
+
+    /**
+     * @param string $cacheType
+     * @throws \Psr\Cache\InvalidArgumentException
+     */
+    public function deleteCache(string $cacheType){
+        $this->logger->info('clearing cache ' . $cacheType);
+        $this->cache->deleteItem($this->generateCacheToken(self::TOKEN_TYPE_TIME, $cacheType));
+        $this->cache->deleteItem($this->generateCacheToken(self::TOKEN_TYPE_DATA, $cacheType));
     }
 }
