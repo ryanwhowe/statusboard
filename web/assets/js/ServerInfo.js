@@ -196,6 +196,7 @@ $.widget("howe.ServerInfo", {
      * @private
      */
     __textFormat: function (data) {
+        data = String(data);
         return data.replace('_', ' ').replace(/\w\S*/g, function (txt) {
             return txt.charAt(0).toUpperCase() + txt.substr(1);
         });
