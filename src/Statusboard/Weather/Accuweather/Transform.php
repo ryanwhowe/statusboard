@@ -21,13 +21,27 @@ class Transform implements ApiResponseInterface {
 
     /**
      * @param string $api_key
+     * @param string $location
+     * @return array
+     * @throws RequestLimitExceededException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public static function getCurrentConditions(string $api_key, string $location): array {
+        $base_uri = 'http://dataservice.accuweather.com/currentconditions/v1/';
+        $uri = $location . '?apikey=' . $api_key;
+
+        return self::getResponse($base_uri, $uri);
+    }
+
+    /**
+     * @param string $api_key
      * @param string $postal
      * @return string
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws RequestLimitExceededException
      */
     public static function getLocation(string $api_key, string $postal): array {
-        $base_uri = 'http://dataservice.accuweather.com/locations/v1/postalcodes/search?apikey=okYccfVSHvQKQb0yJkFwx8AUKElmXFRH&q=01757';
+        $base_uri = 'http://dataservice.accuweather.com/locations/v1/postalcodes/search';
         $uri = '?apikey=' . $api_key . '&q=' . $postal;
 
         $body = self::getResponse($base_uri, $uri);
@@ -101,6 +115,12 @@ class Transform implements ApiResponseInterface {
         }
         $output['headline'] = $body['Headline']['Text'];
         $output['expires'] = $body[self::RESPONSE_TIMEOUT];
+        $output['current'] = [
+            'condition' => $body['current'][0]['WeatherText'],
+            'temp' => self::formatNumber($body['current'][0]['Temperature']['Imperial']['Value']),
+            'link' => $body['current'][0]['Link'],
+            'icon' => self::generateIconImageUrl($body['current'][0]['WeatherIcon'])
+        ];
         return $output;
     }
 

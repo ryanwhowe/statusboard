@@ -76,7 +76,14 @@ $.widget("howe.WeatherInfo",{
         let $e = $(this.element);
 
         me.widget = $([
-            "<div class='col-lg-8 col-lg-offset-2 col-md-12 col-sm-12'><div class='panel panel-success'><div class='panel-heading text-center'>" + me.data_response['headline'] + "</div></div></div>",
+            "<div class='row'>",
+            "<div class='col-lg-3 col-md-3 col-sm-12'><div class='panel panel-warning'><div class='panel-heading text-center'>",
+            me.data_response['current']['condition'] + me.data_response['current']['temp'] + " &deg;F<br>",
+            "<a target='_blank' href='" + me.data_response['current']['link'] + "'><img src='" + me.data_response['current']['icon'] + "' alt='" + me.data_response['current']['condition'] + "'></a><br>",
+            "</div></div></div>",
+            "<div class='col-lg-9 col-md-9 col-sm-12'><div class='panel panel-success'><div class='panel-heading text-center'>" + me.data_response['headline'] + "</div></div></div>",
+            "</div>",
+            "<div class='row'>",
             "<div class='col-lg-3 col-md-6 col-sm-12'>",
             "<div class='panel panel-warning'>",
             "<div class='panel-heading text-center'>Today</div>",
@@ -129,7 +136,7 @@ $.widget("howe.WeatherInfo",{
             "</div>",
             "</div>",
             "</div>",
-
+            "</div>"
         ].join("\n"));
         $e.replaceWith(me.widget);
 

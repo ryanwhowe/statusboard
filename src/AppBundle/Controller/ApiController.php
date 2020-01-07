@@ -119,6 +119,7 @@ class ApiController extends Controller
         } else {
             try {
                 $body = Accuweather::getFiveDayForecast($api_key, $location);
+                $body['current'] = Accuweather::getCurrentConditions($api_key, $location);
                 $timeout = $body[Accuweather::RESPONSE_TIMEOUT];
                 $cache->updateCache($cache::CACHE_TYPE_WEATHER, $timeout, serialize($body));
                 $body[Accuweather::RESPONSE_TIMEOUT] = $cache->getTimeout($cache::CACHE_TYPE_WEATHER);
