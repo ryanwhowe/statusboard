@@ -18,7 +18,7 @@ class GetWeatherImagesCommand extends ContainerAwareCommand
     CONST MIN_ICON_NUMBER = 1;
     CONST MAX_ICON_NUMBER = 44;
 
-    CONST WEATHER_DIRECTORY_BASE = 'web';
+    CONST WEATHER_DIRECTORY_BASE = 'web/';
     CONST WEATHER_DIRECTORY_ACCUWEATHER = self::WEATHER_DIRECTORY_BASE . Transform::ICON_BASE_DIRECTORY;
 
     protected function configure()

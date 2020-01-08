@@ -18,7 +18,7 @@ class Transform implements ApiResponseInterface {
 
     const RESPONSE_RETRY = 5;
     const RESPONSE_TIMEOUT_INTERVAL = 2.0;
-    const ICON_BASE_DIRECTORY = '/assets/images/weather/accuweather/';
+    const ICON_BASE_DIRECTORY = 'assets/images/weather/accuweather/';
     const BASE_URL_CURRENT_CONDITIONS = 'http://dataservice.accuweather.com/currentconditions/v1/';
     const BASE_URL_LOCATION = 'http://dataservice.accuweather.com/locations/v1/postalcodes/search';
     const BASE_URL_FIVE_DAY_FORECAST = 'http://dataservice.accuweather.com/forecasts/v1/daily/5day/';
