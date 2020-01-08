@@ -18,6 +18,10 @@ class Transform implements ApiResponseInterface {
 
     const RESPONSE_RETRY = 5;
     const RESPONSE_TIMEOUT_INTERVAL = 2.0;
+    const ICON_BASE_DIRECTORY = '/assets/images/weather/accuweather/';
+    const BASE_URL_CURRENT_CONDITIONS = 'http://dataservice.accuweather.com/currentconditions/v1/';
+    const BASE_URL_LOCATION = 'http://dataservice.accuweather.com/locations/v1/postalcodes/search';
+    const BASE_URL_FIVE_DAY_FORECAST = 'http://dataservice.accuweather.com/forecasts/v1/daily/5day/';
 
     /**
      * @param string $api_key
@@ -27,7 +31,7 @@ class Transform implements ApiResponseInterface {
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public static function getCurrentConditions(string $api_key, string $location): array {
-        $base_uri = 'http://dataservice.accuweather.com/currentconditions/v1/';
+        $base_uri = self::BASE_URL_CURRENT_CONDITIONS;
         $uri = $location . '?apikey=' . $api_key;
 
         return self::getResponse($base_uri, $uri);
@@ -41,7 +45,7 @@ class Transform implements ApiResponseInterface {
      * @throws RequestLimitExceededException
      */
     public static function getLocation(string $api_key, string $postal): array {
-        $base_uri = 'http://dataservice.accuweather.com/locations/v1/postalcodes/search';
+        $base_uri = self::BASE_URL_LOCATION;
         $uri = '?apikey=' . $api_key . '&q=' . $postal;
 
         $body = self::getResponse($base_uri, $uri);
@@ -60,7 +64,7 @@ class Transform implements ApiResponseInterface {
      * @throws RequestLimitExceededException
      */
     public static function getFiveDayForecast(string $api_key, string $location): array {
-        $base_uri = 'http://dataservice.accuweather.com/forecasts/v1/daily/5day/';
+        $base_uri = self::BASE_URL_FIVE_DAY_FORECAST;
         $uri = $location . '?apikey=' . $api_key;
 
         return self::getResponse($base_uri, $uri);
@@ -129,7 +133,7 @@ class Transform implements ApiResponseInterface {
      * @return string
      */
     public static function generateIconImageUrl(int $icon): string {
-        return 'https://developer.accuweather.com/sites/default/files/' . str_pad($icon, 2, "0", STR_PAD_LEFT) . '-s.png';
+        return self::ICON_BASE_DIRECTORY . self::generateIconFileName($icon);
     }
 
     /**
@@ -180,6 +184,10 @@ class Transform implements ApiResponseInterface {
             }
         ));
         return $handler;
+    }
+
+    public static function generateIconFileName(int $icon): string{
+        return str_pad($icon, 2, "0", STR_PAD_LEFT) . '-s.png';
     }
 
 }
