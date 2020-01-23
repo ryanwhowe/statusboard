@@ -68,13 +68,12 @@ class ApiControllerTest extends WebTestCase {
      * Test the group api response for the required response elements
      */
     public function testGroup() {
-        $expected_keys = ['external_ip', 'internal_ip', 'heartbeat'];
+        $expected_keys = ['external_ip', 'internal_ip', 'heartbeat', 'time_out'];
         $crawler = $this->loggedInClient->request('GET', '/api/group/vmbox');
 
         $this->assertEquals(Response::HTTP_OK, $this->loggedInClient->getResponse()->getStatusCode(), 'Response Code Error');
         $response = $this->loggedInClient->getResponse();
         $response_json = json_decode($response->getContent(), true);
-        $this->assertArrayHasKey('timeout', $response_json, 'Missing timeout key from response');
         foreach ($response_json as $key => $item) {
             if (is_array($item)) {
                 $expected_keys = array_diff($expected_keys, [$item['key']]);

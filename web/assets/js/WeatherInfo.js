@@ -81,10 +81,10 @@ $.widget("howe.WeatherInfo",{
             me.data_response['current']['condition'] + "<br>Currently: " + me.data_response['current']['temp'] + " &deg;F<br>",
             "<a target='_blank' href='" + me.data_response['current']['link'] + "'><img src='" + me.data_response['current']['icon'] + "' alt='" + me.data_response['current']['condition'] + "'></a><br>",
             "</div></div></div>",
-            "<div class='col-lg-9 col-md-9 col-sm-12'><div class='panel panel-success'><div class='panel-heading text-center'>" + me.data_response['headline'] + "</div></div></div>",
+            "<div class='col-lg-9 col-md-9 col-sm-12' title='updated: " + me.__convertTimestamp(Math.floor(new Date().getTime()/1000.0)) + ", expires: " + me.__convertTimestamp(me.data_response['expires']) + "'><div class='panel panel-success'><div class='panel-heading text-center'>" + me.data_response['headline'] + "</div></div></div>",
             "</div>",
             "<div class='row'>",
-            "<div class='col-lg-3 col-md-6 col-sm-12'>",
+            "<div class='col-lg-3 col-md-6 col-sm-6'>",
             "<div class='panel panel-warning'>",
             "<div class='panel-heading text-center'>Today</div>",
             "<div class='panel-body text-center'>",
@@ -97,7 +97,7 @@ $.widget("howe.WeatherInfo",{
             "</div>",
             "</div>",
             "</div>",
-            "<div class='col-lg-3 col-md-6 col-sm-12'>",
+            "<div class='col-lg-3 col-md-6 col-sm-6'>",
             "<div class='panel panel-info'>",
             "<div class='panel-heading text-center'>" + me.data_response[1]['day'] + "</div>",
             "<div class='panel-body text-center'>",
@@ -110,7 +110,7 @@ $.widget("howe.WeatherInfo",{
             "</div>",
             "</div>",
             "</div>",
-            "<div class='col-lg-3 col-md-6 col-sm-12'>",
+            "<div class='col-lg-3 col-md-6 col-sm-6'>",
             "<div class='panel panel-info'>",
             "<div class='panel-heading text-center'>" + me.data_response[2]['day'] + "</div>",
             "<div class='panel-body text-center'>",
@@ -123,7 +123,7 @@ $.widget("howe.WeatherInfo",{
             "</div>",
             "</div>",
             "</div>",
-            "<div class='col-lg-3 col-md-6 col-sm-12'>",
+            "<div class='col-lg-3 col-md-6 col-sm-6'>",
             "<div class='panel panel-info'>",
             "<div class='panel-heading text-center'>" + me.data_response[3]['day'] + "</div>",
             "<div class='panel-body text-center'>",
@@ -173,5 +173,39 @@ $.widget("howe.WeatherInfo",{
         let e = this.element;
         $(e).replaceWith('<div class="alert alert-danger"><strong>ALERT: </strong>' + error_message + '</div>');
         clearInterval(me.update_interval);
+    },
+
+    /**
+     * This is an internal helper function to format the timestamp return values into actual local times
+     *
+     * @param timestamp
+     * @returns {string|*}
+     * @private
+     */
+    __convertTimestamp: function (timestamp) {
+        let d = new Date(timestamp * 1000),	// Convert the passed timestamp to milliseconds
+            yyyy = d.getFullYear(),
+            mm = ('0' + (d.getMonth() + 1)).slice(-2),	// Months are zero based. Add leading 0.
+            dd = ('0' + d.getDate()).slice(-2),			// Add leading 0.
+            hh = d.getHours(),
+            h = hh,
+            min = ('0' + d.getMinutes()).slice(-2),		// Add leading 0.
+            ampm = 'AM',
+            time;
+
+        if (hh > 12) {
+            h = hh - 12;
+            ampm = 'PM';
+        } else if (hh === 12) {
+            h = 12;
+            ampm = 'PM';
+        } else if (hh === 0) {
+            h = 12;
+        }
+
+        // ie: 2013-02-18, 8:35 AM
+        time = yyyy + '-' + mm + '-' + dd + ', ' + h + ':' + min + ' ' + ampm;
+
+        return time;
     },
 });

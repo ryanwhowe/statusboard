@@ -107,12 +107,12 @@ class ApiService
 
         if ($has_cache && $cache->get($time_token) >= $this->getCacheTimeout()) {
             $result = $cache->get($data_token);
-            $result['timeout'] = $this->getCacheTimeout();
+            $result[] = ['key' => 'time_out','value' => $this->getCacheTimeout(), 'lastUpdate' => strtotime('now')];
             $this->logger->info('Cache result', $result);
             $this->logger->info('Cache Time', ['timestamp' => $cache->get($time_token)]);
         } else {
             $result = Client::create($api_token, $api_url, $grouping)->group();
-            $result['timeout'] = $this->getCacheTimeout();
+            $result[] = ['key' => 'time_out','value' => $this->getCacheTimeout(), 'lastUpdate' => strtotime('now')];
             $this->logger->info('Api result', $result);
             $cache->set($data_token, $result);
             $cache->set($time_token, time());
