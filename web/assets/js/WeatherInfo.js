@@ -75,6 +75,8 @@ $.widget("howe.WeatherInfo",{
         let me = this;
         let $e = $(this.element);
 
+        clearTimeout(me.update_interval);
+
         me.widget = $([
             "<div class='row'>",
             "<div class='col-lg-3 col-md-3 col-sm-12'><div class='panel panel-warning'><div class='panel-heading text-center'>",
@@ -139,11 +141,11 @@ $.widget("howe.WeatherInfo",{
             "</div>",
             "<div class='row text-center small'>powered by Accuweather, Inc.&reg;</div>"
         ].join("\n"));
-        $e.replaceWith(me.widget);
+        $e.html('').append(me.widget);
 
         let update_interval = me.__getUpdateInterval();
 
-        me.update_interval = setInterval(function() {
+        me.update_interval = setTimeout(function() {
             me._updateData();
         }, update_interval);
     },
