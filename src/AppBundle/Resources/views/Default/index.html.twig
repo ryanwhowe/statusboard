@@ -138,6 +138,20 @@
             </div>
             <!-- /.panel -->
         </div>
+        <div class="col-md-6 col-lg-6">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="panel-title text-center">
+                        <a href="https://cdn.mbta.com/sites/default/files/route_pdfs/2019-fall/2019-10-21-cr-franklin-foxboro-pilot-accessible.pdf" target="_blank">MBTA</a>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="mbta"></div>
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
     </div>
 {% endblock %}
 
@@ -149,6 +163,7 @@
     <script src="{{ asset('assets/js/ClockClass.js') }}"></script>
     <script src="{{ asset('assets/js/PersonalCalendar.js') }}"></script>
     <script src="{{ asset('assets/js/WeatherInfo.js') }}"></script>
+    <script src="{{ asset('assets/js/Mbta.js') }}"></script>
     <script>
         let time_parts = $('#arrival_time').val().split(':');
         let arrival = new Date(0,0,0,parseInt(time_parts[0],0) ,parseInt(time_parts[1],0),0);
@@ -163,6 +178,7 @@
             displayTime();
             setInterval('displayTime()', 1000);
             $('.weather').WeatherInfo();
+            $('.mbta').Mbta();
             $('.serverinfo').ServerInfo();
             $(".jquery_ui_datepicker_preview").datepicker({
                 defaultDate: null,
