@@ -10,8 +10,10 @@
     <div class="row">
         <div class="col-md-6 col-lg-6">
             <div class="panel panel-info">
-                <div class="panel-heading text-center">
-                    Servers
+                <div class="panel-heading">
+                    <div class="panel-title text-center">
+                        Servers
+                    </div>
                 </div>
                 <div class="panel-body">
                     {% for server in servers %}
@@ -40,8 +42,10 @@
         </div>
         <div class="col-md-6 col-lg-6">
             <div class="panel panel-info">
-                <div class="panel-heading text-center">
-                    Clock
+                <div class="panel-heading">
+                    <div class="panel-title text-center">
+                        Clock
+                    </div>
                 </div>
                 <div class="panel-body">
                     <div class="row">
@@ -83,8 +87,10 @@
     <div class="row">
         <div class="col-md-6 col-lg-6">
             <div class="panel panel-info">
-                <div class="panel-heading text-center">
-                    Calendar
+                <div class="panel-heading">
+                    <div class="panel-title text-center">
+                        Calendar
+                    </div>
                 </div>
                 <div class="panel-body">
                     <div class="jquery_ui_datepicker_preview"></div>
@@ -95,8 +101,10 @@
         </div>
         <div class="col-md-6 col-lg-6">
             <div class="panel panel-info">
-                <div class="panel-heading text-center">
-                    Calendar Upcoming
+                <div class="panel-heading">
+                    <div class="panel-title text-center">
+                        Calendar Upcoming
+                    </div>
                 </div>
                 <div class="panel-body">
                     <table class="table table-bordered table-striped table-hover">
@@ -105,7 +113,7 @@
                         </thead>
                         <tbody>
                             <tr><td>Holiday</td><td{% if events['Holiday'].days %} title="{{ events['Holiday'].date }}">{{ events['Holiday'].days }}{% else %}>None Scheduled{% endif %}</td></tr>
-                            <tr><td>Pay Day</td><td{% if events['Pay Day'].days %} title="{{ events['Pay Day'].date }}">{{ events['Pay Day'].days }}{% else %}>None Scheduled{% endif %}</td></tr>
+                            <tr><td>TRUECar Pay Day</td><td{% if events['TRUECar Pay Date'].days %} title="{{ events['TRUECar Pay Date'].date }}">{{ events['TRUECar Pay Date'].days }}{% else %}>None Scheduled{% endif %}</td></tr>
                             <tr><td>PTO</td><td{% if events['PTO'].days %} title="{{ events['PTO'].date }}">{{ events['PTO'].days }}{% else %}>None Scheduled{% endif %}</td></tr>
                         </tbody>
                     </table>
@@ -115,54 +123,32 @@
             <!-- /.panel -->
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-6 col-lg-6">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="panel-title text-center">
+                        Weather
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="weather"></div>
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+    </div>
 {% endblock %}
 
 {% block style %}
-    <style>
-        .ui-datepicker td.holiday span {
-            background: #7ba7bc;
-            color: #000000;
-            font-weight: bold;
-            pointer-events: all;
-        }
-
-        .ui-datepicker td.sick a {
-            background: #14bf15;
-            color: #000000;
-            font-weight: bold;
-        }
-
-        .ui-datepicker td.pto a {
-            background: #FF9933;
-            color: #000000;
-            font-weight: bold;
-        }
-
-        .ui-datepicker td.payday a {
-            background: #FF3300;
-            color: #000000;
-            font-weight: bold;
-        }
-
-        .ui-datepicker td.ui-datepicker-today a {
-            background: yellow;
-        }
-
-        /*
-        This will stop the weekends from being displayed at ALL on the date picker
-        There is also code in the beforeShowDay that already makes the weekend dates
-        unselectable.  If you want to display the weekend dates again remove this
-        css portion.
-        */
-        th.ui-datepicker-week-end, td.ui-datepicker-week-end {
-            display: none;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/calendar.css') }}"/>
 {% endblock %}
 {% block javascripts %}
     <script src="{{ asset('assets/js/ServerInfo.js') }}"></script>
     <script src="{{ asset('assets/js/ClockClass.js') }}"></script>
     <script src="{{ asset('assets/js/PersonalCalendar.js') }}"></script>
+    <script src="{{ asset('assets/js/WeatherInfo.js') }}"></script>
     <script>
         'use strict';
         let time_parts = $('#arrival_time').val().split(':');
@@ -179,6 +165,7 @@
             setInterval('updateTime()', 1000);
             displayTime();
             setInterval('displayTime()', 1000);
+            $('.weather').WeatherInfo();
             $('.serverinfo').ServerInfo();
             $(".jquery_ui_datepicker_preview").datepicker({
                 defaultDate: null,

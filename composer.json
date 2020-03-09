@@ -5,7 +5,8 @@
     "description": "TheAxeRant statusboard",
     "autoload": {
         "psr-4": {
-            "AppBundle\\": "src/AppBundle"
+            "AppBundle\\": "src/AppBundle",
+            "Statusboard\\": "src/Statusboard"
         },
         "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
     },
@@ -16,6 +17,7 @@
     "require": {
         "php": ">=7.0",
         "ext-json": "*",
+        "calendarific/php-calendarific": "^2.0",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/orm": "^2.5",
         "guzzlehttp/guzzle": "^6.3",

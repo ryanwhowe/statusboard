@@ -5,6 +5,7 @@ namespace AppBundle\Command;
 use AppBundle\Entity\Calendar;
 use AppBundle\Entity\Server;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Statusboard\Utility\ArrayUtility;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
@@ -78,11 +79,7 @@ class BuildDatabaseCommand extends ContainerAwareCommand
                 $io->error("${file} : does not exists");
             } else {
 
-                $csv = array_map('str_getcsv', file($file));
-                \array_walk($csv, function (&$a) use ($csv) {
-                    $a = \array_combine($csv[0], $a);
-                });
-                array_shift($csv);
+                $csv = ArrayUtility::csvToAssociativeArray(file($file));
 
                 $io->progressStart(count($csv));
                 foreach ($csv as $row) {
@@ -107,11 +104,7 @@ class BuildDatabaseCommand extends ContainerAwareCommand
                     $io->error("${file} : does not exists");
                 } else {
 
-                    $csv = array_map('str_getcsv', file($file));
-                    \array_walk($csv, function (&$a) use ($csv) {
-                        $a = \array_combine($csv[0], $a);
-                    });
-                    array_shift($csv);
+                    $csv = ArrayUtility::csvToAssociativeArray(file($file));
 
                     $io->progressStart(count($csv));
                     foreach ($csv as $row) {
@@ -125,10 +118,9 @@ class BuildDatabaseCommand extends ContainerAwareCommand
                     }
                     $io->progressFinish();
 
-                    $io->note('Calendar Load Process Completed');
+                    $io->note('Server Load Process Completed');
                 }
             }
         }
     }
-
 }

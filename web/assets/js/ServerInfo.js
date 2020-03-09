@@ -10,7 +10,8 @@ $.widget("howe.ServerInfo", {
     options: {
         server: null,
         disabled: false,
-        max_age: 31 * 60 * 1000
+        max_age: 31 * 60 * 1000,
+        skip_keys: ['time_out']
     },
 
     /**
@@ -196,6 +197,7 @@ $.widget("howe.ServerInfo", {
      * @private
      */
     __textFormat: function (data) {
+        data = String(data);
         return data.replace('_', ' ').replace(/\w\S*/g, function (txt) {
             return txt.charAt(0).toUpperCase() + txt.substr(1);
         });
@@ -221,6 +223,8 @@ $.widget("howe.ServerInfo", {
             if (datapoint.key === 'heartbeat') {
                 me.data_heartbeat = new Date(datapoint.value * 1000);
                 update_data.unshift("<tr><td style='font-weight: bold;text-align: right'>" + me.__textFormat(datapoint.key) + " : </td><td style='padding-left: 1em;text-align: left' title='" + me.__convertTimestamp(datapoint.last_update) + "'>" + me.__formatter(datapoint.key, datapoint.value) + "</td></tr>");
+            } else if(o.skip_keys.includes(datapoint.key)){
+              return true;
             } else {
                 update_data.push("<tr><td style='font-weight: bold;text-align: right'>" + me.__textFormat(datapoint.key) + " : </td><td style='padding-left: 1em;text-align: left' title='" + me.__convertTimestamp(datapoint.last_update) + "'>" + me.__formatter(datapoint.key, datapoint.value) + "</td></tr>");
             }

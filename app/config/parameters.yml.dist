@@ -22,3 +22,7 @@ parameters:
     api_url: ~
     admin_password: ~
     container.autowiring.strict_mode: true
+    calendarific_api_key: ~
+    accuweather_api_key: ~
+    postal_code: '01001'
+    accuweather_api_location: ~
