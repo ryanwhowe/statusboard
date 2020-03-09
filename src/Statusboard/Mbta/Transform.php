@@ -26,8 +26,14 @@ class Transform {
     const STATION_FILTER_FORGEPARK = 'Forge Park / 495';
 
     const TRIPS_RETURNED = 3;
-    const EXPIRATION_BUFFER = 300; //seconds
+    const EXPIRATION_BUFFER = Cache::TIMEOUT_BUFFER + 60; //seconds
 
+    /**
+     * IMPORTANT, the Cache::TIMEOUT_BUFFER is included in the expires time returned, along with an extra 60 seconds
+     *
+     * @param array $source_data
+     * @return array
+     */
     public static function responseProcessor(array $source_data): array{
         if(empty($source_data)){
             throw new \InvalidArgumentException('No Schedule Data provided');

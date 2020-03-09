@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Statusboard\Weather\Accuweather\RequestLimitExceededException;
 
 class Fetcher {
-    const CACHE_TIME = 600; //seconds
+
     const BASE_URL = 'https://api-v3.mbta.com';
     const LINE = 'line-Franklin';
     const ROUTE = 'CR-Franklin';
