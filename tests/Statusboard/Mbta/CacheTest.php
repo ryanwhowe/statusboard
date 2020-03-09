@@ -2,7 +2,7 @@
 
 namespace Tests\Statusboard\Mbta;
 
-use Statusboard\MBTA\Cache;
+use Statusboard\Mbta\Cache;
 use PHPUnit\Framework\TestCase;
 
 class CacheTest extends TestCase {
