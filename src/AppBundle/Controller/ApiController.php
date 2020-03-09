@@ -9,11 +9,13 @@
 namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Statusboard\Weather\Accuweather\Cache;
+use Statusboard\Mbta\Fetcher as MbtaFetcher;
+use Statusboard\Mbta\Transform as Mbta;
+use Statusboard\Weather\Accuweather\Cache as WeatherCache;
+use Statusboard\Mbta\Cache as MbtaCache;
 use Statusboard\Weather\Accuweather\RequestLimitExceededException;
 use Statusboard\Weather\Accuweather\Transform AS Accuweather;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Cache\Simple\FilesystemCache;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use AppBundle\theAxeRant\Client;
@@ -93,7 +95,7 @@ class ApiController extends Controller
      */
     public function weather(Request $request){
 
-        $cache = new Cache($this->get('logger'));
+        $cache = new WeatherCache($this->get('logger'));
 
         $json_response = Response::HTTP_OK;
         $api_key = $this->getParameter('accuweather_api_key');
@@ -138,6 +140,58 @@ class ApiController extends Controller
 
         $Response->prepare($request)->setPrivate();
 
+        return $Response;
+    }
+
+
+    /**
+     * @Route("/api/mbta")
+     * @param Request $request
+     * @return JsonResponse
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Psr\SimpleCache\InvalidArgumentException
+     */
+    public function mbta(Request $request){
+        $cache = new MbtaCache($this->get('logger'));
+        $json_response = JsonResponse::HTTP_OK;
+        if($cache->checkCacheTime($cache::CACHE_TYPE_SCHEDULE)){
+            $schedule = unserialize($cache->getCache($cache::CACHE_TYPE_SCHEDULE));
+        } else {
+            try {
+                $schedule = MbtaFetcher::getSchedule();
+                $expiration_time = Mbta::getExpirationTime($schedule, time());
+                if(empty($schedule)) {
+                    $cached = $cache->getCache($cache::CACHE_TYPE_SCHEDULE);
+                    if ($cached === null) {
+                        $json_response = JsonResponse::HTTP_NO_CONTENT;
+                    } else {
+                        $schedule = $cached;
+                    }
+                } else {
+                    $cache->updateCache($cache::CACHE_TYPE_SCHEDULE, $expiration_time, serialize($schedule));
+                }
+            } catch (\Exception $e){
+                $schedule = [];
+                $json_response = JsonResponse::HTTP_INTERNAL_SERVER_ERROR;
+            }
+        }
+
+        if($json_response === JsonResponse::HTTP_OK) {
+            $Response = $this->json(\null, $json_response,
+                ['Content-Type' => 'text/json', 'Cache-control' => 'must-revalidate']);
+            $output = Mbta::responseProcessor($schedule);
+            $Response->setContent(json_encode($output));
+        } elseif($json_response === JsonResponse::HTTP_NO_CONTENT){
+            $Response = $this->json(\null, $json_response,
+                ['Content-Type' => 'text/json', 'Cache-control' => 'must-revalidate']);
+            $Response->setContent(json_encode([]));
+        } else {
+            $Response = $this->json(\null, $json_response,
+                ['Content-Type' => 'text/html', 'Cache-control' => 'must-revalidate']);
+            $Response->setContent("<h3>There was an internal error retreiving the scheudle from the MBTA server</h3>");
+        }
+
+        $Response->prepare($request)->setPrivate();
         return $Response;
     }
 }
