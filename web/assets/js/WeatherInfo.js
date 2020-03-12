@@ -48,6 +48,9 @@ $.widget("howe.WeatherInfo",{
                     me.__Error('Ajax Request Timeout');
                 }
                 if(status === 'error'){
+                    if(xhr.status === 403){
+                        me.__Error('Request volume has been exceeded for today');
+                    }
                     me.__Error('Internal Server Error');
                 }
                 let error = JSON.parse(xhr.responseText);
@@ -81,7 +84,8 @@ $.widget("howe.WeatherInfo",{
             "<div class='row'>",
             "<div class='col-lg-3 col-md-3 col-sm-12'><div class='panel panel-warning'><div class='panel-heading text-center'>",
             me.data_response['current']['condition'] + "<br>Currently: " + me.data_response['current']['temp'] + " &deg;F<br>",
-            "<a target='_blank' href='" + me.data_response['current']['link'] + "'><img src='" + me.data_response['current']['icon'] + "' alt='" + me.data_response['current']['condition'] + "'></a><br>",
+            "<a target='_blank' href='" + me.data_response['current']['link'] + "'>",
+            "<i class='wi " + me.data_response['current']['weather-icon'] + "' style='color:#401718; font-size:2em; padding-top: 8px;'></i></a><br>",
             "</div></div></div>",
             "<div class='col-lg-9 col-md-9 col-sm-12' title='updated: " + me.__convertTimestamp(Math.floor(new Date().getTime()/1000.0)) + ", expires: " + me.__convertTimestamp(me.data_response['expires']) + "'><div class='panel panel-success'><div class='panel-heading text-center'>" + me.data_response['headline'] + "</div></div></div>",
             "</div>",
@@ -92,9 +96,9 @@ $.widget("howe.WeatherInfo",{
             "<div class='panel-body text-center'>",
             "High: " + me.data_response[0]['hightemp'] + " &deg;F<br>",
             "Low: " + me.data_response[0]['lowtemp'] + " &deg;F<br>",
-            "<img src='" + me.data_response[0]['icons']['day'] + "' alt='" + me.data_response[0]['icontext']['day'] + "'><br>",
+            "<i class='wi " + me.data_response[0]['weather-icons']['day'] + "' style='color:#401718; font-size:2em; padding-top: 8px;'></i><br>",
             me.data_response[0]['icontext']['day'] + "<br>",
-            "<img src='" + me.data_response[0]['icons']['night'] + "' alt='" + me.data_response[0]['icontext']['night'] + "'><br>",
+            "<i class='wi " + me.data_response[0]['weather-icons']['night'] + "' style='color:#401718; font-size:2em; padding-top: 8px;'></i><br>",
             me.data_response[0]['icontext']['night'],
             "</div>",
             "</div>",
@@ -105,9 +109,9 @@ $.widget("howe.WeatherInfo",{
             "<div class='panel-body text-center'>",
             "High: " + me.data_response[1]['hightemp'] + " &deg;F<br>",
             "Low: " + me.data_response[1]['lowtemp'] + " &deg;F<br>",
-            "<img src='" + me.data_response[1]['icons']['day'] + "' alt='" + me.data_response[1]['icontext']['day'] + "'><br>",
+            "<i class='wi " + me.data_response[1]['weather-icons']['day'] + "' style='color:#401718; font-size:2em; padding-top: 8px;'></i><br>",
             me.data_response[1]['icontext']['day'] + "<br>",
-            "<img src='" + me.data_response[1]['icons']['night'] + "' alt='" + me.data_response[1]['icontext']['night'] + "'><br>",
+            "<i class='wi " + me.data_response[1]['weather-icons']['night'] + "' style='color:#401718; font-size:2em; padding-top: 8px;'></i><br>",
             me.data_response[1]['icontext']['night'],
             "</div>",
             "</div>",
@@ -118,9 +122,9 @@ $.widget("howe.WeatherInfo",{
             "<div class='panel-body text-center'>",
             "High: " + me.data_response[2]['hightemp'] + " &deg;F<br>",
             "Low: " + me.data_response[2]['lowtemp'] + " &deg;F<br>",
-            "<img src='" + me.data_response[2]['icons']['day'] + "' alt='" + me.data_response[2]['icontext']['day'] + "'><br>",
+            "<i class='wi " + me.data_response[2]['weather-icons']['day'] + "' style='color:#401718; font-size:2em; padding-top: 8px;'></i><br>",
             me.data_response[2]['icontext']['day'] + "<br>",
-            "<img src='" + me.data_response[2]['icons']['night'] + "' alt='" + me.data_response[2]['icontext']['night'] + "'><br>",
+            "<i class='wi " + me.data_response[2]['weather-icons']['night'] + "' style='color:#401718; font-size:2em; padding-top: 8px;'></i><br>",
             me.data_response[2]['icontext']['night'],
             "</div>",
             "</div>",
@@ -131,9 +135,9 @@ $.widget("howe.WeatherInfo",{
             "<div class='panel-body text-center'>",
             "High: " + me.data_response[3]['hightemp'] + " &deg;F<br>",
             "Low: " + me.data_response[3]['lowtemp'] + " &deg;F<br>",
-            "<img src='" + me.data_response[3]['icons']['day'] + "' alt='" + me.data_response[3]['icontext']['day'] + "'><br>",
+            "<i class='wi " + me.data_response[3]['weather-icons']['day'] + "' style='color:#401718; font-size:2em; padding-top: 8px;'></i><br>",
             me.data_response[3]['icontext']['day'] + "<br>",
-            "<img src='" + me.data_response[3]['icons']['night'] + "' alt='" + me.data_response[3]['icontext']['night'] + "'><br>",
+            "<i class='wi " + me.data_response[3]['weather-icons']['night'] + "' style='color:#401718; font-size:2em; padding-top: 8px;'></i><br>",
             me.data_response[3]['icontext']['night'],
             "</div>",
             "</div>",
