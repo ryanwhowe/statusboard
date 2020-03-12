@@ -227,6 +227,10 @@ class TransformTest extends TestCase {
                     "day" => "Sunny",
                     "night" => "Mostly cloudy",
                 ],
+                "weather-icons" => [
+                    "day" => "wi-day-sunny",
+                    "night" => "wi-night-alt-cloudy",
+                ],
             ],
             1 => [
                 "date" => 1578657600,
@@ -240,6 +244,10 @@ class TransformTest extends TestCase {
                 "icontext" => [
                     "day" => "Mostly cloudy",
                     "night" => "Mostly cloudy",
+                ],
+                "weather-icons" => [
+                    "day" => "wi-day-cloudy",
+                    "night" => "wi-night-alt-cloudy",
                 ],
             ],
             2 => [
@@ -255,6 +263,10 @@ class TransformTest extends TestCase {
                     "day" => "Mostly cloudy",
                     "night" => "Light Rain Cloudy",
                 ],
+                "weather-icons" => [
+                    "day" => "wi-day-cloudy",
+                    "night" => "wi-cloudy",
+                ],
             ],
             3 => [
                 "date" => 1578830400,
@@ -268,6 +280,10 @@ class TransformTest extends TestCase {
                 "icontext" => [
                     "day" => "Moderate Rain Showers",
                     "night" => "Partly cloudy",
+                ],
+                "weather-icons" => [
+                    "day" => "wi-showers",
+                    "night" => "wi-night-alt-cloudy",
                 ],
             ],
             4 => [
@@ -283,6 +299,10 @@ class TransformTest extends TestCase {
                     "day" => "Intermittent clouds",
                     "night" => "Mostly clear",
                 ],
+                "weather-icons" => [
+                    "day" => "wi-day-cloudy",
+                    "night" => "wi-night-alt-cloudy",
+                ],
             ],
             "headline" => "Becoming noticeably warmer tomorrow and Saturday",
             "expires" => 1578590626,
@@ -291,7 +311,8 @@ class TransformTest extends TestCase {
                 "temp" => 26,
                 "link" => "http://www.accuweather.com/en/us/milford-ma/01757/current-weather/593_pc?lang=en-us",
                 "icon" => "assets/images/weather/accuweather/01-s.png",
-            ]
+                "weather-icon" =>  "wi-day-sunny"
+            ],
         ];
     }
 

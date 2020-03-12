@@ -111,6 +111,10 @@ class Transform implements ApiResponseInterface {
                     'day' => self::generateIconImageUrl($body['DailyForecasts'][$day]['Day']['Icon']),
                     'night' => self::generateIconImageUrl($body['DailyForecasts'][$day]['Night']['Icon']),
                 ],
+                'weather-icons' => [
+                    'day' => TranslateIconsToWeatherIcon::map($body['DailyForecasts'][$day]['Day']['Icon']),
+                    'night' => TranslateIconsToWeatherIcon::map($body['DailyForecasts'][$day]['Night']['Icon']),
+                ],
                 'icontext' => [
                     'day' => self::extractIconPhrase($body['DailyForecasts'][$day]['Day']),
                     'night' => self::extractIconPhrase($body['DailyForecasts'][$day]['Night'])
@@ -123,7 +127,8 @@ class Transform implements ApiResponseInterface {
             'condition' => $body['current'][0]['WeatherText'],
             'temp' => self::formatNumber($body['current'][0]['Temperature']['Imperial']['Value']),
             'link' => $body['current'][0]['Link'],
-            'icon' => self::generateIconImageUrl($body['current'][0]['WeatherIcon'])
+            'icon' => self::generateIconImageUrl($body['current'][0]['WeatherIcon']),
+            'weather-icon' => TranslateIconsToWeatherIcon::map($body['current'][0]['WeatherIcon'])
         ];
         return $output;
     }
