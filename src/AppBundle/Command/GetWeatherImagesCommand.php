@@ -36,7 +36,7 @@ class GetWeatherImagesCommand extends ContainerAwareCommand
 
         $io->title("Checking Weather Directories");
 
-        $skip_numbers = [10,28,27,9];
+        $skip_numbers = [9,10,28,27];
 
         $base_dir = $this->getContainer()->getParameter('kernel.project_dir');
         $base_dir .= '/' . self::WEATHER_DIRECTORY_ACCUWEATHER;
