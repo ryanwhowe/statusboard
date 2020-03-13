@@ -25,7 +25,7 @@ class Transform {
     const STATION_FILTER_SOUTHSTATION = 'South Station';
     const STATION_FILTER_FORGEPARK = 'Forge Park / 495';
 
-    const TRIPS_RETURNED = 3;
+    const TRIPS_RETURNED = 6;
     const EXPIRATION_BUFFER = Cache::TIMEOUT_BUFFER + 60; //seconds
 
     /**
