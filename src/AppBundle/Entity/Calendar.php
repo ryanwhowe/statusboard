@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\UniqueConstraint;
+use Doctrine\ORM\Mapping\Index;
 use Statusboard\Utility\PayDate;
 
 /**
@@ -11,7 +12,9 @@ use Statusboard\Utility\PayDate;
  *
  * @ORM\Table(name="calendar",
  *      uniqueConstraints={
- *          @UniqueConstraint(name="type_date", columns={"type","event_date"})
+ *          @UniqueConstraint(name="type_date", columns={"type","event_date"})},
+ *     indexes={
+ *          @Index(name="date_type_search", columns={"event_date", "type"})
  *     }
  * )
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CalendarRepository")
