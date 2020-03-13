@@ -10,6 +10,9 @@ security:
                 axe:
                     password: '%admin_password%'
                     roles: 'ROLE_ADMIN'
+                test:
+                    password: '%test_password%'
+                    roles: 'ROLE_TESTING'
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
@@ -29,7 +32,8 @@ security:
     access_control:
         # require ROLE_ADMIN for /admin*
         - { path: ^/admin, roles: ROLE_ADMIN }
-        - { path: ^/, roles: ROLE_ADMIN }
+        - { path: ^/, roles: [ROLE_ADMIN, ROLE_TESTING] }
+        - { path: ^/api, roles: [ROLE_ADMIN, ROLE_TESTING] }
 
     encoders:
             Symfony\Component\Security\Core\User\User:
