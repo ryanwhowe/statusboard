@@ -8,9 +8,11 @@
 
 namespace AppBundle\Controller;
 
+use GuzzleHttp\Exception\ServerException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Statusboard\Mbta\Fetcher as MbtaFetcher;
 use Statusboard\Mbta\Transform as Mbta;
+use Statusboard\Mbta\TripFilters;
 use Statusboard\Weather\Accuweather\Cache as WeatherCache;
 use Statusboard\Mbta\Cache as MbtaCache;
 use Statusboard\Weather\Accuweather\RequestLimitExceededException;
@@ -109,7 +111,7 @@ class ApiController extends Controller
                 $location = $data[Accuweather::RESPONSE_KEY];
                 $timeout = $data[Accuweather::RESPONSE_TIMEOUT];
                 $cache->updateCache($cache::CACHE_TYPE_LOCATION, $timeout, $location);
-            } catch (RequestLimitExceededException $e){
+            } catch (ServerException $e){
                 $json_response = Response::HTTP_FORBIDDEN;
                 $location = $this->getParameter('accuweather_api_location');
             }
@@ -125,7 +127,7 @@ class ApiController extends Controller
                 $timeout = $body[Accuweather::RESPONSE_TIMEOUT];
                 $cache->updateCache($cache::CACHE_TYPE_WEATHER, $timeout, serialize($body));
                 $body[Accuweather::RESPONSE_TIMEOUT] = $cache->getTimeout($cache::CACHE_TYPE_WEATHER);
-            } catch (RequestLimitExceededException $e){
+            } catch (ServerException $e){
                 $json_response = Response::HTTP_FORBIDDEN;
             }
         }
@@ -158,7 +160,11 @@ class ApiController extends Controller
             $schedule = unserialize($cache->getCache($cache::CACHE_TYPE_SCHEDULE));
         } else {
             try {
-                $schedule = MbtaFetcher::getSchedule();
+                $trip_filters = [
+                    TripFilters::tripDirectionFilter(TripFilters::TRIP_OUTBOUND),
+                    TripFilters::routePatternFilter(MbtaFetcher::ROUTE_PATTERN)
+                ];
+                $schedule = MbtaFetcher::getSchedule($trip_filters);
                 $expiration_time = Mbta::getExpirationTime($schedule, time());
                 if(empty($schedule)) {
                     $cached = $cache->getCache($cache::CACHE_TYPE_SCHEDULE);
