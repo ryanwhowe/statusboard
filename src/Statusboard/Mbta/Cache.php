@@ -13,5 +13,4 @@ class Cache extends \Statusboard\Utility\Cache
 
     CONST CACHE_TYPE_SCHEDULE = 'schedule';
 
-    CONST TIMEOUT_BUFFER = 300;
 }

@@ -19,12 +19,13 @@ class Fetcher {
     const RESPONSE_TIMEOUT_INTERVAL = 2.0;
 
     /**
+     * @param array $trip_filters
      * @return array|int
      * @throws RequestLimitExceededException
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public static function getSchedule() {
-        $trips = self::getTrips();
+    public static function getSchedule(array $trip_filters) {
+        $trips = self::getTrips($trip_filters);
         if($trips) {
             return self::getResponse(self::BASE_URL, '/schedules?filter[trip]=' . $trips);
         } else {
@@ -33,20 +34,20 @@ class Fetcher {
     }
 
     /**
+     * @param array $filters
      * @return string
      * @throws RequestLimitExceededException
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public static function getTrips(){
+    public static function getTrips(array $filters){
         $date = date('Y-m-d');
         $content = self::getResponse(self::BASE_URL,'/trips?filter[date]=' . $date . '&filter[route]=' . self::ROUTE);
-        $filtered = array_filter($content['data'], function ($value) {
-            /* filter out the inbound trains OR the trains that are on a different route than the one of interest since they do not have the stop needed */
-            if ($value['attributes']['direction_id'] === self::TRIP_INBOUND || $value['relationships']['route_pattern']['data']['id'] !== self::ROUTE_PATTERN) {
-                return false;
+        $filtered = $content['data'];
+        foreach ($filters as $filter){
+            if(is_callable($filter)){
+                $filtered =  array_values(array_filter($filtered, $filter));
             }
-            return true;
-        });
+        }
 
         $trips = [];
 
@@ -63,7 +64,7 @@ class Fetcher {
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws RequestLimitExceededException
      */
-    private static function getResponse(string $base_uri, string $uri){
+    public static function getResponse(string $base_uri, string $uri){
         $client = new Client([
             'base_uri' => $base_uri,
             'timeout' => self::RESPONSE_TIMEOUT_INTERVAL
