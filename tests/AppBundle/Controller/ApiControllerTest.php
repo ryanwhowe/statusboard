@@ -20,8 +20,8 @@ class ApiControllerTest extends WebTestCase {
 
         $this->loggedOutClient = static::createClient();
         $this->loggedInClient = static::createClient(array(), array(
-            'PHP_AUTH_USER' => 'axe',
-            'PHP_AUTH_PW' => 'axe857',
+            'PHP_AUTH_USER' => 'test',
+            'PHP_AUTH_PW' => 'test12345',
         ));
     }
 
@@ -94,7 +94,22 @@ class ApiControllerTest extends WebTestCase {
         $response = $this->loggedInClient->getResponse();
         $response_json = json_decode($response->getContent(), true);
         foreach ($expected_keys as $expected_key) {
-            $this->assertArrayHasKey($expected_key, $response_json, 'Missing ' . $expected_key . ' key from response');
+            $this->assertArrayHasKey($expected_key, $response_json, 'Missing \'' . $expected_key . '\' key from response');
+        }
+    }
+
+    /**
+     * Test the Mbta api response for the required response elements
+     */
+    public function testMbta(){
+        $expected_keys = ['expires', 'trips'];
+        $crawler = $this->loggedInClient->request('GET', '/api/mbta');
+
+        $this->assertEquals(Response::HTTP_OK, $this->loggedInClient->getResponse()->getStatusCode(), 'Response Code Error');
+        $response = $this->loggedInClient->getResponse();
+        $response_json = json_decode($response->getContent(), true);
+        foreach($expected_keys as $expected_key){
+            $this->assertArrayHasKey($expected_key, $response_json, 'Missing \'' . $expected_key. '\' key from response');
         }
     }
 }

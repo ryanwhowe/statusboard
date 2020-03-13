@@ -21,8 +21,8 @@ class DefaultControllerTest extends WebTestCase
 
         $this->loggedOutClient = static::createClient();
         $this->loggedInClient = static::createClient(array(), array(
-            'PHP_AUTH_USER' => 'axe',
-            'PHP_AUTH_PW'   => 'axe857',
+            'PHP_AUTH_USER' => 'test',
+            'PHP_AUTH_PW' => 'test12345',
         ));
     }
     /**
