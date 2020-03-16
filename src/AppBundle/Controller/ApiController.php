@@ -155,6 +155,7 @@ class ApiController extends Controller
      */
     public function mbta(Request $request){
         $cache = new MbtaCache($this->get('logger'));
+        $api_key = $this->getParameter('mbta_api_key');
         $json_response = JsonResponse::HTTP_OK;
         if($cache->checkCacheTime($cache::CACHE_TYPE_SCHEDULE)){
             $schedule = unserialize($cache->getCache($cache::CACHE_TYPE_SCHEDULE));
@@ -164,7 +165,7 @@ class ApiController extends Controller
                     TripFilters::tripDirectionFilter(TripFilters::TRIP_OUTBOUND),
                     TripFilters::routePatternFilter(MbtaFetcher::ROUTE_PATTERN)
                 ];
-                $schedule = MbtaFetcher::getSchedule($trip_filters);
+                $schedule = MbtaFetcher::getSchedule($api_key, $trip_filters);
                 $expiration_time = Mbta::getExpirationTime($schedule, time());
                 if(empty($schedule)) {
                     $cached = $cache->getCache($cache::CACHE_TYPE_SCHEDULE);
