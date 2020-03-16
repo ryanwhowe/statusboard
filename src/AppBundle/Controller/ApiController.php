@@ -24,6 +24,7 @@ use AppBundle\theAxeRant\Client;
 use AppBundle\Cache\ApiService;
 use AppBundle\Entity\Server;
 use Symfony\Component\HttpFoundation\Response;
+use Psr\Log\LoggerInterface;
 
 class ApiController extends Controller
 {
@@ -72,14 +73,18 @@ class ApiController extends Controller
 
     /**
      * @Route("/api/group/{grouping}")
+     * @param $grouping
+     * @param Request $request
+     * @param LoggerInterface $logger
+     * @return JsonResponse
      */
-    public function group($grouping, Request $request){
+    public function group($grouping, Request $request, LoggerInterface $logger){
 
         $result = ApiService::getServerGroupData(
             $grouping,
             $this->getParameter('api_url'),
             $this->getParameter('api_token'),
-            $this->get('logger')
+            $logger
         );
 
         $Response = $this->json(\null, JsonResponse::HTTP_OK,
@@ -95,9 +100,9 @@ class ApiController extends Controller
     /**
      * @Route("/api/weather")
      */
-    public function weather(Request $request){
+    public function weather(Request $request, LoggerInterface $logger){
 
-        $cache = new WeatherCache($this->get('logger'));
+        $cache = new WeatherCache($logger);
 
         $json_response = Response::HTTP_OK;
         $api_key = $this->getParameter('accuweather_api_key');
@@ -153,8 +158,8 @@ class ApiController extends Controller
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Psr\SimpleCache\InvalidArgumentException
      */
-    public function mbta(Request $request){
-        $cache = new MbtaCache($this->get('logger'));
+    public function mbta(Request $request, LoggerInterface $logger){
+        $cache = new MbtaCache($logger);
         $api_key = $this->getParameter('mbta_api_key');
         $json_response = JsonResponse::HTTP_OK;
         if($cache->checkCacheTime($cache::CACHE_TYPE_SCHEDULE)){

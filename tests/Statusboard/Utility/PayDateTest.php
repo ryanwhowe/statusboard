@@ -75,8 +75,8 @@ class PayDateTest extends TestCase {
             [PayDate::EMPLOYER_IVES, true, 'Ives'],
             [PayDate::EMPLOYER_IVES, false, 'Ives Group, Inc.'],
 
-            [PayDate::EMPLOYER_TRUECAR, true, 'TRUECar'],
-            [PayDate::EMPLOYER_TRUECAR, false, 'TRUECar, Inc.'],
+            [PayDate::EMPLOYER_TRUECAR, true, 'TrueCar'],
+            [PayDate::EMPLOYER_TRUECAR, false, 'TrueCar, Inc.'],
         ];
     }
 
