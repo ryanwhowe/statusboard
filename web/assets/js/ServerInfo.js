@@ -134,16 +134,28 @@ $.widget("howe.ServerInfo", {
             case 'heartbeat':
                 return me.__convertTimestamp(value);
             case 'freespace_root':
+            case 'freespace_HDD':
             case 'freespace_HDD1':
-                let sizes = ['MB', 'GB', 'TB'];
-                if (value == 0) return '0 MB';
-                let i = parseInt(Math.floor(Math.log(value) / Math.log(1024)).toString());
-                return Math.round(value / Math.pow(1024, i), 2) + ' ' + sizes[i];
+                return me.__convertToDiskSize(value);
             case 'timelapse_count':
                 return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             default:
                 return value;
         }
+    },
+
+    /**
+     * Convert the number value to human readable string with size info
+     * @param value in kB
+     * @returns {string}
+     * @private
+     */
+    __convertToDiskSize: function(value){
+        let sizes = ['MB', 'GB', 'TB'];
+        if (value == 0) return '0 MB';
+        let i = parseInt(Math.floor(Math.log(value) / Math.log(1024)).toString());
+        let n = value / Math.pow(1024, i);
+        return n.toFixed(2) + ' ' + sizes[i];
     },
 
     /**
