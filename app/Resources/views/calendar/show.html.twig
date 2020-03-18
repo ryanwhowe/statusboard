@@ -17,7 +17,7 @@
                     </tr>
                     <tr>
                         <th>Type</th>
-                        <td>{% if calendar.type == 1 %}Holiday{% elseif calendar.type == 2 %}PTO{% else %}Sick{% endif %}</td>
+                        <td>{% if calendar.type == 1 %}Holiday{% elseif calendar.type == 2 %}PTO{% elseif calendar.type == 3 %}Sick{% elseif calendar.type == 4 %}National Holiday{% elseif calendar.type == 99 %}Pay Date{% endif %}</td>
                     </tr>
                     <tr>
                         <th>Eventdate</th>

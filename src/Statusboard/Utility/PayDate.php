@@ -68,7 +68,7 @@ class PayDate {
                 return ($short_name) ? "Ives" : "Ives Group, Inc.";
                 break;
             case self::EMPLOYER_TRUECAR:
-                return ($short_name) ? "TRUECar" : "TRUECar, Inc.";
+                return ($short_name) ? "TrueCar" : "TrueCar, Inc.";
                 break;
             case null:
                 return null;
@@ -88,12 +88,12 @@ class PayDate {
     public static function checkPayDate(DateTime $pay_date, array $holidays){
         $moved = false;
         $new_date = $pay_date;
-        if(in_array(date('w', $pay_date->getTimeStamp()), [0,6])){
+        if(in_array(date('w', $pay_date->getTimeStamp()), [0,6])){ // check is this a weekend day
             $new_date = new DateTime(date('Y-m-d',$pay_date->getTimestamp() - self::ONE_DAY_SECONDS));
             $moved = true;
         }
         if(!$moved){
-            if(in_array($pay_date->format('Y-m-d'), $holidays)){
+            if(in_array($pay_date->format('Y-m-d'), $holidays)){ // check is this a holiday
                 $new_date = new DateTime(date('Y-m-d',$pay_date->getTimestamp() - self::ONE_DAY_SECONDS));
             }
         }
