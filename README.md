@@ -1,5 +1,5 @@
 # statusboard
-This is a personal status board project that is not really written to be shared, the documentation is very spotty and the front end is in need of a makeover, which is going to be rewritten utilizing AngularJS.
+This is a personal status board project that is not really written to be shared, the documentation is very spotty and the front end is in need of a makeover, which is going to be rewritten utilizing React.js with an updated backend upgraded to either laravel or symfony 5.
 
 Setup
 -----
