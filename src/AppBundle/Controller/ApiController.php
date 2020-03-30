@@ -31,6 +31,9 @@ class ApiController extends Controller
 
     /**
      * @Route("/api/ipCheck/{grouping}")
+     * @param $grouping
+     * @param Request $request
+     * @return JsonResponse
      */
     public function ipCheck($grouping, Request $request){
 
@@ -99,6 +102,12 @@ class ApiController extends Controller
 
     /**
      * @Route("/api/weather")
+     * @param Request $request
+     * @param LoggerInterface $logger
+     * @return JsonResponse
+     * @throws RequestLimitExceededException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Psr\SimpleCache\InvalidArgumentException
      */
     public function weather(Request $request, LoggerInterface $logger){
 
@@ -150,10 +159,27 @@ class ApiController extends Controller
         return $Response;
     }
 
+    /**
+     * @Route("/api/weather/reset")
+     * @param Request $request
+     * @param LoggerInterface $logger
+     * @return JsonResponse
+     * @throws \Psr\Cache\InvalidArgumentException
+     */
+    public function weather_reset(Request $request, LoggerInterface $logger){
+        $cache = new WeatherCache($logger);
+        $cache->deleteCache($cache::CACHE_TYPE_LOCATION);
+        $cache->deleteCache($cache::CACHE_TYPE_WEATHER);
+        $Response = $this->json(['Weather Cache Cleared'], JsonResponse::HTTP_OK,
+            ['Content-Type' => 'text/json', 'Cache-control' => 'must-revalidate']);
+        $Response->prepare($request)->setPrivate();
+        return $Response;
+    }
 
     /**
      * @Route("/api/mbta")
      * @param Request $request
+     * @param LoggerInterface $logger
      * @return JsonResponse
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Psr\SimpleCache\InvalidArgumentException
@@ -203,6 +229,22 @@ class ApiController extends Controller
             $Response->setContent("<h3>There was an internal error retrieving the schedule from the MBTA server</h3>");
         }
 
+        $Response->prepare($request)->setPrivate();
+        return $Response;
+    }
+
+    /**
+     * @Route("/api/mbta/reset")
+     * @param Request $request
+     * @param LoggerInterface $logger
+     * @return JsonResponse
+     * @throws \Psr\Cache\InvalidArgumentException
+     */
+    public function mbta_reset(Request $request, LoggerInterface $logger){
+        $cache = new MbtaCache($logger);
+        $cache->deleteCache($cache::CACHE_TYPE_SCHEDULE);
+        $Response = $this->json(['MBTA Cache Cleared'], JsonResponse::HTTP_OK,
+            ['Content-Type' => 'text/json', 'Cache-control' => 'must-revalidate']);
         $Response->prepare($request)->setPrivate();
         return $Response;
     }

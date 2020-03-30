@@ -25,7 +25,8 @@ class Fetcher {
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public static function getSchedule($api_key, array $trip_filters) {
-        $trips = self::getTrips($api_key, $trip_filters);
+        $trip_data = self::getTrips($api_key);
+        $trips = self::processTrips($trip_data, $trip_filters);
         if($trips) {
             return self::getResponse(self::BASE_URL, '/schedules?api_key=' . $api_key . '&filter[trip]=' . $trips);
         } else {
@@ -34,14 +35,22 @@ class Fetcher {
     }
 
     /**
-     * @param array $filters
-     * @return string
+     * @param string $api_key
+     * @return array
      * @throws RequestLimitExceededException
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public static function getTrips($api_key, array $filters){
+    public static function getTrips($api_key){
         $date = date('Y-m-d');
-        $content = self::getResponse(self::BASE_URL,'/trips?api_key=' . $api_key . '&filter[date]=' . $date . '&filter[route]=' . self::ROUTE);
+        return self::getResponse(self::BASE_URL,'/trips?api_key=' . $api_key . '&filter[date]=' . $date . '&filter[route]=' . self::ROUTE);
+    }
+
+    /**
+     * @param array $content
+     * @param array $filters
+     * @return string
+     */
+    public static function processTrips(array $content, array $filters){
         $filtered = $content['data'];
         foreach ($filters as $filter){
             if(is_callable($filter)){

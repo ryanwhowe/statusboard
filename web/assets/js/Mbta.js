@@ -7,7 +7,7 @@ $.widget("howe.Mbta",{
     url: 'api/mbta',
     //url: 'http://127.0.0.1:3100/mbta',
     options: {
-        update_interval: 10*60*1000, /* update the mbta every 10 minutes unless there is an expires flag present */
+        update_interval: 30*60*1000, /* update the mbta every 30 minutes unless there is an expires flag present */
     },
 
     /**
@@ -124,8 +124,8 @@ $.widget("howe.Mbta",{
         let expires_epoch = me.data_response['expires'];
         let current_epoch = Math.floor(new Date().getTime()/1000.0);
         let delta_in_seconds = expires_epoch - current_epoch;
-        if(delta_in_seconds >= 0) return (delta_in_seconds + 60) * 1000; /* add a minute to the response and convert to microseconds */
-        return me.options.update_interval;
+        /* add a minute to the response and convert to microseconds */
+        return Math.max(me.options.update_interval,(delta_in_seconds + 60) * 1000);
     },
 
     /**
