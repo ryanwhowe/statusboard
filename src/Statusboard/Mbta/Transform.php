@@ -99,6 +99,7 @@ class Transform {
             if ($counter++ >= self::TRIPS_RETURNED) return false;
             return true;
         });
+        $lowest_trip_time = min($lowest_trip_time, strtotime('+1 hour'));
         return array($lowest_trip_time, array_values($trips));
     }
 
@@ -114,6 +115,7 @@ class Transform {
         $stops = self::filterStops($schedule, [self::STATION_FILTER_FORGEPARK, self::STATION_FILTER_SOUTHSTATION]);
         $trips = self::parseTrips($stops);
         list($expiration, $filtered_trips) = self::filterTrips($trips, $filter_time);
+        $expiration = min($expiration, strtotime('+1 hour'));
         return $expiration;
     }
 
