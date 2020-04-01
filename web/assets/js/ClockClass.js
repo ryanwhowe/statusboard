@@ -38,7 +38,7 @@ let Clock = {
         let workedMonthDays = this.workedMonthDays();
         let workingMonthDays = this.workingMonthDays();
         let dayPercent = this.dayPercent();
-        return workedMonthDays / workingMonthDays + (dayPercent / workingMonthDays );
+        return workedMonthDays / (workingMonthDays - 1) + (dayPercent / workingMonthDays );
     },
 
     quarter: function () {
@@ -51,7 +51,7 @@ let Clock = {
     },
 
     yearPercent: function () {
-        return (Math.round(((this.CurrentDate - (new Date(this.CurrentDate.getFullYear(), 0, 1))) / 1000 / 60 / 60 / 24) + .5) / 365) + (this.dayPercent() / 365) - (1 / 365);
+        return (((this.quarter() - 1) * 25 / 100) + (this.quarterPercent()/4));
     },
 
     year: function(){
