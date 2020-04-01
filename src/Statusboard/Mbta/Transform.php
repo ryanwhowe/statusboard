@@ -100,7 +100,11 @@ class Transform {
             return true;
         });
         $lowest_trip_time = min($lowest_trip_time, strtotime('+1 hour'));
-        return array($lowest_trip_time, array_values($trips));
+        $trips = array_values($trips);
+        usort($trips, function($a, $b){
+            return $a['departs'] - $b['departs'];
+        });
+        return array($lowest_trip_time, $trips);
     }
 
     /**
