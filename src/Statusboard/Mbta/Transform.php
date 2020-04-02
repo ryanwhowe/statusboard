@@ -103,8 +103,7 @@ class Transform {
             return true;
         });
         $lowest_trip_time = min($lowest_trip_time, strtotime('+1 hour'));
-        $trips = array_values($trips);
-        return array($lowest_trip_time, $trips);
+        return array($lowest_trip_time, array_values($trips));
     }
 
     /**
