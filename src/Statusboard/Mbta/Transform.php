@@ -104,9 +104,6 @@ class Transform {
         });
         $lowest_trip_time = min($lowest_trip_time, strtotime('+1 hour'));
         $trips = array_values($trips);
-        usort($trips, function($a, $b){
-            return $a['departs'] - $b['departs'];
-        });
         return array($lowest_trip_time, $trips);
     }
 
