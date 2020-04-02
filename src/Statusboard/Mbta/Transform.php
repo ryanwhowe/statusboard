@@ -93,6 +93,9 @@ class Transform {
     public static function filterTrips(array $trips, $filter_time = 0): array {
         $lowest_trip_time = PHP_INT_MAX;
         $counter = 0;
+        usort($trips, function($a, $b){
+            return $a['departs'] - $b['departs'];
+        });
         $trips = array_filter($trips, function ($trip) use (&$lowest_trip_time, &$counter, $filter_time) {
             if ($filter_time > $trip['departs']) return false;
             if ($lowest_trip_time > $trip['departs']) $lowest_trip_time = $trip['departs'];
