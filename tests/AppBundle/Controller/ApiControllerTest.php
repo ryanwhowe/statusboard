@@ -19,10 +19,13 @@ class ApiControllerTest extends WebTestCase {
     protected function setUp() {
 
         $this->loggedOutClient = static::createClient();
-        $this->loggedInClient = static::createClient(array(), array(
-            'PHP_AUTH_USER' => 'test',
-            'PHP_AUTH_PW' => 'test12345',
-        ));
+        $this->loggedInClient = static::createClient(
+            [],
+            [
+                'PHP_AUTH_USER' => 'test',
+                'PHP_AUTH_PW' => 'test12345',
+            ]
+        );
     }
 
     /**
@@ -42,25 +45,25 @@ class ApiControllerTest extends WebTestCase {
 
         $this->assertEquals(Response::HTTP_OK, $this->loggedInClient->getResponse()->getStatusCode(), 'Response Code Error');
         $response = $this->loggedInClient->getResponse();
-        $response_json = json_decode($response->getContent(), true);
-        $this->assertArrayHasKey('headline', $response_json);
-        $this->assertArrayHasKey('expires', $response_json);
-        $this->assertArrayHasKey('current', $response_json);
+        $responseData = json_decode($response->getContent(), true);
+        $this->assertArrayHasKey('headline', $responseData);
+        $this->assertArrayHasKey('expires', $responseData);
+        $this->assertArrayHasKey('current', $responseData);
 
         foreach (range(0, 4) as $day) {
-            $this->assertArrayHasKey('date', $response_json[$day]);
-            $this->assertArrayHasKey('day', $response_json[$day]);
-            $this->assertArrayHasKey('hightemp', $response_json[$day]);
-            $this->assertArrayHasKey('lowtemp', $response_json[$day]);
-            $this->assertArrayHasKey('icons', $response_json[$day]);
+            $this->assertArrayHasKey('date', $responseData[$day]);
+            $this->assertArrayHasKey('day', $responseData[$day]);
+            $this->assertArrayHasKey('hightemp', $responseData[$day]);
+            $this->assertArrayHasKey('lowtemp', $responseData[$day]);
+            $this->assertArrayHasKey('icons', $responseData[$day]);
 
-            $this->assertArrayHasKey('day', $response_json[$day]['icons']);
-            $this->assertArrayHasKey('night', $response_json[$day]['icons']);
+            $this->assertArrayHasKey('day', $responseData[$day]['icons']);
+            $this->assertArrayHasKey('night', $responseData[$day]['icons']);
 
-            $this->assertArrayHasKey('icontext', $response_json[$day]);
+            $this->assertArrayHasKey('icontext', $responseData[$day]);
 
-            $this->assertArrayHasKey('day', $response_json[$day]['icontext']);
-            $this->assertArrayHasKey('night', $response_json[$day]['icontext']);
+            $this->assertArrayHasKey('day', $responseData[$day]['icontext']);
+            $this->assertArrayHasKey('night', $responseData[$day]['icontext']);
         }
     }
 
@@ -73,8 +76,8 @@ class ApiControllerTest extends WebTestCase {
 
         $this->assertEquals(Response::HTTP_OK, $this->loggedInClient->getResponse()->getStatusCode(), 'Response Code Error');
         $response = $this->loggedInClient->getResponse();
-        $response_json = json_decode($response->getContent(), true);
-        foreach ($response_json as $key => $item) {
+        $responseData = json_decode($response->getContent(), true);
+        foreach ($responseData as $key => $item) {
             if (is_array($item)) {
                 $expected_keys = array_diff($expected_keys, [$item['key']]);
             }
@@ -92,9 +95,9 @@ class ApiControllerTest extends WebTestCase {
 
         $this->assertEquals(Response::HTTP_OK, $this->loggedInClient->getResponse()->getStatusCode(), 'Response Code Error');
         $response = $this->loggedInClient->getResponse();
-        $response_json = json_decode($response->getContent(), true);
+        $responseData = json_decode($response->getContent(), true);
         foreach ($expected_keys as $expected_key) {
-            $this->assertArrayHasKey($expected_key, $response_json, 'Missing \'' . $expected_key . '\' key from response');
+            $this->assertArrayHasKey($expected_key, $responseData, 'Missing \'' . $expected_key . '\' key from response');
         }
     }
 
@@ -107,9 +110,9 @@ class ApiControllerTest extends WebTestCase {
 
         $this->assertEquals(Response::HTTP_OK, $this->loggedInClient->getResponse()->getStatusCode(), 'Response Code Error');
         $response = $this->loggedInClient->getResponse();
-        $response_json = json_decode($response->getContent(), true);
+        $responseData = json_decode($response->getContent(), true);
         foreach($expected_keys as $expected_key){
-            $this->assertArrayHasKey($expected_key, $response_json, 'Missing \'' . $expected_key. '\' key from response');
+            $this->assertArrayHasKey($expected_key, $responseData, 'Missing \'' . $expected_key. '\' key from response');
         }
     }
 }
