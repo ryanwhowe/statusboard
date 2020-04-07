@@ -66,7 +66,7 @@ class DefaultController extends Controller
     {
         $arrival_time = $request->cookies->get('time_sheet_time', '09:00');
         $add_time = $request->cookies->get('time_sheet_add_time', 0);
-        $calendarEvents = json_encode($this->getCalendarData());
+        $calendarEvents = json_encode(self::getCalendarData($this->getDoctrine()->getRepository(Calendar::class)->findAll()));
         return $this->render('AppBundle:Default:calendar.html.twig', [
             'calendarJson' => $calendarEvents,
             'type' => [
