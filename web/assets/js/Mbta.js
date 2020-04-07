@@ -8,6 +8,7 @@ $.widget("howe.Mbta",{
     //url: 'http://127.0.0.1:3100/mbta',
     options: {
         update_interval: 30*60*1000, /* update the mbta every 30 minutes unless there is an expires flag present */
+        baseUrl: ''
     },
 
     /**
@@ -31,7 +32,7 @@ $.widget("howe.Mbta",{
     _updateData: function(){
         let me = this;
         $.ajax({
-            url: me.url,
+            url: me.options.baseUrl + me.url,
             method: 'GET',
             dataType: 'json',
             async: true,

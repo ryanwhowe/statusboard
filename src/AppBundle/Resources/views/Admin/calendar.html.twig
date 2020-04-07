@@ -1,0 +1,74 @@
+{% extends "::base.html.twig" %}
+{% block title %}Howe - Calendar Test Page{% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Calendar Test Page</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-lg-6">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="panel-title text-center">
+                        <i class="fa fa-calendar fa-fw"></i> Calendar
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="jquery_ui_datepicker_preview"></div>
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <div class="col-md-6 col-lg-6">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="panel-title text-center">
+                        <i class="fa fa-calendar-check-o fa-fw"></i> Upcoming
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead>
+                        <tr class="info"><th class="text-center">Event</th><th class="text-center">Days</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Holiday</td><td{% if events['Holiday'].days %} title="{{ events['Holiday'].date }}">{{ events['Holiday'].days }}{% else %}>None Scheduled{% endif %}</td></tr>
+                            <tr><td>TrueCar Pay Day</td><td{% if events['TrueCar Pay Date'].days %} title="{{ events['TrueCar Pay Date'].date }}">{{ events['TrueCar Pay Date'].days }}{% else %}>None Scheduled{% endif %}</td></tr>
+                            <tr><td>PTO</td><td{% if events['PTO'].days %} title="{{ events['PTO'].date }}">{{ events['PTO'].days }}{% else %}>None Scheduled{% endif %}</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+    </div>
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/calendar.css') }}"/>
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('assets/js/ClockClass.js') }}"></script>
+    <script src="{{ asset('assets/js/PersonalCalendar.js') }}"></script>
+    <script>
+        let date_data = {{ calendarJson | raw }};
+        PersonalCalendar.init(date_data);
+        $(function () {
+            $(".jquery_ui_datepicker_preview").datepicker({
+                defaultDate: null,
+                firstDay: 1, // Set Monday to the first day of the week
+                numberOfMonths: [1, 2], //display a full calendar year
+                showCurrentAtPos: 0, // set the current month to the center position
+                showMonthAfterYear: true,
+                beforeShowDay: function (currentDate) {
+                    return PersonalCalendar.parseDate(currentDate);
+                }
+            });
+        });
+
+    </script>
+{% endblock %}

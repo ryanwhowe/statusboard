@@ -7,6 +7,7 @@ $.widget("howe.WeatherInfo",{
     url: 'api/weather',
     options: {
         update_interval: 10*60*1000, /* update the weather every 10 minutes unless there is an expires flag present */
+        baseUrl: ''
     },
 
     /**
@@ -30,7 +31,7 @@ $.widget("howe.WeatherInfo",{
     _updateData: function(){
         let me = this;
         $.ajax({
-            url: me.url,
+            url: me.options.baseUrl + me.url,
             method: 'GET',
             dataType: 'json',
             async: true,

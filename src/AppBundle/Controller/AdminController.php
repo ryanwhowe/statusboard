@@ -26,7 +26,7 @@ class AdminController extends Controller
     /**
      * @Route("/", name="admin")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         return $this->render('AppBundle:Admin:admin.html.twig');
     }
@@ -34,7 +34,7 @@ class AdminController extends Controller
     /**
      * @Route("/server", name="admin_test_server")
      */
-    public function serverAction()
+    public function serverAction(Request $request)
     {
         /**
          * @var ServerRepository $serverRepository
@@ -44,6 +44,63 @@ class AdminController extends Controller
         return $this->render('AppBundle:Admin:server.html.twig',[
             'servers' => $servers,
             'baseUrl' => $this->container->get('router')->getContext()->getBaseUrl() . "/"
+        ]);
+    }
+
+    /**
+     * @Route("/mbta", name="admin_test_mbta")
+     */
+    public function mbtaAction(Request $request){
+        return $this->render('AppBundle:Admin:mbta.html.twig',[
+            'baseUrl' => $this->container->get('router')->getContext()->getBaseUrl() . "/"
+        ]);
+    }
+
+    /**
+     * @Route("/weather", name="admin_test_weather")
+     */
+    public function weatherAction(Request $request){
+        return $this->render('AppBundle:Admin:weather.html.twig',[
+            'baseUrl' => $this->container->get('router')->getContext()->getBaseUrl() . "/"
+        ]);
+    }
+
+    /**
+     * @Route("/testcalendar", name="admin_test_calendar")
+     * @throws \Exception
+     */
+    public function calendarAction(Request $request){
+        $arrival_time = $request->cookies->get('time_sheet_time', '09:00');
+        $add_time = $request->cookies->get('time_sheet_add_time', 0);
+        /**
+         * @var CalendarRepository $calendarRepository;
+         */
+        $calendarRepository = $this->getDoctrine()->getRepository(Calendar::class);
+
+        $nextEvents = DefaultController::formatNextEvents($calendarRepository);
+
+        $calendarEvents = json_encode(DefaultController::getCalendarData($this->getDoctrine()->getRepository(Calendar::class)->findAll()));
+
+        return $this->render('AppBundle:Admin:calendar.html.twig', [
+            'calendarJson' => $calendarEvents,
+            'arrival_time' => $arrival_time,
+            'add_time'     => $add_time,
+            'events'       => $nextEvents,
+            'baseUrl'      => $this->container->get('router')->getContext()->getBaseUrl() . "/"
+        ]);
+    }
+
+    /**
+     * @Route("/clock", name="admin_test_clock")
+     * @param Request $request
+     * @return Response
+     */
+    public function clockAction(Request $request){
+        $arrival_time = $request->cookies->get('time_sheet_time', '09:00');
+        $add_time = $request->cookies->get('time_sheet_add_time', 0);
+        return $this->render('AppBundle:Admin:clock.html.twig',[
+            'arrival_time' => $arrival_time,
+            'add_time'     => $add_time,
         ]);
     }
 }

@@ -40,10 +40,10 @@ class DefaultController extends Controller
         $serverRepository = $this->getDoctrine()->getRepository(Server::class);
         $servers = $serverRepository->findAll();
 
-        $nextEvents = $this->formatNextEvents($calendarRepository);
+        $nextEvents = self::formatNextEvents($calendarRepository);
         //$nextEvents['Pay Day'] = $this->TrueCar_nextPayDate();
 
-        $calendarEvents = json_encode($this->getCalendarData());
+        $calendarEvents = json_encode(self::getCalendarData($this->getDoctrine()->getRepository(Calendar::class)->findAll()));
 
 
         return $this->render('AppBundle:Default:index.html.twig', [
@@ -225,7 +225,7 @@ class DefaultController extends Controller
      * @return array
      * @throws \Exception
      */
-    private function formatNextEvents(CalendarRepository $calendarRepository): array {
+    public static function formatNextEvents(CalendarRepository $calendarRepository): array {
         $eventTypes = [
             Calendar::TYPE_NATIONAL_HOLIDAY => 'Holiday',
             Calendar::TYPE_PTO => 'PTO',
@@ -262,8 +262,7 @@ class DefaultController extends Controller
      * @return array
      * @throws \Exception
      */
-    public function getCalendarData(){
-        $calendars = $this->getDoctrine()->getRepository(Calendar::class)->findAll();
+    public static function getCalendarData($calendars){
         $calendar_data = [];
 
         /**
