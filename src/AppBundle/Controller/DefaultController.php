@@ -12,6 +12,7 @@ use AppBundle\Entity\Server;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Statusboard\Utility\PayDate;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -55,18 +56,11 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/admin", name="admin")
-     */
-    public function adminAction()
-    {
-        return $this->render('AppBundle:Default:admin.html.twig');
-    }
-
-    /**
      * @Route("/calendar", name="calendar")
      * @param Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
+     * @throws \Exception
      */
     public function calendarIndexAction(Request $request)
     {
@@ -89,7 +83,7 @@ class DefaultController extends Controller
      * @Route("/utility/calendarUpdate", name="calendarUpdate")
      * @param Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return RedirectResponse
      */
     public function calendarUpdateAction(Request $request)
     {
@@ -113,7 +107,7 @@ class DefaultController extends Controller
             $this->addFlash('error',
                 'The event already exists and could not be added');
         }
-        $response = new \Symfony\Component\HttpFoundation\RedirectResponse($this->generateUrl('calendar'));
+        $response = new RedirectResponse($this->generateUrl('calendar'));
         return $response;
     }
 
@@ -121,7 +115,7 @@ class DefaultController extends Controller
      * @Route("/timeSheet", name="timeSheet")
      * @param $request Request
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      * @throws \Exception
      */
     public function timeSheetAction(Request $request)
@@ -191,14 +185,14 @@ class DefaultController extends Controller
      * @Route("/utility/timeSheetUpdate", name="timeSheetUpdate")
      * @param Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return RedirectResponse
      * @throws \Exception
      */
     public function timeSheetUpdateAction(Request $request)
     {
         $time = $request->request->get('time');
         $add_time = $request->request->get('add_time');
-        $response = new \Symfony\Component\HttpFoundation\RedirectResponse($this->generateUrl('timeSheet'));
+        $response = new RedirectResponse($this->generateUrl('timeSheet'));
         $response->headers->setCookie(new \Symfony\Component\HttpFoundation\Cookie('time_sheet_time',
             $time, new DateTime('tomorrow')));
         $response->headers->setCookie(new \Symfony\Component\HttpFoundation\Cookie('time_sheet_add_time',
@@ -210,7 +204,7 @@ class DefaultController extends Controller
      * @Route("/utility/timeSheetCalendarUpdate")
      * @param Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return RedirectResponse
      * @throws \Exception
      */
     public function timeSheetCalendarUpdateAction(Request $request){
@@ -218,7 +212,7 @@ class DefaultController extends Controller
         $tue = $request->request->filter('tue', null, \FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
         $wed = $request->request->filter('wed', null, \FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
         $thu = $request->request->filter('thu', null, \FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-        $response = new \Symfony\Component\HttpFoundation\RedirectResponse($this->generateUrl('timeSheet'));
+        $response = new RedirectResponse($this->generateUrl('timeSheet'));
         $response->headers->setCookie(new \Symfony\Component\HttpFoundation\Cookie('time_sheet_calendar_mon', $mon, new DateTime('next sunday')));
         $response->headers->setCookie(new \Symfony\Component\HttpFoundation\Cookie('time_sheet_calendar_tue', $tue, new DateTime('next sunday')));
         $response->headers->setCookie(new \Symfony\Component\HttpFoundation\Cookie('time_sheet_calendar_wed', $wed, new DateTime('next sunday')));

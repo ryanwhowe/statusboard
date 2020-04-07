@@ -5,7 +5,8 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Calendar;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Calendar controller.
@@ -123,7 +124,7 @@ class CalendarController extends Controller
      *
      * @param Calendar $calendar The calendar entity
      *
-     * @return \Symfony\Component\Form\Form The form
+     * @return \Symfony\Component\Form\FormInterface
      */
     private function createDeleteForm(Calendar $calendar)
     {

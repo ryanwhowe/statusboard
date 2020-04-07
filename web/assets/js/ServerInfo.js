@@ -11,7 +11,8 @@ $.widget("howe.ServerInfo", {
         server: null,
         disabled: false,
         max_age: 31 * 60 * 1000,
-        skip_keys: ['time_out']
+        skip_keys: ['time_out'],
+        baseUrl: ''
     },
 
     /**
@@ -27,6 +28,7 @@ $.widget("howe.ServerInfo", {
         me.data_response = null;
         let create_server = $(e).data('server');
         let disabled = $(e).data('disabled');
+        let baseUrl = $(e).data('baseurl');
         if (typeof create_server !== 'undefined') {
             o.server = create_server;
         }
@@ -37,6 +39,10 @@ $.widget("howe.ServerInfo", {
 
         if (o.server === null) {
             me.__Error('No Server Name Given');
+        }
+
+        if (typeof baseUrl !== 'undefined') {
+            o.baseUrl = baseUrl;
         }
 
         $(e).html(o.server).attr('data-toggle', 'modal').attr('data-target', me.my_name + '_serverModal');
@@ -65,7 +71,7 @@ $.widget("howe.ServerInfo", {
             o = this.options;
         $(e).removeClass('btn-danger btn-success').addClass('btn-primary');
         $.ajax({
-            url: me.url + 'group/' + o.server,
+            url: o.baseUrl + me.url + 'group/' + o.server,
             method: 'GET',
             dataType: 'json',
             async: true,
