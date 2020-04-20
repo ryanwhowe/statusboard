@@ -2,17 +2,18 @@
 
 namespace Tests\AppBundle\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
 class ApiControllerTest extends WebTestCase {
     /**
-     * @var Symfony\Bundle\FrameworkBundle\Client that is not logged in to the site
+     * @var Client that is not logged in to the site
      */
     protected $loggedInClient;
 
     /**
-     * @var Symfony\Bundle\FrameworkBundle\Client that is logged into the site
+     * @var Client that is logged into the site
      */
     protected $loggedOutClient;
 

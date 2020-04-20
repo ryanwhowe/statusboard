@@ -30,7 +30,7 @@ class TranslateIconsToWeatherIcon {
                 return 'wi-thunderstorm';
             case 16: // Mostly Cloudy w/ T-Storms (day)
             case 17: // Partly Sunny w/ T-Storms (day)
-                return 'wi-day-thunderstorms';
+                return 'wi-day-thunderstorm';
             case 18: // Rain (day, night)
                 return 'wi-rain';
             case 19: // Flurries (day, night)
