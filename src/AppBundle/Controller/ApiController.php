@@ -193,8 +193,7 @@ class ApiController extends Controller
         } else {
             try {
                 $trip_filters = [
-                    TripFilters::tripDirectionFilter(TripFilters::TRIP_OUTBOUND),
-                    TripFilters::routePatternFilter(MbtaFetcher::ROUTE_PATTERN)
+                    TripFilters::headSignFilter(TripFilters::HEADSIGN_FORGEPARK)
                 ];
                 $schedule = MbtaFetcher::getSchedule($api_key, $trip_filters);
                 $expiration_time = Mbta::getExpirationTime($schedule, time());
