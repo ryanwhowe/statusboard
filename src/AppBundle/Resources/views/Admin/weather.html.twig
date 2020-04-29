@@ -12,7 +12,7 @@
             <div class="panel panel-info">
                 <div class="panel-heading">
                     <div class="panel-title text-center">
-                        <i class="fa fa-cloud fa-fw"></i> Weather
+                        <i class="fa fa-cloud fa-fw reset_weather"></i> Weather
                     </div>
                 </div>
                 <div class="panel-body">
@@ -32,6 +32,35 @@
     <script>
         $(function () {
             $('.weather').WeatherInfo({baseUrl: "{{ baseUrl }}"});
+            $('body').on('click', '.reset_weather', () => { performReset("{{ baseUrl }}api/weather/reset"); });
         });
+        function performReset(endpoint){
+            $.ajax({
+                url: endpoint,
+                method: 'GET',
+                dataType:'json',
+                async: true,
+                cache: false,
+                timeout: 5*1000,
+                success: function(data, status){
+                    if(status === 'timeout'){
+                        alert('Time out!');
+                    }
+                    if(status === 'nocontent'){
+                        alert('No Content');
+                    }
+                    alert(data);
+                },
+                error: function(xhr, status){
+                    if(status === 'timeout'){
+                        alert('Time out!');
+                    }
+                    if(status === 'nocontent'){
+                        alert('No Content');
+                    }
+                    alert('failed to clear cache');
+                }
+            });
+        }
     </script>
 {% endblock %}

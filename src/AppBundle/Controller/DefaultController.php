@@ -51,7 +51,8 @@ class DefaultController extends Controller
             'arrival_time' => $arrival_time,
             'add_time'     => $add_time,
             'servers'      => $servers,
-            'events'       => $nextEvents
+            'events'       => $nextEvents,
+            'baseUrl'      => $this->container->get('router')->getContext()->getBaseUrl() . "/"
         ]);
     }
 
