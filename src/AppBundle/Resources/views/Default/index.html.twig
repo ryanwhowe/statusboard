@@ -22,7 +22,7 @@
                         {% endif %}
                             <div class="col-md-12 col-lg-4">
                                 <button style="display: none;" type="button"
-                                        class="btn btn-primary btn-lg btn-block serverinfo" data-server="{{ server.name }}"{% if server.isDisabled %} data-disabled="true"{% endif %}></button>
+                                        class="btn btn-primary btn-lg btn-block serverinfo" data-server="{{ server.name }}"{% if server.isDisabled %} data-disabled="true"{% endif %} data-baseurl="{{ baseUrl }}"></button>
                             </div>
                         {% if loop.index is divisible by (3) %}
                             {% if loop.last %}
@@ -128,7 +128,7 @@
             <div class="panel panel-info">
                 <div class="panel-heading">
                     <div class="panel-title text-center">
-                        <i class="fa fa-cloud fa-fw"></i> Weather
+                        <i class="fa fa-cloud fa-fw reset_weather"></i> Weather
                     </div>
                 </div>
                 <div class="panel-body">
@@ -177,8 +177,8 @@
             setInterval('updateTime()', 1000);
             displayTime();
             setInterval('displayTime()', 1000);
-            $('.weather').WeatherInfo();
-            $('.mbta').Mbta();
+            $('.weather').WeatherInfo({baseUrl: "{{ baseUrl }}"});
+            $('.mbta').Mbta({baseUrl: "{{ baseUrl }}"});
             $('.serverinfo').ServerInfo();
             $(".jquery_ui_datepicker_preview").datepicker({
                 defaultDate: null,
@@ -190,7 +190,9 @@
                     return PersonalCalendar.parseDate(currentDate);
                 }
             });
-            $('body').on('click', '.reset_mbta', updateMbta);
+            $('body')
+                .on('click', '.reset_mbta', performReset("{{ baseUrl }}api/mbta/reset"))
+                .on('click', '.reset_weather', performReset("{{ baseUrl }}api/weather/reset"));
         });
 
         /**
@@ -254,9 +256,9 @@
 
         }
 
-        function updateMbta(){
+        function performReset(endpoint){
             $.ajax({
-                url: "api/mbta/reset",
+                url: endpoint,
                 method: 'GET',
                 dataType:'json',
                 async: true,

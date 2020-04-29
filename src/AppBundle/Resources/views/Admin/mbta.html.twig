@@ -30,15 +30,13 @@
 {% block javascripts %}
     <script src="{{ asset('assets/js/Mbta.js') }}"></script>
     <script>
-
         $(function () {
             $('.mbta').Mbta({baseUrl: "{{ baseUrl }}"});
-            $('body').on('click', '.reset_mbta', updateMbta);
+            $('body').on('click', '.reset_mbta', performReset("{{ baseUrl }}api/weather/reset"));
         });
-
-        function updateMbta(){
+        function performReset(endpoint){
             $.ajax({
-                url: "api/mbta/reset",
+                url: endpoint,
                 method: 'GET',
                 dataType:'json',
                 async: true,
@@ -64,6 +62,5 @@
                 }
             });
         }
-
     </script>
 {% endblock %}
