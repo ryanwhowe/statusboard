@@ -191,8 +191,8 @@
                 }
             });
             $('body')
-                .on('click', '.reset_mbta', performReset("{{ baseUrl }}api/mbta/reset"))
-                .on('click', '.reset_weather', performReset("{{ baseUrl }}api/weather/reset"));
+                .on('click', '.reset_mbta', () => { performReset("{{ baseUrl }}api/mbta/reset"); })
+                .on('click', '.reset_weather', () => { performReset("{{ baseUrl }}api/weather/reset"); });
         });
 
         /**

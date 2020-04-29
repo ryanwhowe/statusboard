@@ -32,7 +32,7 @@
     <script>
         $(function () {
             $('.weather').WeatherInfo({baseUrl: "{{ baseUrl }}"});
-            $('body').on('click', '.reset_weather', performReset("{{ baseUrl }}api/weather/reset"));
+            $('body').on('click', '.reset_weather', () => { performReset("{{ baseUrl }}api/weather/reset"); });
         });
         function performReset(endpoint){
             $.ajax({
