@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Statusboard\Utility;
-
 
 class Environment
 {
