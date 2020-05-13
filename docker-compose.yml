@@ -1,0 +1,17 @@
+version: '3.7'
+
+services:
+  php:
+    build: ./
+    restart: on-failure
+    user: 1000:1000
+    environment:
+      RUN_ENVIRONMENT: docker-dev
+
+  web:
+    image: nginx:1.17-alpine
+    restart: on-failure
+    ports:
+      - 8000:80
+    depends_on:
+      - php

@@ -62,3 +62,5 @@ load_servers.csv
 
 /archives/
 /testing/
+/docker-compose.override.yml
+/node_modules/
