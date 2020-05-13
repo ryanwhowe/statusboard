@@ -16,6 +16,10 @@ class Environment
     const ENV_AWS_DEV = 10;
     const ENV_AWS_TEST = 11;
 
+    const TYPE_PRODUCTION = 'prod';
+    const TYPE_DEV = 'dev';
+    const TYPE_DOCKER_DEV = 'docker-dev';
+
     public static $type = null;
 
     /**
@@ -30,11 +34,11 @@ class Environment
         if(is_null(self::$type)) {
             self::$type = self::ENV_PRODUCTION;
             $environment = getenv('RUN_ENVIRONMENT');
-            if (isset($environment) && strcasecmp($environment, 'docker-dev') == 0) {
+            if (isset($environment) && strcasecmp($environment, self::TYPE_DOCKER_DEV) == 0) {
                 self::$type = self::ENV_DOCKER_DEV;
-            } elseif (isset($environment) && strcasecmp($environment, 'dev') == 0) {
+            } elseif (isset($environment) && strcasecmp($environment, self::TYPE_DEV) == 0) {
                 self::$type = self::ENV_DEV;
-            } elseif (isset($environment) && strcasecmp($environment, 'prod') == 0) {
+            } elseif (isset($environment) && strcasecmp($environment, self::TYPE_PRODUCTION) == 0) {
                 self::$type = self::ENV_PRODUCTION;
             } elseif (in_array(@$_SERVER['REMOTE_ADDR'], ['127.0.0.1', '::1'], true)) {
                 self::$type = self::ENV_LOCAL;
