@@ -50,7 +50,13 @@ class Environment
     public static function isLocalDevelopment(){
         return (self::getType() === self::ENV_DOCKER_DEV);
     }
+
     public static function isDevelopment(){
-        return (self::isLocal() || self::isLocalDevelopment() || (self::getType() === self::ENV_AWS_DEV));
+        return (
+            self::isLocal() ||
+            self::isLocalDevelopment() ||
+            (self::getType() === self::ENV_AWS_DEV) ||
+            (self::getType() === self::ENV_DEV)
+        );
     }
 }
