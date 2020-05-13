@@ -18,8 +18,15 @@ class Environment
 
     public static $type = null;
 
-    public static function getType(){
-
+    /**
+     * @param string|null $type
+     * @return int
+     */
+    public static function getType($type=null){
+        if($type !== null){
+            putenv("RUN_ENVIRONMENT=${type}");
+            self::$type = null;
+        }
         if(is_null(self::$type)) {
             self::$type = self::ENV_PRODUCTION;
             $environment = getenv('RUN_ENVIRONMENT');
@@ -27,6 +34,8 @@ class Environment
                 self::$type = self::ENV_DOCKER_DEV;
             } elseif (isset($environment) && strcasecmp($environment, 'dev') == 0) {
                 self::$type = self::ENV_DEV;
+            } elseif (isset($environment) && strcasecmp($environment, 'prod') == 0) {
+                self::$type = self::ENV_PRODUCTION;
             } elseif (in_array(@$_SERVER['REMOTE_ADDR'], ['127.0.0.1', '::1'], true)) {
                 self::$type = self::ENV_LOCAL;
             }

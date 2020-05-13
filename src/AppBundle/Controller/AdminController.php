@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\Calendar;
 use AppBundle\Entity\Server;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
+use Statusboard\Utility\Environment;
 use Statusboard\Utility\PayDate;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -101,6 +102,36 @@ class AdminController extends Controller
         return $this->render('AppBundle:Admin:clock.html.twig',[
             'arrival_time' => $arrival_time,
             'add_time'     => $add_time,
+        ]);
+    }
+
+    /**
+     * @Route("/environment", name="admin_test_environment")
+     * @param Request $request
+     * @return Response
+     */
+    public function environmentAction(Request $request){
+        $type_test = $request->request->get('type_test');
+        $env = Environment::getType($type_test);
+        $envs = [
+            'ENV_PRODUCTION' => ($env === Environment::ENV_PRODUCTION),
+            'ENV_DOCKER_PRODUCTION' => ($env === Environment::ENV_DOCKER_PRODUCTION),
+            'ENV_DOCKER_DEV' => ($env === Environment::ENV_DOCKER_DEV),
+            'ENV_DEV' => ($env === Environment::ENV_DEV),
+            'ENV_LOCAL' => ($env === Environment::ENV_LOCAL),
+            'EVN_TEST' => ($env === Environment::EVN_TEST),
+            'ENV_DOCKER_TEST' => ($env === Environment::ENV_DOCKER_TEST),
+            'ENV_AWS_PRODUCTION' => ($env === Environment::ENV_AWS_PRODUCTION),
+            'ENV_AWS_STAGING' => ($env === Environment::ENV_AWS_STAGING),
+            'ENV_AWS_DEV' => ($env === Environment::ENV_AWS_DEV),
+            'ENV_AWS_TEST' => ($env === Environment::ENV_AWS_TEST),
+            'isLocal()' => Environment::isLocal(),
+            'isLocalDevelopment()' => Environment::isLocalDevelopment(),
+            'isDevelopment()' => Environment::isDevelopment(),
+
+        ];
+        return $this->render('AppBundle:Admin:environment.html.twig', [
+            'environments' => $envs,
         ]);
     }
 }
