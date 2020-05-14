@@ -1,0 +1,9 @@
+language: php
+php:
+  - '7.2.24'
+
+before_script:
+  - apt-get install nvm
+
+composer install
+nvm run asset-install
