@@ -1,10 +1,10 @@
 FROM php:7.2-fpm
 RUN docker-php-ext-install pdo_mysql
 RUN pecl install apcu
-RUN apt-get update -y && \
-apt-get install -y \
+RUN apt-get update -yq && \
+apt-get install -yq \
 zlib1g-dev unzip gnupg \
-&& curl -sL https://deb.nodesource.com/setup_11.x | bash \
+&& curl -sL https://deb.nodesource.com/setup_12.x | bash \
 && apt-get install nodejs -yq
 
 RUN docker-php-ext-install opcache

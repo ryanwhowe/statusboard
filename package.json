@@ -10,5 +10,8 @@
     "jquery": "3.5.x",
     "moment": "2.19.x",
     "weathericons": "2.0.x"
+  },
+  "scripts": {
+    "asset-install": "npm ci && cp -r node_modules/* web/bundles/"
   }
 }

@@ -9,7 +9,7 @@ class Environment
     const ENV_DOCKER_DEV = 3;
     const ENV_DEV = 4;
     const ENV_LOCAL = 5;
-    const EVN_TEST = 6;
+    const ENV_TEST = 6;
     const ENV_DOCKER_TEST = 7;
     const ENV_AWS_PRODUCTION = 8;
     const ENV_AWS_STAGING = 9;
@@ -19,6 +19,7 @@ class Environment
     const TYPE_PRODUCTION = 'prod';
     const TYPE_DEV = 'dev';
     const TYPE_DOCKER_DEV = 'docker-dev';
+    const TYPE_TEST = 'test';
 
     public static $type = null;
 
@@ -38,6 +39,8 @@ class Environment
                 self::$type = self::ENV_DOCKER_DEV;
             } elseif (isset($environment) && strcasecmp($environment, self::TYPE_DEV) == 0) {
                 self::$type = self::ENV_DEV;
+            } elseif (isset($environment) && strcasecmp($environment, self::TYPE_TEST) == 0) {
+                self::$type = self::ENV_TEST;
             } elseif (isset($environment) && strcasecmp($environment, self::TYPE_PRODUCTION) == 0) {
                 self::$type = self::ENV_PRODUCTION;
             } elseif (in_array(@$_SERVER['REMOTE_ADDR'], ['127.0.0.1', '::1'], true)) {
@@ -45,6 +48,14 @@ class Environment
             }
         }
         return self::$type;
+    }
+
+    public static function isAwsTesting(){
+        return (self::getType() === self::ENV_AWS_TEST);
+    }
+
+    public static function isTesting(){
+        return (self::getType() === self::ENV_TEST || self::isAwsTesting());
     }
 
     public static function isLocal(){

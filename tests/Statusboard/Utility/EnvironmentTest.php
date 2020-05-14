@@ -19,6 +19,8 @@ class EnvironmentTest extends TestCase
         $this->assertTrue(Environment::isDevelopment());
         Environment::getType(Environment::TYPE_PRODUCTION);
         $this->assertFalse(Environment::isDevelopment());
+        Environment::getType(Environment::TYPE_TEST);
+        $this->assertFalse(Environment::isDevelopment());
     }
 
     /**
@@ -32,6 +34,8 @@ class EnvironmentTest extends TestCase
         $this->assertEquals(Environment::ENV_DOCKER_DEV, $env);
         $env = Environment::getType(Environment::TYPE_PRODUCTION);
         $this->assertEquals(Environment::ENV_PRODUCTION, $env);
+        $env = Environment::getType(Environment::TYPE_TEST);
+        $this->assertEquals(Environment::ENV_TEST, $env);
     }
 
     /**
@@ -45,5 +49,18 @@ class EnvironmentTest extends TestCase
         $this->assertTrue(Environment::isLocalDevelopment());
         Environment::getType(Environment::TYPE_PRODUCTION);
         $this->assertFalse(Environment::isLocalDevelopment());
+        Environment::getType(Environment::TYPE_TEST);
+        $this->assertFalse(Environment::isLocalDevelopment());
+    }
+
+    public function isTesting(){
+        Environment::getType(Environment::TYPE_DEV);
+        $this->assertFalse(Environment::isTesting());
+        Environment::getType(Environment::TYPE_DOCKER_DEV);
+        $this->assertFalse(Environment::isTesting());
+        Environment::getType(Environment::TYPE_PRODUCTION);
+        $this->assertFalse(Environment::isTesting());
+        Environment::getType(Environment::TYPE_TEST);
+        $this->assertTrue(Environment::isTesting());
     }
 }

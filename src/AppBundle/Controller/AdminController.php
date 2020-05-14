@@ -119,7 +119,7 @@ class AdminController extends Controller
             'ENV_DOCKER_DEV' => ($env === Environment::ENV_DOCKER_DEV),
             'ENV_DEV' => ($env === Environment::ENV_DEV),
             'ENV_LOCAL' => ($env === Environment::ENV_LOCAL),
-            'EVN_TEST' => ($env === Environment::EVN_TEST),
+            'ENV_TEST' => ($env === Environment::ENV_TEST),
             'ENV_DOCKER_TEST' => ($env === Environment::ENV_DOCKER_TEST),
             'ENV_AWS_PRODUCTION' => ($env === Environment::ENV_AWS_PRODUCTION),
             'ENV_AWS_STAGING' => ($env === Environment::ENV_AWS_STAGING),
@@ -128,6 +128,8 @@ class AdminController extends Controller
             'isLocal()' => Environment::isLocal(),
             'isLocalDevelopment()' => Environment::isLocalDevelopment(),
             'isDevelopment()' => Environment::isDevelopment(),
+            'isTesting()' => Environment::isTesting(),
+            'isAwsTesting()' => Environment::isAwsTesting(),
 
         ];
         return $this->render('AppBundle:Admin:environment.html.twig', [
