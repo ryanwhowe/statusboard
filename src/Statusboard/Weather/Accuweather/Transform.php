@@ -146,7 +146,14 @@ class Transform implements ApiResponseInterface {
      * @return string
      */
     public static function extractIconPhrase(array $dayData): string {
-        return $dayData['HasPrecipitation'] ? $dayData['PrecipitationIntensity'] . ' ' . $dayData['PrecipitationType'] . ' ' . $dayData['IconPhrase'] : $dayData['IconPhrase'];
+        if($dayData['HasPrecipitation']){
+            $phrase = $dayData['PrecipitationIntensity'] . ' ' . $dayData['PrecipitationType'];
+            if(stristr($phrase, $dayData['IconPhrase']) === false){
+                $phrase .= $dayData['IconPhrase'];
+            }
+            return $phrase;
+        }
+        return $dayData['IconPhrase'];
     }
 
     /**
