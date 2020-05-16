@@ -15,7 +15,7 @@ require __DIR__.'/../vendor/autoload.php';
 // Feel free to remove this, extend it, or make something more sophisticated.
 if (isset($_SERVER['HTTP_CLIENT_IP'])
     || isset($_SERVER['HTTP_X_FORWARDED_FOR'])
-    || !(Environment::isDevelopment() || PHP_SAPI === 'cli-server')
+    || !(Environment::isDevelopment() || Environment::isTesting() || PHP_SAPI === 'cli-server')
 ) {
     header('HTTP/1.0 403 Forbidden');
     exit('You are not allowed to access this file. Check '.basename(__FILE__).' for more information.');
