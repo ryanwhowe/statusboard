@@ -1,0 +1,25 @@
+[
+  {
+    "LocalObservationDateTime": "2020-05-16T10:08:00-04:00",
+    "EpochTime": 1589638080,
+    "WeatherText": "Mostly sunny",
+    "WeatherIcon": 2,
+    "HasPrecipitation": false,
+    "PrecipitationType": null,
+    "IsDayTime": true,
+    "Temperature": {
+      "Metric": {
+        "Value": 17,
+        "Unit": "C",
+        "UnitType": 17
+      },
+      "Imperial": {
+        "Value": 63,
+        "Unit": "F",
+        "UnitType": 18
+      }
+    },
+    "MobileLink": "http://m.accuweather.com/en/us/milford-ma/01757/current-weather/593_pc?lang=en-us",
+    "Link": "http://www.accuweather.com/en/us/milford-ma/01757/current-weather/593_pc?lang=en-us"
+  }
+]

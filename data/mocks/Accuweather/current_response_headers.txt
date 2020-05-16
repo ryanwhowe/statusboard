@@ -1,0 +1,48 @@
+Accept:
+    */*
+Accept-Encoding:
+    gzip
+Accept-Language:
+    en-US
+Access-Control-Allow-Headers:
+    origin
+Access-Control-Allow-Methods:
+    GET
+Access-Control-Allow-Origin:
+    *
+Access-Control-Max-Age:
+    3628800
+Cache-Control:
+    public
+Connection:
+    keep-alive
+Content-Encoding:
+    gzip
+Content-Type:
+    application/json; charset=utf-8
+Date:
+    Sat, 16 May 2020 14:17:12 GMT
+Expires:
+    Sat, 16 May 2020 14:27:12 GMT
+Host:
+    accuweather-api.trafficmanager.net
+Origin:
+    https://developer.accuweather.com
+RateLimit-Limit:
+    50
+RateLimit-Remaining:
+    36
+Referer:
+    https://developer.accuweather.com/accuweather-current-conditions-api/apis/get/currentconditions/v1/%7BlocationKey%7D
+Transfer-Encoding:
+    chunked
+User-Agent:
+    Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:76.0) Gecko/20100101 Firefox/76.0
+Vary:
+    Accept-Encoding
+X-Forwarded-For:
+    24.91.57.146
+X-Forwarded-Port:
+    443
+X-Forwarded-Proto:
+    https
