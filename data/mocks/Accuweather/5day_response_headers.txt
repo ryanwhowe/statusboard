@@ -1,229 +1,25 @@
-Accept:
-    */*
-Accept-Encoding:
-    gzip
-Accept-Language:
-    en-US
-Access-Control-Allow-Headers:
-    origin
-Access-Control-Allow-Methods:
-    GET
-Access-Control-Allow-Origin:
-    *
-Access-Control-Max-Age:
-    3628800
-Cache-Control:
-    public
-Connection:
-    keep-alive
-Content-Encoding:
-    gzip
-Content-Type:
-    application/json; charset=utf-8
-Date:
-    Sat, 16 May 2020 14:19:19 GMT
-Expires:
-    Sat, 16 May 2020 14:38:56 GMT
-Host:
-    api.accuweather.com
-Origin:
-    https://developer.accuweather.com
-RateLimit-Limit:
-    50
-RateLimit-Remaining:
-    35
-Referer:
-    https://developer.accuweather.com/accuweather-forecast-api/apis/get/forecasts/v1/daily/5day/%7BlocationKey%7D
-Server:
-    Microsoft-IIS/10.0
-Transfer-Encoding:
-    chunked
-User-Agent:
-    Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:76.0) Gecko/20100101 Firefox/76.0
-Vary:
-    Accept-Encoding
-X-Forwarded-For:
-    24.91.57.146
-X-Forwarded-Port:
-    443
-X-Forwarded-Proto:
-    https
-
-{
-  "Headline": {
-    "EffectiveDate": "2020-05-17T20:00:00-04:00",
-    "EffectiveEpochDate": 1589760000,
-    "Severity": 3,
-    "Text": "Expect rainy weather tomorrow evening through Tuesday afternoon",
-    "Category": "rain",
-    "EndDate": "2020-05-19T20:00:00-04:00",
-    "EndEpochDate": 1589932800,
-    "MobileLink": "http://m.accuweather.com/en/us/milford-ma/01757/extended-weather-forecast/593_pc?lang=en-us",
-    "Link": "http://www.accuweather.com/en/us/milford-ma/01757/daily-weather-forecast/593_pc?lang=en-us"
-  },
-  "DailyForecasts": [
-    {
-      "Date": "2020-05-16T07:00:00-04:00",
-      "EpochDate": 1589626800,
-      "Temperature": {
-        "Minimum": {
-          "Value": 48,
-          "Unit": "F",
-          "UnitType": 18
-        },
-        "Maximum": {
-          "Value": 73,
-          "Unit": "F",
-          "UnitType": 18
-        }
-      },
-      "Day": {
-        "Icon": 3,
-        "IconPhrase": "Partly sunny",
-        "HasPrecipitation": false
-      },
-      "Night": {
-        "Icon": 35,
-        "IconPhrase": "Partly cloudy",
-        "HasPrecipitation": false
-      },
-      "Sources": [
-        "AccuWeather"
-      ],
-      "MobileLink": "http://m.accuweather.com/en/us/milford-ma/01757/daily-weather-forecast/593_pc?day=1&lang=en-us",
-      "Link": "http://www.accuweather.com/en/us/milford-ma/01757/daily-weather-forecast/593_pc?day=1&lang=en-us"
-    },
-    {
-      "Date": "2020-05-17T07:00:00-04:00",
-      "EpochDate": 1589713200,
-      "Temperature": {
-        "Minimum": {
-          "Value": 49,
-          "Unit": "F",
-          "UnitType": 18
-        },
-        "Maximum": {
-          "Value": 69,
-          "Unit": "F",
-          "UnitType": 18
-        }
-      },
-      "Day": {
-        "Icon": 6,
-        "IconPhrase": "Mostly cloudy",
-        "HasPrecipitation": false
-      },
-      "Night": {
-        "Icon": 18,
-        "IconPhrase": "Rain",
-        "HasPrecipitation": true,
-        "PrecipitationType": "Rain",
-        "PrecipitationIntensity": "Light"
-      },
-      "Sources": [
-        "AccuWeather"
-      ],
-      "MobileLink": "http://m.accuweather.com/en/us/milford-ma/01757/daily-weather-forecast/593_pc?day=2&lang=en-us",
-      "Link": "http://www.accuweather.com/en/us/milford-ma/01757/daily-weather-forecast/593_pc?day=2&lang=en-us"
-    },
-    {
-      "Date": "2020-05-18T07:00:00-04:00",
-      "EpochDate": 1589799600,
-      "Temperature": {
-        "Minimum": {
-          "Value": 45,
-          "Unit": "F",
-          "UnitType": 18
-        },
-        "Maximum": {
-          "Value": 55,
-          "Unit": "F",
-          "UnitType": 18
-        }
-      },
-      "Day": {
-        "Icon": 18,
-        "IconPhrase": "Rain",
-        "HasPrecipitation": true,
-        "PrecipitationType": "Rain",
-        "PrecipitationIntensity": "Light"
-      },
-      "Night": {
-        "Icon": 18,
-        "IconPhrase": "Rain",
-        "HasPrecipitation": true,
-        "PrecipitationType": "Rain",
-        "PrecipitationIntensity": "Light"
-      },
-      "Sources": [
-        "AccuWeather"
-      ],
-      "MobileLink": "http://m.accuweather.com/en/us/milford-ma/01757/daily-weather-forecast/593_pc?day=3&lang=en-us",
-      "Link": "http://www.accuweather.com/en/us/milford-ma/01757/daily-weather-forecast/593_pc?day=3&lang=en-us"
-    },
-    {
-      "Date": "2020-05-19T07:00:00-04:00",
-      "EpochDate": 1589886000,
-      "Temperature": {
-        "Minimum": {
-          "Value": 41,
-          "Unit": "F",
-          "UnitType": 18
-        },
-        "Maximum": {
-          "Value": 51,
-          "Unit": "F",
-          "UnitType": 18
-        }
-      },
-      "Day": {
-        "Icon": 12,
-        "IconPhrase": "Showers",
-        "HasPrecipitation": true,
-        "PrecipitationType": "Rain",
-        "PrecipitationIntensity": "Light"
-      },
-      "Night": {
-        "Icon": 38,
-        "IconPhrase": "Mostly cloudy",
-        "HasPrecipitation": false
-      },
-      "Sources": [
-        "AccuWeather"
-      ],
-      "MobileLink": "http://m.accuweather.com/en/us/milford-ma/01757/daily-weather-forecast/593_pc?day=4&lang=en-us",
-      "Link": "http://www.accuweather.com/en/us/milford-ma/01757/daily-weather-forecast/593_pc?day=4&lang=en-us"
-    },
-    {
-      "Date": "2020-05-20T07:00:00-04:00",
-      "EpochDate": 1589972400,
-      "Temperature": {
-        "Minimum": {
-          "Value": 42,
-          "Unit": "F",
-          "UnitType": 18
-        },
-        "Maximum": {
-          "Value": 57,
-          "Unit": "F",
-          "UnitType": 18
-        }
-      },
-      "Day": {
-        "Icon": 4,
-        "IconPhrase": "Intermittent clouds",
-        "HasPrecipitation": false
-      },
-      "Night": {
-        "Icon": 36,
-        "IconPhrase": "Intermittent clouds",
-        "HasPrecipitation": false
-      },
-      "Sources": [
-        "AccuWeather"
-      ],
-      "MobileLink": "http://m.accuweather.com/en/us/milford-ma/01757/daily-weather-forecast/593_pc?day=5&lang=en-us",
-      "Link": "http://www.accuweather.com/en/us/milford-ma/01757/daily-weather-forecast/593_pc?day=5&lang=en-us"
-    }
-  ]
-}
+Accept: */*
+Accept-Encoding: gzip
+Accept-Language: en-US
+Access-Control-Allow-Headers: origin
+Access-Control-Allow-Methods: GET
+Access-Control-Allow-Origin: *
+Access-Control-Max-Age: 3628800
+Cache-Control: public
+Connection: keep-alive
+Content-Encoding: gzip
+Content-Type: application/json; charset=utf-8
+Date: Sat, 16 May 2020 14:19:19 GMT
+Expires: Sat, 16 May 2020 14:38:56 GMT
+Host: api.accuweather.com
+Origin: https://developer.accuweather.com
+RateLimit-Limit: 50
+RateLimit-Remaining: 35
+Referer: https://developer.accuweather.com/accuweather-forecast-api/apis/get/forecasts/v1/daily/5day/%7BlocationKey%7D
+Server: Microsoft-IIS/10.0
+Transfer-Encoding: chunked
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:76.0) Gecko/20100101 Firefox/76.0
+Vary: Accept-Encoding
+X-Forwarded-For: 24.91.57.146
+X-Forwarded-Port: 443
+X-Forwarded-Proto: https

@@ -13,9 +13,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Statusboard\Mbta\Fetcher as MbtaFetcher;
 use Statusboard\Mbta\Transform as Mbta;
 use Statusboard\Mbta\TripFilters;
+use Statusboard\Utility\Environment;
 use Statusboard\Weather\Accuweather\Cache as WeatherCache;
 use Statusboard\Mbta\Cache as MbtaCache;
+use Statusboard\Weather\Accuweather\Mock;
 use Statusboard\Weather\Accuweather\RequestLimitExceededException;
+use Statusboard\Weather\Accuweather\Fetcher AS AccuweatherFetcher ;
 use Statusboard\Weather\Accuweather\Transform AS Accuweather;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -117,31 +120,53 @@ class ApiController extends Controller
         $api_key = $this->getParameter('accuweather_api_key');
         $postal = $this->getParameter('postal_code');
 
+        $request_limit = (int)$cache->getCacheIfSet($cache::CACHE_TYPE_REQUESTLIMIT, '50');
+
+        if(Environment::isTesting()){
+            $fetcher = new Mock();
+        } else {
+            $fetcher = new AccuweatherFetcher();
+        }
+
         if($cache->checkCacheTime($cache::CACHE_TYPE_LOCATION)){
             $location = (string)$cache->getCache($cache::CACHE_TYPE_LOCATION);
         } else {
             try{
-                $data = Accuweather::getLocation($api_key, $postal);
-                $location = $data[Accuweather::RESPONSE_KEY];
-                $timeout = $data[Accuweather::RESPONSE_TIMEOUT];
+                $location_response = $fetcher::getLocation($api_key, $postal);
+                $location = Accuweather::getLocationKey($location_response);
+                $timeout = strtotime(Accuweather::getExpiresHeader($location_response));
+                $request_limit = (int)Accuweather::getRemainingLimitHeader($location_response);
                 $cache->updateCache($cache::CACHE_TYPE_LOCATION, $timeout, $location);
+                $cache->setRequestLimit($request_limit);
             } catch (ServerException $e){
+                $json_response = Response::HTTP_FORBIDDEN;
+                $location = $this->getParameter('accuweather_api_location');
+            } catch (RequestLimitExceededException $e){
                 $json_response = Response::HTTP_FORBIDDEN;
                 $location = $this->getParameter('accuweather_api_location');
             }
         }
 
-        if($cache->checkCacheTime($cache::CACHE_TYPE_WEATHER)){
+        if(
+            $cache->hasData($cache::CACHE_TYPE_WEATHER) &&
+            ($cache->checkCacheTime($cache::CACHE_TYPE_WEATHER) || $request_limit < 2)
+        ){
             $body = unserialize($cache->getCache($cache::CACHE_TYPE_WEATHER));
             $body[Accuweather::RESPONSE_TIMEOUT] = $cache->getTimeout($cache::CACHE_TYPE_WEATHER);
         } else {
             try {
-                $body = Accuweather::getFiveDayForecast($api_key, $location);
-                $body['current'] = Accuweather::getCurrentConditions($api_key, $location);
-                $timeout = $body[Accuweather::RESPONSE_TIMEOUT];
+                $fiveday_response = $fetcher::getFiveDayForecast($api_key, $location);
+                $body = Accuweather::getArrayResponseBody($fiveday_response);
+                $current_response = $fetcher::getCurrentConditions($api_key, $location);
+                $body['current'] = Accuweather::getArrayResponseBody($current_response);
+                $timeout = strtotime(Accuweather::getExpiresHeader($fiveday_response));
+                $request_limit = (int)Accuweather::getRemainingLimitHeader($current_response);
                 $cache->updateCache($cache::CACHE_TYPE_WEATHER, $timeout, serialize($body));
+                $cache->setRequestLimit($request_limit);
                 $body[Accuweather::RESPONSE_TIMEOUT] = $cache->getTimeout($cache::CACHE_TYPE_WEATHER);
             } catch (ServerException $e){
+                $json_response = Response::HTTP_FORBIDDEN;
+            }catch (RequestLimitExceededException $e){
                 $json_response = Response::HTTP_FORBIDDEN;
             }
         }

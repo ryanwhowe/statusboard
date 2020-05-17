@@ -2,8 +2,7 @@
 
 namespace Statusboard\Utility;
 
-class Environment
-{
+class Environment {
     const ENV_PRODUCTION = 1;
     const ENV_DOCKER_PRODUCTION = 2;
     const ENV_DOCKER_DEV = 3;
@@ -25,14 +24,15 @@ class Environment
 
     /**
      * @param string|null $type
+     *
      * @return int
      */
-    public static function getType($type=null){
-        if($type !== null){
+    public static function getType($type = null) {
+        if ($type !== null) {
             putenv("RUN_ENVIRONMENT=${type}");
             self::$type = null;
         }
-        if(is_null(self::$type)) {
+        if (is_null(self::$type)) {
             self::$type = self::ENV_PRODUCTION;
             $environment = getenv('RUN_ENVIRONMENT');
             if (isset($environment) && strcasecmp($environment, self::TYPE_DOCKER_DEV) == 0) {
@@ -50,28 +50,35 @@ class Environment
         return self::$type;
     }
 
-    public static function isAwsTesting(){
+    public static function isAwsTesting() {
         return (self::getType() === self::ENV_AWS_TEST);
     }
 
-    public static function isTesting(){
+    public static function isTesting() {
         return (self::getType() === self::ENV_TEST || self::isAwsTesting());
     }
 
-    public static function isLocal(){
+    public static function isLocal() {
         return (self::getType() === self::ENV_LOCAL);
     }
 
-    public static function isLocalDevelopment(){
+    public static function isLocalDevelopment() {
         return (self::getType() === self::ENV_DOCKER_DEV);
     }
 
-    public static function isDevelopment(){
+    public static function isDevelopment() {
         return (
             self::isLocal() ||
             self::isLocalDevelopment() ||
             (self::getType() === self::ENV_AWS_DEV) ||
             (self::getType() === self::ENV_DEV)
         );
+    }
+
+    /**
+     * reset the static variable of the current environment
+     */
+    public static function reset() {
+        self::$type = null;
     }
 }

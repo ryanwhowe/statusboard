@@ -2,6 +2,7 @@
 
 namespace Tests\AppBundle\Controller;
 
+use Statusboard\Utility\Environment;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,7 +19,8 @@ class ApiControllerTest extends WebTestCase {
     protected $loggedOutClient;
 
     protected function setUp() {
-
+        parent::setUp();
+        Environment::getType(Environment::TYPE_TEST);
         $this->loggedOutClient = static::createClient();
         $this->loggedInClient = static::createClient(
             [],
@@ -27,6 +29,12 @@ class ApiControllerTest extends WebTestCase {
                 'PHP_AUTH_PW' => 'test12345',
             ]
         );
+    }
+
+    protected function tearDown()
+    {
+        Environment::reset();
+        parent::tearDown();
     }
 
     /**
@@ -42,6 +50,7 @@ class ApiControllerTest extends WebTestCase {
      * Test the logged in state for the weather api and test that the required response elements are present
      */
     public function testWeatherLoggedIn() {
+
         $crawler = $this->loggedInClient->request('GET', '/api/weather');
 
         $this->assertEquals(Response::HTTP_OK, $this->loggedInClient->getResponse()->getStatusCode(), 'Response Code Error');

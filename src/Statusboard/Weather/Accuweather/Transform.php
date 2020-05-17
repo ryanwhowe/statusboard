@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Statusboard\Weather\Accuweather;
 
 use GuzzleHttp\Client;
@@ -8,92 +7,19 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\ResponseInterface;
+use Statusboard\Utility\AbstractTransform;
 use Statusboard\Weather\ApiResponseInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-class Transform implements ApiResponseInterface {
+class Transform extends AbstractTransform implements ApiResponseInterface {
 
-    const RESPONSE_KEY = 'key';
+    const RESPONSE_LOCATION_KEY = 'Key';
     const RESPONSE_TIMEOUT = 'timeout';
 
-    const RESPONSE_RETRY = 5;
-    const RESPONSE_TIMEOUT_INTERVAL = 2.0;
+    const RESPONSE_HEADER_EXPIRES = 'Expires';
+    const RESPONSE_HEADER_REMAININGLIMIT = 'RateLimit-Remaining';
+
     const ICON_BASE_DIRECTORY = 'assets/images/weather/accuweather/';
-    const BASE_URL_CURRENT_CONDITIONS = 'http://dataservice.accuweather.com/currentconditions/v1/';
-    const BASE_URL_LOCATION = 'http://dataservice.accuweather.com/locations/v1/postalcodes/search';
-    const BASE_URL_FIVE_DAY_FORECAST = 'http://dataservice.accuweather.com/forecasts/v1/daily/5day/';
-
-    /**
-     * @param string $api_key
-     * @param string $location
-     * @return array
-     * @throws RequestLimitExceededException
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     */
-    public static function getCurrentConditions(string $api_key, string $location): array {
-        $base_uri = self::BASE_URL_CURRENT_CONDITIONS;
-        $uri = $location . '?apikey=' . $api_key;
-
-        return self::getResponse($base_uri, $uri);
-    }
-
-    /**
-     * @param string $api_key
-     * @param string $postal
-     * @return string
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws RequestLimitExceededException
-     */
-    public static function getLocation(string $api_key, string $postal): array {
-        $base_uri = self::BASE_URL_LOCATION;
-        $uri = '?apikey=' . $api_key . '&q=' . $postal;
-
-        $body = self::getResponse($base_uri, $uri);
-
-        return [
-            self::RESPONSE_KEY => $body[0]['Key'],
-            self::RESPONSE_TIMEOUT => $body[self::RESPONSE_TIMEOUT]
-        ];
-    }
-
-    /**
-     * @param string $location
-     * @param string $api_key
-     * @return array
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws RequestLimitExceededException
-     */
-    public static function getFiveDayForecast(string $api_key, string $location): array {
-        $base_uri = self::BASE_URL_FIVE_DAY_FORECAST;
-        $uri = $location . '?apikey=' . $api_key;
-
-        return self::getResponse($base_uri, $uri);
-    }
-
-    /**
-     * @param string $base_uri
-     * @param string $uri
-     * @return int|array
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws RequestLimitExceededException
-     */
-    private static function getResponse(string $base_uri, string $uri){
-        $client = new Client([
-            'base_uri' => $base_uri,
-            'timeout' => self::RESPONSE_TIMEOUT_INTERVAL
-        ]);
-        $request = new Request('get', $uri);
-        $response = $client->send($request);
-        $statusCode = $response->getStatusCode();
-        if($statusCode === Response::HTTP_FORBIDDEN){
-            throw new RequestLimitExceededException();
-        } else {
-            $timeout = $response->getHeader('Expires');
-            $return = \json_decode((string)$response->getBody(), true);
-            $return[self::RESPONSE_TIMEOUT] = strtotime($timeout[0]);
-        }
-        return $return;
-    }
 
     /**
      * @param array $body
@@ -149,7 +75,7 @@ class Transform implements ApiResponseInterface {
         if($dayData['HasPrecipitation']){
             $phrase = $dayData['PrecipitationIntensity'] . ' ' . $dayData['PrecipitationType'];
             if(stristr($phrase, $dayData['IconPhrase']) === false){
-                $phrase .= $dayData['IconPhrase'];
+                $phrase .= ' ' . $dayData['IconPhrase'];
             }
             return $phrase;
         }
@@ -167,39 +93,34 @@ class Transform implements ApiResponseInterface {
         return (int)number_format($number, $decimals, $dec_point, $thousands_sep);
     }
 
-    private static function getHandlerStack(){
-        $handler = HandlerStack::create();
-        $handler->push(Middleware::retry(
-            function($retries, $request, ResponseInterface $response = null, $exception = null){
-                if($retries > self::RESPONSE_RETRY) {
-                    return false;
-                }
-                if($response) {
-                    if($response->getStatusCode() === 200)
-                        return false;
-                }
-                return true;
-            },
-            function($retries){
-                return $retries * 1000;
-            }
-        ));
-        $handler->push(Middleware::mapRequest(
-            function(ResponseInterface $response){
-                if($response !== null){
-                    $statusCode = $response->getStatusCode();
-                    if($statusCode === 403){
-                        return $response->withStatus(200);
-                    }
-                }
-                return $response;
-            }
-        ));
-        return $handler;
-    }
 
     public static function generateIconFileName(int $icon): string{
         return str_pad($icon, 2, "0", STR_PAD_LEFT) . '-s.png';
+    }
+
+    /**
+     * @param ResponseInterface $response
+     * @return string
+     */
+    public static function getExpiresHeader(ResponseInterface $response): string{
+        return self::getSingleHeaderValue($response, self::RESPONSE_HEADER_EXPIRES);
+    }
+
+    /**
+     * @param ResponseInterface $response
+     * @return string
+     */
+    public static function getRemainingLimitHeader(ResponseInterface $response): string{
+        return self::getSingleHeaderValue($response, self::RESPONSE_HEADER_REMAININGLIMIT);
+    }
+
+    /**
+     * @param ResponseInterface $response
+     * @return string
+     */
+    public static function getLocationKey(ResponseInterface $response): string{
+        $body = self::getArrayResponseBody($response);
+        return $body[0][self::RESPONSE_LOCATION_KEY];
     }
 
 }
