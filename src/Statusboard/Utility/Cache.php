@@ -136,4 +136,24 @@ abstract class Cache
         $this->cache->deleteItem($this->generateCacheToken(self::TOKEN_TYPE_TIME, $cacheType));
         $this->cache->deleteItem($this->generateCacheToken(self::TOKEN_TYPE_DATA, $cacheType));
     }
+
+    /**
+     * @param string $cacheType
+     * @param string $default
+     * @return string
+     * @throws \Psr\SimpleCache\InvalidArgumentException
+     */
+    public function getCacheIfSet(string $cacheType, string $default){
+        return $this->checkCacheTime($cacheType) ? $this->getCache($cacheType) : $default;
+    }
+
+    /**
+     * @param string $cacheType
+     * @return bool
+     * @throws \Psr\SimpleCache\InvalidArgumentException
+     */
+    public function hasData(string $cacheType): bool {
+        $token = $this->generateCacheToken(self::TOKEN_TYPE_DATA, $cacheType);
+        return $this->cache->has($token);
+    }
 }
