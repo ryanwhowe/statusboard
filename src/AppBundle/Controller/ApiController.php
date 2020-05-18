@@ -16,7 +16,7 @@ use Statusboard\Mbta\TripFilters;
 use Statusboard\Utility\Environment;
 use Statusboard\Weather\Accuweather\Cache as WeatherCache;
 use Statusboard\Mbta\Cache as MbtaCache;
-use Statusboard\Weather\Accuweather\Mock;
+use Statusboard\Weather\Accuweather\MockFetcher;
 use Statusboard\Weather\Accuweather\RequestLimitExceededException;
 use Statusboard\Weather\Accuweather\Fetcher AS AccuweatherFetcher ;
 use Statusboard\Weather\Accuweather\Transform AS Accuweather;
@@ -123,7 +123,7 @@ class ApiController extends Controller
         $request_limit = (int)$cache->getCacheIfSet($cache::CACHE_TYPE_REQUESTLIMIT, '50');
 
         if(Environment::isTesting()){
-            $fetcher = new Mock();
+            $fetcher = new MockFetcher();
         } else {
             $fetcher = new AccuweatherFetcher();
         }
@@ -209,20 +209,30 @@ class ApiController extends Controller
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Psr\SimpleCache\InvalidArgumentException
      */
-    public function mbta(Request $request, LoggerInterface $logger){
+    public function mbta(Request $request, LoggerInterface $logger) {
         $cache = new MbtaCache($logger);
         $api_key = $this->getParameter('mbta_api_key');
         $json_response = JsonResponse::HTTP_OK;
-        if($cache->checkCacheTime($cache::CACHE_TYPE_SCHEDULE)){
+
+        if (Environment::isTesting()) {
+            $fetcher = new \Statusboard\Mbta\MockFetcher();
+        } else {
+            $fetcher = new MbtaFetcher();
+        }
+
+        if ($cache->checkCacheTime($cache::CACHE_TYPE_SCHEDULE)) {
             $schedule = unserialize($cache->getCache($cache::CACHE_TYPE_SCHEDULE));
         } else {
             try {
                 $trip_filters = [
-                    TripFilters::headSignFilter(TripFilters::HEADSIGN_FORGEPARK)
+                    TripFilters::headSignFilter(TripFilters::HEADSIGN_FORGEPARK),
                 ];
-                $schedule = MbtaFetcher::getSchedule($api_key, $trip_filters);
-                $expiration_time = Mbta::getExpirationTime($schedule, time());
-                if(empty($schedule)) {
+                $trips = $fetcher::getTrips($api_key);
+                $filtered_trips = Mbta::generateTripsParameter($trips, $trip_filters);
+                $schedule_response = $fetcher::getSchedule($api_key, $filtered_trips);
+                $expiration_time = Mbta::getExpirationTime($schedule_response, time());
+                $schedule = Mbta::getArrayResponseBody($schedule_response);
+                if (empty($schedule)) {
                     $cached = $cache->getCache($cache::CACHE_TYPE_SCHEDULE);
                     if ($cached === null) {
                         $json_response = JsonResponse::HTTP_NO_CONTENT;
