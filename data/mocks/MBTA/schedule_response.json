@@ -1,0 +1,4907 @@
+{
+  "data": [
+    {
+      "attributes": {
+        "arrival_time": null,
+        "departure_time": "2020-05-18T07:20:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 1,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 1,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1703C0-South Station-1",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "South Station",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1703C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T07:25:00-04:00",
+        "departure_time": "2020-05-18T07:25:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 2,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1703C0-Back Bay-2",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Back Bay",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1703C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T07:28:00-04:00",
+        "departure_time": "2020-05-18T07:28:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 3,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1703C0-Ruggles-3",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Ruggles",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1703C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T07:38:00-04:00",
+        "departure_time": "2020-05-18T07:38:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 4,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1703C0-Readville-4",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Readville",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1703C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T07:41:00-04:00",
+        "departure_time": "2020-05-18T07:41:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 5,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1703C0-Endicott-5",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Endicott",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1703C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T07:45:00-04:00",
+        "departure_time": "2020-05-18T07:45:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 6,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1703C0-Dedham Corp Center-6",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Dedham Corp Center",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1703C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T07:47:00-04:00",
+        "departure_time": "2020-05-18T07:47:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 7,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1703C0-Islington-7",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Islington",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1703C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T07:50:00-04:00",
+        "departure_time": "2020-05-18T07:50:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 8,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1703C0-Norwood Depot-8",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Norwood Depot",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1703C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T07:53:00-04:00",
+        "departure_time": "2020-05-18T07:53:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 9,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1703C0-Norwood Central-9",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Norwood Central",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1703C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T07:57:00-04:00",
+        "departure_time": "2020-05-18T07:57:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 10,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1703C0-Windsor Gardens-10",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Windsor Gardens",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1703C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T08:03:00-04:00",
+        "departure_time": "2020-05-18T08:03:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 11,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1703C0-Walpole-11",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Walpole",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1703C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T08:10:00-04:00",
+        "departure_time": "2020-05-18T08:10:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 12,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1703C0-Norfolk-12",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Norfolk",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1703C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T08:17:00-04:00",
+        "departure_time": "2020-05-18T08:17:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 13,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1703C0-Franklin-13",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Franklin",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1703C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T08:24:00-04:00",
+        "departure_time": null,
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 1,
+        "stop_headsign": null,
+        "stop_sequence": 14,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1703C0-Forge Park / 495-14",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Forge Park / 495",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1703C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": null,
+        "departure_time": "2020-05-18T09:20:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 1,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 1,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1705C0-South Station-1",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "South Station",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1705C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T09:25:00-04:00",
+        "departure_time": "2020-05-18T09:25:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 2,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1705C0-Back Bay-2",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Back Bay",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1705C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T09:28:00-04:00",
+        "departure_time": "2020-05-18T09:28:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 3,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1705C0-Ruggles-3",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Ruggles",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1705C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T09:38:00-04:00",
+        "departure_time": "2020-05-18T09:38:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 4,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1705C0-Readville-4",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Readville",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1705C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T09:41:00-04:00",
+        "departure_time": "2020-05-18T09:41:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 5,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1705C0-Endicott-5",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Endicott",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1705C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T09:45:00-04:00",
+        "departure_time": "2020-05-18T09:45:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 6,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1705C0-Dedham Corp Center-6",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Dedham Corp Center",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1705C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T09:47:00-04:00",
+        "departure_time": "2020-05-18T09:47:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 7,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1705C0-Islington-7",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Islington",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1705C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T09:50:00-04:00",
+        "departure_time": "2020-05-18T09:50:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 8,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1705C0-Norwood Depot-8",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Norwood Depot",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1705C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T09:53:00-04:00",
+        "departure_time": "2020-05-18T09:53:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 9,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1705C0-Norwood Central-9",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Norwood Central",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1705C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T09:57:00-04:00",
+        "departure_time": "2020-05-18T09:57:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 10,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1705C0-Windsor Gardens-10",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Windsor Gardens",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1705C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T10:03:00-04:00",
+        "departure_time": "2020-05-18T10:03:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 11,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1705C0-Walpole-11",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Walpole",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1705C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T10:10:00-04:00",
+        "departure_time": "2020-05-18T10:10:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 12,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1705C0-Norfolk-12",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Norfolk",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1705C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T10:17:00-04:00",
+        "departure_time": "2020-05-18T10:17:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 13,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1705C0-Franklin-13",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Franklin",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1705C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T10:24:00-04:00",
+        "departure_time": null,
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 1,
+        "stop_headsign": null,
+        "stop_sequence": 14,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1705C0-Forge Park / 495-14",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Forge Park / 495",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1705C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": null,
+        "departure_time": "2020-05-18T11:20:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 1,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 1,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1707C0-South Station-1",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "South Station",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1707C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T11:25:00-04:00",
+        "departure_time": "2020-05-18T11:25:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 2,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1707C0-Back Bay-2",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Back Bay",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1707C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T11:28:00-04:00",
+        "departure_time": "2020-05-18T11:28:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 3,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1707C0-Ruggles-3",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Ruggles",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1707C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T11:38:00-04:00",
+        "departure_time": "2020-05-18T11:38:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 4,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1707C0-Readville-4",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Readville",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1707C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T11:41:00-04:00",
+        "departure_time": "2020-05-18T11:41:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 5,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1707C0-Endicott-5",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Endicott",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1707C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T11:45:00-04:00",
+        "departure_time": "2020-05-18T11:45:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 6,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1707C0-Dedham Corp Center-6",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Dedham Corp Center",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1707C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T11:47:00-04:00",
+        "departure_time": "2020-05-18T11:47:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 7,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1707C0-Islington-7",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Islington",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1707C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T11:50:00-04:00",
+        "departure_time": "2020-05-18T11:50:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 8,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1707C0-Norwood Depot-8",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Norwood Depot",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1707C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T11:53:00-04:00",
+        "departure_time": "2020-05-18T11:53:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 9,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1707C0-Norwood Central-9",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Norwood Central",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1707C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T11:57:00-04:00",
+        "departure_time": "2020-05-18T11:57:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 10,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1707C0-Windsor Gardens-10",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Windsor Gardens",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1707C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T12:03:00-04:00",
+        "departure_time": "2020-05-18T12:03:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 11,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1707C0-Walpole-11",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Walpole",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1707C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T12:10:00-04:00",
+        "departure_time": "2020-05-18T12:10:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 12,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1707C0-Norfolk-12",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Norfolk",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1707C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T12:17:00-04:00",
+        "departure_time": "2020-05-18T12:17:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 13,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1707C0-Franklin-13",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Franklin",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1707C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T12:24:00-04:00",
+        "departure_time": null,
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 1,
+        "stop_headsign": null,
+        "stop_sequence": 14,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1707C0-Forge Park / 495-14",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Forge Park / 495",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1707C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": null,
+        "departure_time": "2020-05-18T13:20:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 1,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 1,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1709C0-South Station-1",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "South Station",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1709C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T13:25:00-04:00",
+        "departure_time": "2020-05-18T13:25:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 2,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1709C0-Back Bay-2",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Back Bay",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1709C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T13:28:00-04:00",
+        "departure_time": "2020-05-18T13:28:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 3,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1709C0-Ruggles-3",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Ruggles",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1709C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T13:38:00-04:00",
+        "departure_time": "2020-05-18T13:38:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 4,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1709C0-Readville-4",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Readville",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1709C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T13:41:00-04:00",
+        "departure_time": "2020-05-18T13:41:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 5,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1709C0-Endicott-5",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Endicott",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1709C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T13:45:00-04:00",
+        "departure_time": "2020-05-18T13:45:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 6,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1709C0-Dedham Corp Center-6",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Dedham Corp Center",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1709C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T13:47:00-04:00",
+        "departure_time": "2020-05-18T13:47:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 7,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1709C0-Islington-7",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Islington",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1709C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T13:50:00-04:00",
+        "departure_time": "2020-05-18T13:50:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 8,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1709C0-Norwood Depot-8",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Norwood Depot",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1709C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T13:53:00-04:00",
+        "departure_time": "2020-05-18T13:53:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 9,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1709C0-Norwood Central-9",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Norwood Central",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1709C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T13:57:00-04:00",
+        "departure_time": "2020-05-18T13:57:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 10,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1709C0-Windsor Gardens-10",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Windsor Gardens",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1709C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T14:03:00-04:00",
+        "departure_time": "2020-05-18T14:03:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 11,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1709C0-Walpole-11",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Walpole",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1709C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T14:10:00-04:00",
+        "departure_time": "2020-05-18T14:10:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 12,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1709C0-Norfolk-12",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Norfolk",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1709C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T14:17:00-04:00",
+        "departure_time": "2020-05-18T14:17:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 13,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1709C0-Franklin-13",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Franklin",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1709C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T14:24:00-04:00",
+        "departure_time": null,
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 1,
+        "stop_headsign": null,
+        "stop_sequence": 14,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1709C0-Forge Park / 495-14",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Forge Park / 495",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1709C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": null,
+        "departure_time": "2020-05-18T15:20:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 1,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 1,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1711C0-South Station-1",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "South Station",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1711C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T15:25:00-04:00",
+        "departure_time": "2020-05-18T15:25:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 2,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1711C0-Back Bay-2",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Back Bay",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1711C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T15:28:00-04:00",
+        "departure_time": "2020-05-18T15:28:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 3,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1711C0-Ruggles-3",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Ruggles",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1711C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T15:38:00-04:00",
+        "departure_time": "2020-05-18T15:38:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 4,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1711C0-Readville-4",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Readville",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1711C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T15:41:00-04:00",
+        "departure_time": "2020-05-18T15:41:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 5,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1711C0-Endicott-5",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Endicott",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1711C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T15:45:00-04:00",
+        "departure_time": "2020-05-18T15:45:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 6,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1711C0-Dedham Corp Center-6",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Dedham Corp Center",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1711C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T15:47:00-04:00",
+        "departure_time": "2020-05-18T15:47:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 7,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1711C0-Islington-7",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Islington",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1711C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T15:50:00-04:00",
+        "departure_time": "2020-05-18T15:50:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 8,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1711C0-Norwood Depot-8",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Norwood Depot",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1711C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T15:53:00-04:00",
+        "departure_time": "2020-05-18T15:53:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 9,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1711C0-Norwood Central-9",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Norwood Central",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1711C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T15:57:00-04:00",
+        "departure_time": "2020-05-18T15:57:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 10,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1711C0-Windsor Gardens-10",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Windsor Gardens",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1711C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T16:03:00-04:00",
+        "departure_time": "2020-05-18T16:03:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 11,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1711C0-Walpole-11",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Walpole",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1711C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T16:10:00-04:00",
+        "departure_time": "2020-05-18T16:10:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 12,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1711C0-Norfolk-12",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Norfolk",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1711C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T16:17:00-04:00",
+        "departure_time": "2020-05-18T16:17:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 13,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1711C0-Franklin-13",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Franklin",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1711C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T16:24:00-04:00",
+        "departure_time": null,
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 1,
+        "stop_headsign": null,
+        "stop_sequence": 14,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1711C0-Forge Park / 495-14",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Forge Park / 495",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1711C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": null,
+        "departure_time": "2020-05-18T17:20:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 1,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 1,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-9990C0-South Station-1",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "South Station",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-9990C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T17:25:00-04:00",
+        "departure_time": "2020-05-18T17:25:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 2,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-9990C0-Back Bay-2",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Back Bay",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-9990C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T17:28:00-04:00",
+        "departure_time": "2020-05-18T17:28:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 3,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-9990C0-Ruggles-3",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Ruggles",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-9990C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T17:38:00-04:00",
+        "departure_time": "2020-05-18T17:38:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 4,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-9990C0-Readville-4",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Readville",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-9990C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T17:41:00-04:00",
+        "departure_time": "2020-05-18T17:41:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 5,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-9990C0-Endicott-5",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Endicott",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-9990C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T17:45:00-04:00",
+        "departure_time": "2020-05-18T17:45:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 6,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-9990C0-Dedham Corp Center-6",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Dedham Corp Center",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-9990C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T17:47:00-04:00",
+        "departure_time": "2020-05-18T17:47:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 7,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-9990C0-Islington-7",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Islington",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-9990C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T17:50:00-04:00",
+        "departure_time": "2020-05-18T17:50:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 8,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-9990C0-Norwood Depot-8",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Norwood Depot",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-9990C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T17:53:00-04:00",
+        "departure_time": "2020-05-18T17:53:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 9,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-9990C0-Norwood Central-9",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Norwood Central",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-9990C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T17:57:00-04:00",
+        "departure_time": "2020-05-18T17:57:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 10,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-9990C0-Windsor Gardens-10",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Windsor Gardens",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-9990C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T18:03:00-04:00",
+        "departure_time": "2020-05-18T18:03:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 11,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-9990C0-Walpole-11",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Walpole",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-9990C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T18:10:00-04:00",
+        "departure_time": "2020-05-18T18:10:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 12,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-9990C0-Norfolk-12",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Norfolk",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-9990C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T18:17:00-04:00",
+        "departure_time": "2020-05-18T18:17:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 13,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-9990C0-Franklin-13",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Franklin",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-9990C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T18:24:00-04:00",
+        "departure_time": null,
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 1,
+        "stop_headsign": null,
+        "stop_sequence": 14,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-9990C0-Forge Park / 495-14",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Forge Park / 495",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-9990C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": null,
+        "departure_time": "2020-05-18T19:20:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 1,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 1,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1715C0-South Station-1",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "South Station",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1715C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T19:25:00-04:00",
+        "departure_time": "2020-05-18T19:25:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 2,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1715C0-Back Bay-2",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Back Bay",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1715C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T19:28:00-04:00",
+        "departure_time": "2020-05-18T19:28:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 3,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1715C0-Ruggles-3",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Ruggles",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1715C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T19:38:00-04:00",
+        "departure_time": "2020-05-18T19:38:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 4,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1715C0-Readville-4",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Readville",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1715C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T19:41:00-04:00",
+        "departure_time": "2020-05-18T19:41:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 5,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1715C0-Endicott-5",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Endicott",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1715C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T19:45:00-04:00",
+        "departure_time": "2020-05-18T19:45:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 6,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1715C0-Dedham Corp Center-6",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Dedham Corp Center",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1715C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T19:47:00-04:00",
+        "departure_time": "2020-05-18T19:47:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 7,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1715C0-Islington-7",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Islington",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1715C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T19:50:00-04:00",
+        "departure_time": "2020-05-18T19:50:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 8,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1715C0-Norwood Depot-8",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Norwood Depot",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1715C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T19:53:00-04:00",
+        "departure_time": "2020-05-18T19:53:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 9,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1715C0-Norwood Central-9",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Norwood Central",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1715C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T19:57:00-04:00",
+        "departure_time": "2020-05-18T19:57:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 10,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1715C0-Windsor Gardens-10",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Windsor Gardens",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1715C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T20:03:00-04:00",
+        "departure_time": "2020-05-18T20:03:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 11,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1715C0-Walpole-11",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Walpole",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1715C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T20:10:00-04:00",
+        "departure_time": "2020-05-18T20:10:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 12,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1715C0-Norfolk-12",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Norfolk",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1715C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T20:17:00-04:00",
+        "departure_time": "2020-05-18T20:17:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 13,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1715C0-Franklin-13",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Franklin",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1715C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T20:24:00-04:00",
+        "departure_time": null,
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 1,
+        "stop_headsign": null,
+        "stop_sequence": 14,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1715C0-Forge Park / 495-14",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Forge Park / 495",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1715C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": null,
+        "departure_time": "2020-05-18T21:20:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 1,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 1,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-9991C0-South Station-1",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "South Station",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-9991C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T21:25:00-04:00",
+        "departure_time": "2020-05-18T21:25:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 2,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-9991C0-Back Bay-2",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Back Bay",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-9991C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T21:28:00-04:00",
+        "departure_time": "2020-05-18T21:28:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 3,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-9991C0-Ruggles-3",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Ruggles",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-9991C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T21:38:00-04:00",
+        "departure_time": "2020-05-18T21:38:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 4,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-9991C0-Readville-4",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Readville",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-9991C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T21:41:00-04:00",
+        "departure_time": "2020-05-18T21:41:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 5,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-9991C0-Endicott-5",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Endicott",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-9991C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T21:45:00-04:00",
+        "departure_time": "2020-05-18T21:45:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 6,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-9991C0-Dedham Corp Center-6",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Dedham Corp Center",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-9991C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T21:47:00-04:00",
+        "departure_time": "2020-05-18T21:47:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 7,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-9991C0-Islington-7",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Islington",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-9991C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T21:50:00-04:00",
+        "departure_time": "2020-05-18T21:50:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 8,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-9991C0-Norwood Depot-8",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Norwood Depot",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-9991C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T21:53:00-04:00",
+        "departure_time": "2020-05-18T21:53:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 9,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-9991C0-Norwood Central-9",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Norwood Central",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-9991C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T21:57:00-04:00",
+        "departure_time": "2020-05-18T21:57:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 10,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-9991C0-Windsor Gardens-10",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Windsor Gardens",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-9991C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T22:03:00-04:00",
+        "departure_time": "2020-05-18T22:03:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 11,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-9991C0-Walpole-11",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Walpole",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-9991C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T22:10:00-04:00",
+        "departure_time": "2020-05-18T22:10:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 12,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-9991C0-Norfolk-12",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Norfolk",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-9991C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T22:17:00-04:00",
+        "departure_time": "2020-05-18T22:17:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 13,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-9991C0-Franklin-13",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Franklin",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-9991C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T22:24:00-04:00",
+        "departure_time": null,
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 1,
+        "stop_headsign": null,
+        "stop_sequence": 14,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-9991C0-Forge Park / 495-14",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Forge Park / 495",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-9991C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": null,
+        "departure_time": "2020-05-18T23:20:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 1,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 1,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1719C0-South Station-1",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "South Station",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1719C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T23:25:00-04:00",
+        "departure_time": "2020-05-18T23:25:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 2,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1719C0-Back Bay-2",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Back Bay",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1719C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T23:28:00-04:00",
+        "departure_time": "2020-05-18T23:28:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 3,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1719C0-Ruggles-3",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Ruggles",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1719C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T23:38:00-04:00",
+        "departure_time": "2020-05-18T23:38:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 4,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1719C0-Readville-4",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Readville",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1719C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T23:41:00-04:00",
+        "departure_time": "2020-05-18T23:41:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 5,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1719C0-Endicott-5",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Endicott",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1719C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T23:45:00-04:00",
+        "departure_time": "2020-05-18T23:45:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 6,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1719C0-Dedham Corp Center-6",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Dedham Corp Center",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1719C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T23:47:00-04:00",
+        "departure_time": "2020-05-18T23:47:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 7,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1719C0-Islington-7",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Islington",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1719C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T23:50:00-04:00",
+        "departure_time": "2020-05-18T23:50:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 8,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1719C0-Norwood Depot-8",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Norwood Depot",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1719C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T23:53:00-04:00",
+        "departure_time": "2020-05-18T23:53:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 9,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1719C0-Norwood Central-9",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Norwood Central",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1719C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T23:57:00-04:00",
+        "departure_time": "2020-05-18T23:57:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 10,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1719C0-Windsor Gardens-10",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Windsor Gardens",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1719C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-19T00:03:00-04:00",
+        "departure_time": "2020-05-19T00:03:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 11,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1719C0-Walpole-11",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Walpole",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1719C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-19T00:10:00-04:00",
+        "departure_time": "2020-05-19T00:10:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 12,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1719C0-Norfolk-12",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Norfolk",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1719C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-19T00:17:00-04:00",
+        "departure_time": "2020-05-19T00:17:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 13,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1719C0-Franklin-13",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Franklin",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1719C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-19T00:24:00-04:00",
+        "departure_time": null,
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 1,
+        "stop_headsign": null,
+        "stop_sequence": 14,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-1719C0-Forge Park / 495-14",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Forge Park / 495",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-1719C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": null,
+        "departure_time": "2020-05-18T16:40:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 1,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 1,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-7701C0-South Station-1",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "South Station",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-7701C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T16:45:00-04:00",
+        "departure_time": "2020-05-18T16:45:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 2,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-7701C0-Back Bay-2",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Back Bay",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-7701C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T16:48:00-04:00",
+        "departure_time": "2020-05-18T16:48:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 3,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-7701C0-Ruggles-3",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Ruggles",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-7701C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T16:58:00-04:00",
+        "departure_time": "2020-05-18T16:58:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 4,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-7701C0-Readville-4",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Readville",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-7701C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T17:01:00-04:00",
+        "departure_time": "2020-05-18T17:01:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 5,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-7701C0-Endicott-5",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Endicott",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-7701C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T17:05:00-04:00",
+        "departure_time": "2020-05-18T17:05:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 6,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-7701C0-Dedham Corp Center-6",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Dedham Corp Center",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-7701C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T17:07:00-04:00",
+        "departure_time": "2020-05-18T17:07:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 7,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-7701C0-Islington-7",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Islington",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-7701C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T17:10:00-04:00",
+        "departure_time": "2020-05-18T17:10:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 8,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-7701C0-Norwood Depot-8",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Norwood Depot",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-7701C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T17:13:00-04:00",
+        "departure_time": "2020-05-18T17:13:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 9,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-7701C0-Norwood Central-9",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Norwood Central",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-7701C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T17:17:00-04:00",
+        "departure_time": "2020-05-18T17:17:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 10,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-7701C0-Windsor Gardens-10",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Windsor Gardens",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-7701C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T17:23:00-04:00",
+        "departure_time": "2020-05-18T17:23:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 11,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-7701C0-Walpole-11",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Walpole",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-7701C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T17:30:00-04:00",
+        "departure_time": "2020-05-18T17:30:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 12,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-7701C0-Norfolk-12",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Norfolk",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-7701C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T17:37:00-04:00",
+        "departure_time": "2020-05-18T17:37:00-04:00",
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 0,
+        "stop_headsign": null,
+        "stop_sequence": 13,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-7701C0-Franklin-13",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Franklin",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-7701C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2020-05-18T17:44:00-04:00",
+        "departure_time": null,
+        "direction_id": 0,
+        "drop_off_type": 0,
+        "pickup_type": 1,
+        "stop_headsign": null,
+        "stop_sequence": 14,
+        "timepoint": true
+      },
+      "id": "schedule-CR-Weekday-StormB-19-7701C0-Forge Park / 495-14",
+      "relationships": {
+        "prediction": {},
+        "route": {
+          "data": {
+            "id": "CR-Franklin",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "Forge Park / 495",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "CR-Weekday-StormB-19-7701C0",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "schedule"
+    }
+  ],
+  "jsonapi": {
+    "version": "1.0"
+  }
+}
