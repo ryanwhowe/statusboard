@@ -117,15 +117,17 @@ class ApiController extends Controller
         $cache = new WeatherCache($logger);
 
         $json_response = Response::HTTP_OK;
-        $api_key = $this->getParameter('accuweather_api_key');
-        $postal = $this->getParameter('postal_code');
 
         $request_limit = (int)$cache->getCacheIfSet($cache::CACHE_TYPE_REQUESTLIMIT, '50');
 
         if(Environment::isTesting()){
             $fetcher = new MockFetcher();
+            $api_key = '';
+            $postal = '';
         } else {
             $fetcher = new AccuweatherFetcher();
+            $api_key = $this->getParameter('accuweather_api_key');
+            $postal = $this->getParameter('postal_code');
         }
 
         if($cache->checkCacheTime($cache::CACHE_TYPE_LOCATION)){
@@ -211,12 +213,13 @@ class ApiController extends Controller
      */
     public function mbta(Request $request, LoggerInterface $logger) {
         $cache = new MbtaCache($logger);
-        $api_key = $this->getParameter('mbta_api_key');
         $json_response = JsonResponse::HTTP_OK;
 
         if (Environment::isTesting()) {
             $fetcher = new \Statusboard\Mbta\MockFetcher();
+            $api_key = '';
         } else {
+            $api_key = $this->getParameter('mbta_api_key');
             $fetcher = new MbtaFetcher();
         }
 

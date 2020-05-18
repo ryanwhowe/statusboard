@@ -6,8 +6,10 @@ use GuzzleHttp\Client;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
 use GuzzleHttp\Psr7\Request;
+use Prophecy\Util\StringUtil;
 use Psr\Http\Message\ResponseInterface;
 use Statusboard\Utility\AbstractTransform;
+use Statusboard\Utility\StringUtility;
 use Statusboard\Weather\ApiResponseInterface;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -72,12 +74,14 @@ class Transform extends AbstractTransform implements ApiResponseInterface {
      * @return string
      */
     public static function extractIconPhrase(array $dayData): string {
-        if($dayData['HasPrecipitation']){
-            $phrase = $dayData['PrecipitationIntensity'] . ' ' . $dayData['PrecipitationType'];
-            if(stristr($phrase, $dayData['IconPhrase']) === false){
-                $phrase .= ' ' . $dayData['IconPhrase'];
-            }
-            return $phrase;
+        if($dayData['HasPrecipitation']) {
+            return StringUtility::buildUniqueString(
+                [
+                    $dayData['PrecipitationIntensity'],
+                    $dayData['PrecipitationType'],
+                    $dayData['IconPhrase'],
+                ]
+            );
         }
         return $dayData['IconPhrase'];
     }
