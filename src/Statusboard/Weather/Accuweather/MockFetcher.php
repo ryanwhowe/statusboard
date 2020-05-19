@@ -6,10 +6,11 @@ namespace Statusboard\Weather\Accuweather;
 
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
+use Statusboard\Utility\AbstractMockFetcher;
 use function GuzzleHttp\Psr7\stream_for;
 
-class Mock {
-    const MOCK_DATA_LOCATION = __dir__ . '/../../../../data/mocks/Accuweather/';
+class MockFetcher extends AbstractMockFetcher implements FetcherInterface {
+    const MOCK_DATA_LOCATION = __dir__ . '/../../../../data/mocks/weather/Accuweather/';
     const MOCK_DATA_FILE_5DAY = '5day_response.json';
     const MOCK_DATA_FILE_CURRENT = 'current_response.json';
     const MOCK_DATA_FILE_LOCATION = 'location_response.json';
@@ -28,7 +29,7 @@ class Mock {
     public static function getCurrentConditions(string $api_key, string $location): ResponseInterface {
         return self::buildResponse(
             self::generateMockHeader(self::EXPIRES_CURRENT),
-            self::buildSourceFile(self::MOCK_DATA_FILE_CURRENT)
+            self::buildSourceFile(self::MOCK_DATA_LOCATION . self::MOCK_DATA_FILE_CURRENT)
         );
     }
 
@@ -42,7 +43,7 @@ class Mock {
     public static function getLocation(string $api_key, string $postal): ResponseInterface {
         return self::buildResponse(
             self::generateMockHeader(self::EXPIRES_LOCATION),
-            self::buildSourceFile(self::MOCK_DATA_FILE_LOCATION)
+            self::buildSourceFile(self::MOCK_DATA_LOCATION . self::MOCK_DATA_FILE_LOCATION)
         );
     }
 
@@ -56,36 +57,8 @@ class Mock {
     public static function getFiveDayForecast(string $api_key, string $location): ResponseInterface {
         return self::buildResponse(
             self::generateMockHeader(self::EXPIRES_5DAY),
-            self::buildSourceFile(self::MOCK_DATA_FILE_5DAY)
+            self::buildSourceFile(self::MOCK_DATA_LOCATION . self::MOCK_DATA_FILE_5DAY)
         );
-    }
-
-    /**
-     * @param array  $headers
-     * @param string $source
-     *
-     * @return ResponseInterface
-     */
-    protected static function buildResponse(array $headers, string $source): ResponseInterface {
-        return new Response(
-            200,
-            $headers,
-            stream_for($source)
-        );
-    }
-
-    /**
-     * @param string $filename
-     *
-     * @return string
-     * @throws \Exception
-     */
-    protected static function buildSourceFile(string $filename) {
-        $file = self::MOCK_DATA_LOCATION . $filename;
-        if (!file_exists($file) && !is_readable($file)) {
-            throw new \Exception("File Not Found");
-        }
-        return file_get_contents($file);
     }
 
     /**

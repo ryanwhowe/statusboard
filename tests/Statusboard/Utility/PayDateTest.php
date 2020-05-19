@@ -66,17 +66,17 @@ class PayDateTest extends TestCase {
     public function getEmployerByConstantDataProvider(){
         return [
             /*  input, short, expected */
-            [PayDate::EMPLOYER_JNJ, true, 'JNJ'],
-            [PayDate::EMPLOYER_JNJ, false, 'JNJ Industries, Inc.'],
+            [PayDate::EMPLOYER_JNJ, true, PayDate::EMPLOYER_SHORTNAME_JNJ],
+            [PayDate::EMPLOYER_JNJ, false, PayDate::EMPLOYER_LONGNAME_JNJ],
 
-            [PayDate::EMPLOYER_AVENTION, true, 'Avention'],
-            [PayDate::EMPLOYER_AVENTION, false, 'Avention, Inc.'],
+            [PayDate::EMPLOYER_AVENTION, true, PayDate::EMPLOYER_SHORTNAME_AVENTION],
+            [PayDate::EMPLOYER_AVENTION, false, PayDate::EMPLOYER_LONGNAME_AVENTION],
 
-            [PayDate::EMPLOYER_IVES, true, 'Ives'],
-            [PayDate::EMPLOYER_IVES, false, 'Ives Group, Inc.'],
+            [PayDate::EMPLOYER_IVES, true, PayDate::EMPLOYER_SHORTNAME_IVES],
+            [PayDate::EMPLOYER_IVES, false, PayDate::EMPLOYER_LONGNAME_IVES],
 
-            [PayDate::EMPLOYER_TRUECAR, true, 'TrueCar'],
-            [PayDate::EMPLOYER_TRUECAR, false, 'TrueCar, Inc.'],
+            [PayDate::EMPLOYER_TRUECAR, true, PayDate::EMPLOYER_SHORTNAME_TRUECAR],
+            [PayDate::EMPLOYER_TRUECAR, false, PayDate::EMPLOYER_LONGNAME_TRUECAR],
         ];
     }
 

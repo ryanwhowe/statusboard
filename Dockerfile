@@ -4,7 +4,7 @@ RUN pecl install apcu
 RUN pecl install xdebug
 RUN apt-get update -yq && \
 apt-get install -yq \
-zlib1g-dev unzip gnupg \
+zlib1g-dev unzip gnupg vim \
 && curl -sL https://deb.nodesource.com/setup_12.x | bash \
 && apt-get install nodejs -yq
 

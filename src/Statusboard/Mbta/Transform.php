@@ -2,7 +2,10 @@
 
 namespace Statusboard\Mbta;
 
-class Transform {
+use Psr\Http\Message\ResponseInterface;
+use Statusboard\Utility\AbstractTransform;
+
+class Transform extends AbstractTransform {
 
     const ID_SCHEDULE_TEXT = 'schedule';
     const ID_CR_TEXT = 'cr';
@@ -32,20 +35,21 @@ class Transform {
      * IMPORTANT, the Cache::TIMEOUT_BUFFER is included in the expires time returned, along with an extra 60 seconds
      *
      * @param array $source_data
+     *
      * @return array
      */
-    public static function responseProcessor(array $source_data): array{
-        if(empty($source_data)){
+    public static function responseProcessor(array $source_data): array {
+        if (empty($source_data)) {
             throw new \InvalidArgumentException('No Schedule Data provided');
         }
         $stops = self::filterStops($source_data, [self::STATION_FILTER_FORGEPARK, self::STATION_FILTER_SOUTHSTATION]);
-        $trips = self::parseTrips($stops);
+        $trips = self::parseTripData($stops);
 
-        list($lowest_trip_time, $results) = self::filterTrips($trips, time());
+        list($lowest_trip_time, $results) = self::filterTripsByTime($trips, time());
 
         $output = [
             'expires' => $lowest_trip_time + self::EXPIRATION_BUFFER,
-            'trips' => $results
+            'trips'   => $results,
         ];
         return $output;
     }
@@ -55,12 +59,13 @@ class Transform {
      *
      * @param array $schedule
      * @param array $stops
+     *
      * @return array
      */
     public static function filterStops($schedule, array $stops): array {
         return array_filter($schedule['data'], function ($value) use ($stops) {
             foreach ($stops as $stop) {
-                if(stristr($value['id'], $stop)) return true;
+                if (stristr($value['id'], $stop)) return true;
             }
             return false;
         });
@@ -68,32 +73,34 @@ class Transform {
 
     /**
      * @param array $result
+     *
      * @return array
      */
-    public static function parseTrips(array $result): array {
+    public static function parseTripData(array $result): array {
         $results = [];
-        foreach ($result AS $data) {
-            $station_name = ($data['attributes']['arrival_time'] === null) ? 'departs' : 'arrives';
+        foreach ($result as $data) {
+            $time_description = ($data['attributes']['arrival_time'] === null) ? 'departs' : 'arrives';
             $time = ($data['attributes']['arrival_time'] === null) ? $data['attributes']['departure_time'] : $data['attributes']['arrival_time'];
             $time = strtotime($time);
             $station = Transform::idParser($data['id']);
             if (!isset($results[$station[Transform::ID_TRIP]])) {
                 $results[$station[Transform::ID_TRIP]] = ['trip' => (int)$station[Transform::ID_TRIP]];
             }
-            $results[$station[Transform::ID_TRIP]][$station_name] = $time;
+            $results[$station[Transform::ID_TRIP]][$time_description] = $time;
         }
         return array_values($results);
     }
 
     /**
      * @param array $trips
-     * @param int $filter_time
+     * @param int   $filter_time
+     *
      * @return array
      */
-    public static function filterTrips(array $trips, $filter_time = 0): array {
+    public static function filterTripsByTime(array $trips, $filter_time = 0): array {
         $lowest_trip_time = PHP_INT_MAX;
         $counter = 0;
-        usort($trips, function($a, $b){
+        usort($trips, function ($a, $b) {
             return $a['departs'] - $b['departs'];
         });
         $trips = array_filter($trips, function ($trip) use (&$lowest_trip_time, &$counter, $filter_time) {
@@ -103,21 +110,20 @@ class Transform {
             return true;
         });
         $lowest_trip_time = min($lowest_trip_time, strtotime('+1 hour'));
-        return array($lowest_trip_time, array_values($trips));
+        return [$lowest_trip_time, array_values($trips)];
     }
 
     /**
-     * @param array $schedule
-     * @param int $filter_time
+     * @param ResponseInterface $schedule_response
+     * @param int               $filter_time
+     *
      * @return int
      */
-    public static function getExpirationTime(array $schedule, $filter_time = 0): int {
-        if(empty($schedule)){
-            throw new \InvalidArgumentException('No Schedule Data provided');
-        }
+    public static function getExpirationTime(ResponseInterface $schedule_response, $filter_time = 0): int {
+        $schedule = self::getArrayResponseBody($schedule_response);
         $stops = self::filterStops($schedule, [self::STATION_FILTER_FORGEPARK, self::STATION_FILTER_SOUTHSTATION]);
-        $trips = self::parseTrips($stops);
-        list($expiration, $filtered_trips) = self::filterTrips($trips, $filter_time);
+        $trips = self::parseTripData($stops);
+        list($expiration, $filtered_trips) = self::filterTripsByTime($trips, $filter_time);
         $expiration = min($expiration, strtotime('+1 hour'));
         return $expiration;
     }
@@ -126,6 +132,7 @@ class Transform {
      * Parse the id value and break it up into its components
      *
      * @param string $id
+     *
      * @return array
      */
     public static function idParser(string $id) {
@@ -140,5 +147,28 @@ class Transform {
             self::ID_STATION           => $parts[self::PARSER_STATION],
             self::ID_ROUTE_STOP_NUMBER => $parts[self::PARSER_ROUTE_STOP_NUMBER],
         ];
+    }
+
+    /**
+     * @param ResponseInterface $trips
+     * @param array             $filters
+     *
+     * @return string
+     */
+    public static function generateTripsParameter(ResponseInterface $trips, array $filters) {
+        $content = self::getArrayResponseBody($trips);
+        $filtered = $content['data'];
+        foreach ($filters as $filter) {
+            if (is_callable($filter)) {
+                $filtered = array_values(array_filter($filtered, $filter));
+            }
+        }
+
+        $trips = [];
+
+        foreach ($filtered as $test) {
+            $trips[] = $test['id'];
+        }
+        return implode(',', $trips);
     }
 }
