@@ -8,11 +8,10 @@
 
 namespace AppBundle\Controller;
 
-use GuzzleHttp\Exception\ServerException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Statusboard\ControllerHelpers\ApiHelper;
 use Statusboard\Mbta\Fetcher as MbtaFetcher;
 use Statusboard\Mbta\Transform as Mbta;
-use Statusboard\Mbta\TripFilters;
 use Statusboard\Utility\Environment;
 use Statusboard\Weather\Accuweather\Cache as WeatherCache;
 use Statusboard\Mbta\Cache as MbtaCache;
@@ -25,8 +24,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use AppBundle\theAxeRant\Client;
 use AppBundle\Cache\ApiService;
-use AppBundle\Entity\Server;
-use Symfony\Component\HttpFoundation\Response;
 use Psr\Log\LoggerInterface;
 
 class ApiController extends Controller
@@ -113,70 +110,32 @@ class ApiController extends Controller
      * @throws \Psr\SimpleCache\InvalidArgumentException
      */
     public function weather(Request $request, LoggerInterface $logger){
-
         $cache = new WeatherCache($logger);
 
-        $json_response = Response::HTTP_OK;
-
-        $request_limit = (int)$cache->getCacheIfSet($cache::CACHE_TYPE_REQUESTLIMIT, '50');
-
-        if(Environment::isTesting()){
+        if (Environment::isTesting()) {
             $fetcher = new MockFetcher();
             $api_key = '';
             $postal = '';
+            $default_location = '';
         } else {
             $fetcher = new AccuweatherFetcher();
             $api_key = $this->getParameter('accuweather_api_key');
             $postal = $this->getParameter('postal_code');
+            $default_location = $this->getParameter('accuweather_api_location');
         }
 
-        if($cache->checkCacheTime($cache::CACHE_TYPE_LOCATION)){
-            $location = (string)$cache->getCache($cache::CACHE_TYPE_LOCATION);
-        } else {
-            try{
-                $location_response = $fetcher::getLocation($api_key, $postal);
-                $location = Accuweather::getLocationKey($location_response);
-                $timeout = strtotime(Accuweather::getExpiresHeader($location_response));
-                $request_limit = (int)Accuweather::getRemainingLimitHeader($location_response);
-                $cache->updateCache($cache::CACHE_TYPE_LOCATION, $timeout, $location);
-                $cache->setRequestLimit($request_limit);
-            } catch (ServerException $e){
-                $json_response = Response::HTTP_FORBIDDEN;
-                $location = $this->getParameter('accuweather_api_location');
-            } catch (RequestLimitExceededException $e){
-                $json_response = Response::HTTP_FORBIDDEN;
-                $location = $this->getParameter('accuweather_api_location');
-            }
-        }
-
-        if(
-            $cache->hasData($cache::CACHE_TYPE_WEATHER) &&
-            ($cache->checkCacheTime($cache::CACHE_TYPE_WEATHER) || $request_limit < 2)
-        ){
-            $body = unserialize($cache->getCache($cache::CACHE_TYPE_WEATHER));
-            $body[Accuweather::RESPONSE_TIMEOUT] = $cache->getTimeout($cache::CACHE_TYPE_WEATHER);
-        } else {
-            try {
-                $fiveday_response = $fetcher::getFiveDayForecast($api_key, $location);
-                $body = Accuweather::getArrayResponseBody($fiveday_response);
-                $current_response = $fetcher::getCurrentConditions($api_key, $location);
-                $body['current'] = Accuweather::getArrayResponseBody($current_response);
-                $timeout = strtotime(Accuweather::getExpiresHeader($fiveday_response));
-                $request_limit = (int)Accuweather::getRemainingLimitHeader($current_response);
-                $cache->updateCache($cache::CACHE_TYPE_WEATHER, $timeout, serialize($body));
-                $cache->setRequestLimit($request_limit);
-                $body[Accuweather::RESPONSE_TIMEOUT] = $cache->getTimeout($cache::CACHE_TYPE_WEATHER);
-            } catch (ServerException $e){
-                $json_response = Response::HTTP_FORBIDDEN;
-            }catch (RequestLimitExceededException $e){
-                $json_response = Response::HTTP_FORBIDDEN;
-            }
-        }
+        list($json_response, $body) = ApiHelper::getAccuweatherData(
+            $cache,
+            $fetcher,
+            $api_key,
+            $postal,
+            $default_location
+        );
 
         $Response = $this->json(\null, $json_response,
             ['Content-Type' => 'text/json', 'Cache-control' => 'must-revalidate']);
 
-        if($json_response === JsonResponse::HTTP_OK) {
+        if ($json_response === JsonResponse::HTTP_OK) {
             $output = Accuweather::responseProcessor($body);
             $Response->setContent(json_encode($output));
         }
@@ -213,7 +172,6 @@ class ApiController extends Controller
      */
     public function mbta(Request $request, LoggerInterface $logger) {
         $cache = new MbtaCache($logger);
-        $json_response = JsonResponse::HTTP_OK;
 
         if (Environment::isTesting()) {
             $fetcher = new \Statusboard\Mbta\MockFetcher();
@@ -223,33 +181,7 @@ class ApiController extends Controller
             $fetcher = new MbtaFetcher();
         }
 
-        if ($cache->checkCacheTime($cache::CACHE_TYPE_SCHEDULE)) {
-            $schedule = unserialize($cache->getCache($cache::CACHE_TYPE_SCHEDULE));
-        } else {
-            try {
-                $trip_filters = [
-                    TripFilters::headSignFilter(TripFilters::HEADSIGN_FORGEPARK),
-                ];
-                $trips = $fetcher::getTrips($api_key);
-                $filtered_trips = Mbta::generateTripsParameter($trips, $trip_filters);
-                $schedule_response = $fetcher::getSchedule($api_key, $filtered_trips);
-                $expiration_time = Mbta::getExpirationTime($schedule_response, time());
-                $schedule = Mbta::getArrayResponseBody($schedule_response);
-                if (empty($schedule)) {
-                    $cached = $cache->getCache($cache::CACHE_TYPE_SCHEDULE);
-                    if ($cached === null) {
-                        $json_response = JsonResponse::HTTP_NO_CONTENT;
-                    } else {
-                        $schedule = $cached;
-                    }
-                } else {
-                    $cache->updateCache($cache::CACHE_TYPE_SCHEDULE, $expiration_time, serialize($schedule));
-                }
-            } catch (\Exception $e){
-                $schedule = [];
-                $json_response = JsonResponse::HTTP_INTERNAL_SERVER_ERROR;
-            }
-        }
+        list($schedule, $json_response) = ApiHelper::getMbtaData($cache, $fetcher, $api_key);
 
         if($json_response === JsonResponse::HTTP_OK) {
             $Response = $this->json(\null, $json_response,
@@ -285,4 +217,6 @@ class ApiController extends Controller
         $Response->prepare($request)->setPrivate();
         return $Response;
     }
+
+
 }

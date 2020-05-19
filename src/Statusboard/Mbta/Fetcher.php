@@ -5,7 +5,7 @@ namespace Statusboard\Mbta;
 use Psr\Http\Message\ResponseInterface;
 use Statusboard\Utility\AbstractFetcher;
 
-class Fetcher extends AbstractFetcher {
+class Fetcher extends AbstractFetcher implements FetcherInterface {
 
     const BASE_URL = 'https://api-v3.mbta.com';
     const ROUTE = 'CR-Franklin';

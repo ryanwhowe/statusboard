@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\Calendar;
 use AppBundle\Entity\Server;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
+use Statusboard\ControllerHelpers\AdminHelper;
 use Statusboard\Utility\Environment;
 use Statusboard\Utility\PayDate;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -112,28 +113,11 @@ class AdminController extends Controller
      */
     public function environmentAction(Request $request){
         $type_test = $request->request->get('type_test');
-        $env = Environment::getType($type_test);
-        $envs = [
-            'ENV_PRODUCTION' => ($env === Environment::ENV_PRODUCTION),
-            'ENV_DOCKER_PRODUCTION' => ($env === Environment::ENV_DOCKER_PRODUCTION),
-            'ENV_DOCKER_DEV' => ($env === Environment::ENV_DOCKER_DEV),
-            'ENV_DEV' => ($env === Environment::ENV_DEV),
-            'ENV_LOCAL' => ($env === Environment::ENV_LOCAL),
-            'ENV_TEST' => ($env === Environment::ENV_TEST),
-            'ENV_DOCKER_TEST' => ($env === Environment::ENV_DOCKER_TEST),
-            'ENV_AWS_PRODUCTION' => ($env === Environment::ENV_AWS_PRODUCTION),
-            'ENV_AWS_STAGING' => ($env === Environment::ENV_AWS_STAGING),
-            'ENV_AWS_DEV' => ($env === Environment::ENV_AWS_DEV),
-            'ENV_AWS_TEST' => ($env === Environment::ENV_AWS_TEST),
-            'isLocal()' => Environment::isLocal(),
-            'isLocalDevelopment()' => Environment::isLocalDevelopment(),
-            'isDevelopment()' => Environment::isDevelopment(),
-            'isTesting()' => Environment::isTesting(),
-            'isAwsTesting()' => Environment::isAwsTesting(),
-
-        ];
+        $envs = AdminHelper::getEnvironmentTestResults($type_test);
         return $this->render('AppBundle:Admin:environment.html.twig', [
             'environments' => $envs,
         ]);
     }
+
+
 }

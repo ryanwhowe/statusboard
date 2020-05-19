@@ -5,7 +5,7 @@ namespace Statusboard\Mbta;
 use Psr\Http\Message\ResponseInterface;
 use Statusboard\Utility\AbstractMockFetcher;
 
-class MockFetcher extends AbstractMockFetcher {
+class MockFetcher extends AbstractMockFetcher implements FetcherInterface {
 
     const MOCK_DATA_LOCATION = __dir__ . '/../../../data/mocks/MBTA/';
     const DATE_FORMAT = 'D, j M Y H:i:s e';

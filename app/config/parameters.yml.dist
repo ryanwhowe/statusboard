@@ -17,12 +17,12 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret: ThisTokenIsNotSoSecretChangeIt
+    container.autowiring.strict_mode: true
 
     api_token: ~
     api_url: ~
     admin_password: ~
-    test_password: ~
-    container.autowiring.strict_mode: true
+    test_password: $2y$12$mlZRszXKwFPoUUA8TH4UAOvYY8rxC/k9XICn9G1ahJbODlJjULkmm
     calendarific_api_key: ~
     accuweather_api_key: ~
     mbta_api_key: ~

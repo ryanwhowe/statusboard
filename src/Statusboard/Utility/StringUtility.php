@@ -34,7 +34,6 @@ class StringUtility {
      * @param string[] $strings
      * @param bool     $case_sensitive
      * @param string   $delimiter
-     *
      * @return string
      * @see /tests2/unit/Utils/StrUtilTest.php
      *
@@ -42,9 +41,11 @@ class StringUtility {
     public static function buildUniqueString(array $strings, $case_sensitive = false, $delimiter = ' ') {
         $string = '';
         foreach ($strings as $append) {
-            $string = self::appendIfNotInString($string, $append, $case_sensitive, $delimiter);
+            $append_parts = explode($delimiter, $append);
+            foreach ($append_parts as $append_part) {
+                $string = self::appendIfNotInString($string, $append_part, $case_sensitive, $delimiter);
+            }
         }
         return $string;
     }
-
 }

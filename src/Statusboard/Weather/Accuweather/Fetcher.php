@@ -10,7 +10,7 @@ use Psr\Http\Message\ResponseInterface;
 use Statusboard\Utility\AbstractFetcher;
 use Symfony\Component\HttpFoundation\Response;
 
-class Fetcher extends AbstractFetcher {
+class Fetcher extends AbstractFetcher implements FetcherInterface {
 
     const BASE_URL_CURRENT_CONDITIONS = 'http://dataservice.accuweather.com/currentconditions/v1/';
     const BASE_URL_LOCATION = 'http://dataservice.accuweather.com/locations/v1/postalcodes/search';

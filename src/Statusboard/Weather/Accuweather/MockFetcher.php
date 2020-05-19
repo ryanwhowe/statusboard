@@ -9,7 +9,7 @@ use Psr\Http\Message\ResponseInterface;
 use Statusboard\Utility\AbstractMockFetcher;
 use function GuzzleHttp\Psr7\stream_for;
 
-class MockFetcher extends AbstractMockFetcher {
+class MockFetcher extends AbstractMockFetcher implements FetcherInterface {
     const MOCK_DATA_LOCATION = __dir__ . '/../../../../data/mocks/weather/Accuweather/';
     const MOCK_DATA_FILE_5DAY = '5day_response.json';
     const MOCK_DATA_FILE_CURRENT = 'current_response.json';
