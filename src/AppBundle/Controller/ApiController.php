@@ -217,6 +217,4 @@ class ApiController extends Controller
         $Response->prepare($request)->setPrivate();
         return $Response;
     }
-
-
 }

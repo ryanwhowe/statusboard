@@ -118,6 +118,4 @@ class AdminController extends Controller
             'environments' => $envs,
         ]);
     }
-
-
 }

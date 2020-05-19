@@ -2,16 +2,10 @@
 
 namespace Statusboard\Weather\Accuweather;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Middleware;
-use GuzzleHttp\Psr7\Request;
-use Prophecy\Util\StringUtil;
 use Psr\Http\Message\ResponseInterface;
 use Statusboard\Utility\AbstractTransform;
 use Statusboard\Utility\StringUtility;
 use Statusboard\Weather\ApiResponseInterface;
-use Symfony\Component\HttpFoundation\Response;
 
 class Transform extends AbstractTransform implements ApiResponseInterface {
 
