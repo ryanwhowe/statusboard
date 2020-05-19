@@ -1,74 +1,85 @@
 # statusboard
-This is a personal status board project that is not really written to be shared, the documentation is very spotty and the front end is in need of a makeover, which is going to be rewritten utilizing React.js with an updated backend upgraded to either laravel or symfony 5.
+This is a personal status board project that was not written to be shared, the documentation is very spotty and the front end is in need of a makeover, which is going to be rewritten utilizing React.js with an updated backend upgraded to either laravel or symfony 5.
 
-Setup
------
+#Setup Local Dev
+Setup has been updated to utilize docker for local development.
 
-**Install Composer Components** - The components used in the Symfony installation require composer to install the dependencies not stored in the repository for the project.  To install the components run the following command from the project root directory.  
-<code>
-composer i
-</code>
+###Create a Docker Override file
+copy the override example file to create your own local version
+```shell script
+cp docker-compose.override.yml.example docker-compose.override.yml
+```
+The path placeholder needs to be updated 
+```shell script
+replace <path_to_solution> with the absolute path to your solution files
+```
 
-**Install Yarn resources** - To install the yarn dependencies execute the following in the project root directory.  
-<code>
-rm yarn.lock  
-yarn --modules-folder web/bundles
-</code>
+###Create Parameters file
+This file need to be created and have the secrets added, or it needs to be pulled from archives
+```shell script
+cd app\config
+cp parameters.yml.dist parameters.yml
+```
 
+##Bring up the Docker config
+```shell script
+docker-compose up -d --build
+```
+Build the dependencies for the project
+```shell script
+docker-compose exec php composer i
+docker-compose exec php npm run asset-install
+```
+Build the local sqlite database, and optionally seed the database from csv pump files. 
 
-Future
-------
-These are future upgrades
-* Rewrite front end utilizing Angular
+**<span style="color:red">WARNING:</span>** This command will drop and recreate the database if there is already a database file present.
+```shell script
+docker-compose exec php bin/console app:buildDatabase [calendarfile.csv] [serverfile.csv]
+```
 
-Security
---------
-The following code is needed for generating a security token for the single log in account
+##Security
+The following code is for generating a security token for the single log in account
 
-<code>
+```shell script
 php bin/console security:encode-password
-</code>
+```
 
 
+##Additional Utilities
+There are some additional console utilities created for maintenance
 
-Extra
------
-install yarn on the dev or production systems
+###Data Exports
+####Calendar Dump
+```shell script
+docker-compose exec php bin/console app:ExportCaledarToCsv <outputFilename>
+```
+####Server Dump
+```shell script
+docker-compose exec php bin/console app:ExportServerToCsv <outputFilename>
+```
 
-<code>
-curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-sudo apt-get update
-sudo apt-get install yarn build-essential checkinstall libssl-dev
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
-nvm install v8.9.3
-</code>
+###Calendar Utilities
+#### GeneratePayDates
+The script will generate pay dates for the optionally passed year, or will generate them starting from 2007 to the current year.  This utility will not create duplicate records, if a pay date already exists for one it generates it does not get written to the Database.  For any year that is run, there should already be holidays imported for (both national and company), this data is required for determining the proper pay dates.
+```shell script
+docker-compose exec php bin/console app:GeneratePayDates [year]
+```
+####ImportHoliday
+The script utilizes the free [Calendarific](https://calendarific.com/) api to load national US holidays into the database.  If the optional year is specified that will be used otherwise all years from 2007 to present will be loaded.  This will not create dupliate entries, if a national holiday already exists for a given date it will not be added to the database.
+```shell script
+docker-compose exec php bin/console app:ImportHoliday [year]
+```
 
+###Deprecated Utilities
+These utilities have been deprecated and are not currently used
+####GetWeatherImages
+This locally cached the Accuweather images files for use with their API.  These images were too large, the implementation has been changed to utilize a weather font resource.
+```shell script
+docker-compose exec php bin/console app:GetWeatherImages
+```
 
-Needed
-------
-The following is for creating and loading the database used by the calendar application.  The load is not needed for funcationality.  The database does need to be built however in order to function.  If the model is changed in any way then the database will need to be recreated.
-
-<code>
-svn export $REPO/MachineCode/MachineSettings/RaspberryPi/machines/workPi/trunk/scripts/deploy/load_calendar.csv 
-
-svn export $REPO/MachineCode/MachineSettings/RaspberryPi/machines/workPi/trunk/scripts/deploy/deployment/statusboard/auth.json
-
-rm app/config/parameters.yml
-
-svn export $REPO/MachineCode/MachineSettings/RaspberryPi/machines/workPi/trunk/scripts/deploy/deployment/statusboard/app/config/parameters.yml app/config/parameters.yml
-</code>
-
-<code>
-/load_calendar.csv
-
-/auth.json
-
-/app/config/parameters.yml
-
-php bin/console app:buildDatabase
-
-php bin/console app:loadCsvToDatabase load_calendar.csv
-<code>
-
-
+####yarnInstall
+The front end assets previously were installed utilizing `yarn`, this has been update to utilize the run script via `npm`
+```shell script
+docker-compose exec php bin/console app:yarnInstall
+```

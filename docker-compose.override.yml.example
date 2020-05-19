@@ -6,8 +6,8 @@ services:
       - <path_to_solution>:/usr/src/app
     environment:
       XDEBUG_CONFIG: remote_host=host.docker.internal remote_port=9001 remote_connect_back=0
-      RUN_ENVIRONMENT: docker-dev # allow to override the run environment set in docker-compose
+      RUN_ENVIRONMENT: docker-dev # allow to override the run environment set in docker-compose.yml
   web:
     volumes:
       - <path_to_solution>:/usr/src/app
-      - <path_to_solution>:/etc/nginx/conf.d/default.conf
+      - <path_to_solution>/nginx.conf:/etc/nginx/conf.d/default.conf

@@ -15,6 +15,9 @@ RUN docker-php-ext-enable apcu
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 ENV COMPOSER_MEMORY_LIMIT=-1
 ENV COMPOSER_CACHE_DIR=/tmp
+
+RUN npm config set cache /tmp --global
+
 WORKDIR /usr/src/app
 
 COPY opcache.ini /usr/local/etc/php/conf.d/opcache.ini
