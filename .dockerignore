@@ -1,0 +1,12 @@
+.git
+node_modules/
+vendor/
+web/bundles/*.*
+.github/
+.gitignore
+docker-compose.override.yml
+docker-compose.override.yml.example
+docker-compose.yml
+testing/
+.travis.yml
+nginx.conf

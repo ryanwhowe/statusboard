@@ -11,6 +11,7 @@ class Transform extends AbstractTransform implements ApiResponseInterface {
 
     const RESPONSE_LOCATION_KEY = 'Key';
     const RESPONSE_TIMEOUT = 'timeout';
+    const RESPONSE_REQUEST_LIMIT = 'request_limit';
 
     const RESPONSE_HEADER_EXPIRES = 'Expires';
     const RESPONSE_HEADER_REMAININGLIMIT = 'RateLimit-Remaining';
@@ -45,12 +46,13 @@ class Transform extends AbstractTransform implements ApiResponseInterface {
         }
         $output['headline'] = $body['Headline']['Text'];
         $output['expires'] = $body[self::RESPONSE_TIMEOUT];
+        $output['request_limit'] = $body[self::RESPONSE_REQUEST_LIMIT];
         $output['current'] = [
-            'condition' => $body['current'][0]['WeatherText'],
-            'temp' => self::formatNumber($body['current'][0]['Temperature']['Imperial']['Value']),
-            'link' => $body['current'][0]['Link'],
-            'icon' => self::generateIconImageUrl($body['current'][0]['WeatherIcon']),
-            'weather-icon' => TranslateIconsToWeatherIcon::map($body['current'][0]['WeatherIcon'])
+            'condition'    => $body['current'][0]['WeatherText'],
+            'temp'         => self::formatNumber($body['current'][0]['Temperature']['Imperial']['Value']),
+            'link'         => $body['current'][0]['Link'],
+            'icon'         => self::generateIconImageUrl($body['current'][0]['WeatherIcon']),
+            'weather-icon' => TranslateIconsToWeatherIcon::map($body['current'][0]['WeatherIcon']),
         ];
         return $output;
     }

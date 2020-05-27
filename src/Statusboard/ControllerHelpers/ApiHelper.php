@@ -65,6 +65,7 @@ class ApiHelper {
                 $body['current'] = Accuweather::getArrayResponseBody($current_response);
                 $timeout = strtotime(Accuweather::getExpiresHeader($fiveday_response));
                 $request_limit = (int)Accuweather::getRemainingLimitHeader($current_response);
+                $body['request_limit'] = $request_limit;
                 $cache->updateCache($cache::CACHE_TYPE_WEATHER, $timeout, serialize($body));
                 $cache->setRequestLimit($request_limit);
                 $body[Accuweather::RESPONSE_TIMEOUT] = $cache->getTimeout($cache::CACHE_TYPE_WEATHER);
