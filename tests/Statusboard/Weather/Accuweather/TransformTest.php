@@ -198,17 +198,17 @@ class TransformTest extends TestCase {
                             "UnitType" => 17,
                         ],
                         "Imperial" => [
-                            "Value" => 26.0,
-                            "Unit" => "F",
+                            "Value"    => 26.0,
+                            "Unit"     => "F",
                             "UnitType" => 18,
                         ],
                     ],
                     "MobileLink" => "http://m.accuweather.com/en/us/milford-ma/01757/current-weather/593_pc?lang=en-us",
                     "Link" => "http://www.accuweather.com/en/us/milford-ma/01757/current-weather/593_pc?lang=en-us",
                 ],
-                "timeout" => 1578590505
-
-            ]
+                "timeout" => 1578590505,
+            ],
+            "request_limit" => 35,
         ];
     }
 
@@ -296,22 +296,23 @@ class TransformTest extends TestCase {
                     "night" => "assets/images/weather/accuweather/34-s.png",
                 ],
                 "icontext" => [
-                    "day" => "Intermittent clouds",
+                    "day"   => "Intermittent clouds",
                     "night" => "Mostly clear",
                 ],
                 "weather-icons" => [
-                    "day" => "wi-day-cloudy",
+                    "day"   => "wi-day-cloudy",
                     "night" => "wi-night-alt-cloudy",
                 ],
             ],
             "headline" => "Becoming noticeably warmer tomorrow and Saturday",
             "expires" => 1578590626,
+            "request_limit" => 35,
             "current" => [
-                "condition" => "Sunny",
-                "temp" => 26,
-                "link" => "http://www.accuweather.com/en/us/milford-ma/01757/current-weather/593_pc?lang=en-us",
-                "icon" => "assets/images/weather/accuweather/01-s.png",
-                "weather-icon" =>  "wi-day-sunny"
+                "condition"    => "Sunny",
+                "temp"         => 26,
+                "link"         => "http://www.accuweather.com/en/us/milford-ma/01757/current-weather/593_pc?lang=en-us",
+                "icon"         => "assets/images/weather/accuweather/01-s.png",
+                "weather-icon" => "wi-day-sunny",
             ],
         ];
     }
