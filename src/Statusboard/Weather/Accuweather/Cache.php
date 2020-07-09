@@ -14,13 +14,26 @@ class Cache extends \Statusboard\Utility\Cache
     CONST CACHE_TYPE_WEATHER = 'weather';
     CONST CACHE_TYPE_REQUESTLIMIT = 'limit';
 
-    CONST TIMEOUT_BUFFER = 60 * 60;
+    const TIMEOUT_BUFFER = 60 * 60;
 
     /**
      * @param int $request_limit
+     *
      * @throws \Psr\SimpleCache\InvalidArgumentException
      */
-    public function setRequestLimit(int $request_limit){
+    public function setRequestLimit(int $request_limit) {
         $this->updateCache(self::CACHE_TYPE_REQUESTLIMIT, strtotime('+24 hours'), (string)$request_limit);
+    }
+
+    /**
+     * Construct a cache type that is dependant upon the postal code used to generate the cache data
+     *
+     * @param string $cache_type
+     * @param string $postal
+     *
+     * @return string
+     */
+    public static function constructCacheType(string $cache_type, string $postal) {
+        return $cache_type . "_" . $postal;
     }
 }

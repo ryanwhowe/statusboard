@@ -177,7 +177,7 @@
             setInterval('updateTime()', 1000);
             displayTime();
             setInterval('displayTime()', 1000);
-            $('.weather').WeatherInfo({baseUrl: "{{ baseUrl }}"});
+            $('.weather').WeatherInfo({baseUrl: "{{ baseUrl }}", postalCode: '01757'});
             $('.mbta').Mbta({baseUrl: "{{ baseUrl }}"});
             $('.serverinfo').ServerInfo();
             $(".jquery_ui_datepicker_preview").datepicker({
@@ -191,18 +191,22 @@
                 }
             });
             $('body')
-                .on('click', '.reset_mbta', () => { performReset("{{ baseUrl }}api/mbta/reset"); })
-                .on('click', '.reset_weather', () => { performReset("{{ baseUrl }}api/weather/reset"); });
+                .on('click', '.reset_mbta', () => {
+                    performReset("{{ baseUrl }}api/reset/mbta");
+                })
+                .on('click', '.reset_weather', () => {
+                    performReset("{{ baseUrl }}api/reset/weather");
+                });
         });
 
         /**
          * Display the time in the clock id
          */
-        function displayTime(){
+        function displayTime() {
             let display_data = TimeSheet.getDisplayValue();
-            let display_hour= display_data.display_hour;
+            let display_hour = display_data.display_hour;
             let work_time;
-            if(display_hour !== ''){
+            if (display_hour !== '') {
                 work_time = display_hour.toString();
                 $(document).prop('title', base_title + ' (' + work_time + ')');
             }

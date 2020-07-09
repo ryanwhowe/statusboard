@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class Fetcher extends AbstractFetcher implements FetcherInterface {
 
+    const MAX_REQUEST_LIMIT = 50;
     const BASE_URL_CURRENT_CONDITIONS = 'http://dataservice.accuweather.com/currentconditions/v1/';
     const BASE_URL_LOCATION = 'http://dataservice.accuweather.com/locations/v1/postalcodes/search';
     const BASE_URL_FIVE_DAY_FORECAST = 'http://dataservice.accuweather.com/forecasts/v1/daily/5day/';

@@ -8,6 +8,7 @@ use Statusboard\Mbta\Transform as Mbta;
 use Statusboard\Mbta\TripFilters;
 use Statusboard\Mbta\FetcherInterface as MbtaFetcherInterface;
 use Statusboard\Weather\Accuweather\Cache as AccuweatherCache;
+use Statusboard\Weather\Accuweather\Fetcher;
 use Statusboard\Weather\Accuweather\FetcherInterface as AccuweatherFetcherInterface;
 use Statusboard\Weather\Accuweather\RequestLimitExceededException;
 use Statusboard\Weather\Accuweather\Transform as Accuweather;
@@ -30,9 +31,9 @@ class ApiHelper {
     public static function getAccuweatherData(AccuweatherCache $cache, AccuweatherFetcherInterface $fetcher, string $api_key, string $postal, string $default_location): array {
         $json_response = Response::HTTP_OK;
 
-        $request_limit = (int)$cache->getCacheIfSet($cache::CACHE_TYPE_REQUESTLIMIT, '50');
+        $request_limit = (int)$cache->getCacheIfSet($cache::CACHE_TYPE_REQUESTLIMIT, (string)Fetcher::MAX_REQUEST_LIMIT);
 
-        if ($cache->checkCacheTime($cache::CACHE_TYPE_LOCATION)) {
+        if ($cache->checkCacheTime($cache::constructCacheType($cache::CACHE_TYPE_LOCATION, $postal))) {
             $location = (string)$cache->getCache($cache::CACHE_TYPE_LOCATION);
         } else {
             try {
@@ -40,7 +41,7 @@ class ApiHelper {
                 $location = Accuweather::getLocationKey($location_response);
                 $timeout = strtotime(Accuweather::getExpiresHeader($location_response));
                 $request_limit = (int)Accuweather::getRemainingLimitHeader($location_response);
-                $cache->updateCache($cache::CACHE_TYPE_LOCATION, $timeout, $location);
+                $cache->updateCache($cache::constructCacheType($cache::CACHE_TYPE_LOCATION, $postal), $timeout, $location);
                 $cache->setRequestLimit($request_limit);
             } catch (ServerException $e) {
                 $json_response = Response::HTTP_FORBIDDEN;
@@ -52,11 +53,11 @@ class ApiHelper {
         }
 
         if (
-            $cache->hasData($cache::CACHE_TYPE_WEATHER) &&
-            ($cache->checkCacheTime($cache::CACHE_TYPE_WEATHER) || $request_limit < 2)
+            $cache->hasData($cache::constructCacheType($cache::CACHE_TYPE_WEATHER, $postal)) &&
+            ($cache->checkCacheTime($cache::constructCacheType($cache::CACHE_TYPE_WEATHER, $postal)) || $request_limit < 2)
         ) {
-            $body = unserialize($cache->getCache($cache::CACHE_TYPE_WEATHER));
-            $body[Accuweather::RESPONSE_TIMEOUT] = $cache->getTimeout($cache::CACHE_TYPE_WEATHER);
+            $body = unserialize($cache->getCache($cache::constructCacheType($cache::CACHE_TYPE_WEATHER, $postal)));
+            $body[Accuweather::RESPONSE_TIMEOUT] = $cache->getTimeout($cache::constructCacheType($cache::CACHE_TYPE_WEATHER, $postal));
         } else {
             try {
                 $fiveday_response = $fetcher::getFiveDayForecast($api_key, $location);
@@ -66,9 +67,9 @@ class ApiHelper {
                 $timeout = strtotime(Accuweather::getExpiresHeader($fiveday_response));
                 $request_limit = (int)Accuweather::getRemainingLimitHeader($current_response);
                 $body['request_limit'] = $request_limit;
-                $cache->updateCache($cache::CACHE_TYPE_WEATHER, $timeout, serialize($body));
+                $cache->updateCache($cache::constructCacheType($cache::CACHE_TYPE_WEATHER, $postal), $timeout, serialize($body));
                 $cache->setRequestLimit($request_limit);
-                $body[Accuweather::RESPONSE_TIMEOUT] = $cache->getTimeout($cache::CACHE_TYPE_WEATHER);
+                $body[Accuweather::RESPONSE_TIMEOUT] = $cache->getTimeout($cache::constructCacheType($cache::CACHE_TYPE_WEATHER, $postal));
             } catch (ServerException $e) {
                 $json_response = Response::HTTP_FORBIDDEN;
             } catch (RequestLimitExceededException $e) {

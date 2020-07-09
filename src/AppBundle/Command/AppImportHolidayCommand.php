@@ -78,17 +78,23 @@ class AppImportHolidayCommand extends ContainerAwareCommand
             $io->progressStart(count($holidays));
             foreach ($holidays as $index => $holiday) {
                 $date = key($holiday);
+                $description = $holiday[$date];
 
                 $existing_holiday = $this->objectManager->getRepository(Calendar::class)->findOneBy(['eventDate' => new \DateTime($date), 'type' => Calendar::TYPE_NATIONAL_HOLIDAY]);
-                if($existing_holiday === null) {
+                if ($existing_holiday === null) {
                     $calendar = new Calendar();
                     $this->objectManager->getManager()->persist($calendar);
 
-                    $calendar->setDescription($holiday[$date]);
+                    $calendar->setDescription($description);
                     $calendar->setEventDate(new \DateTime($date));
                     $calendar->setType(Calendar::TYPE_NATIONAL_HOLIDAY);
                     $this->objectManager->getManager()->flush();
                     $this->objectManager->getManager()->detach($calendar);
+                } else {
+                    $existing_holiday->setDescription($description);
+                    $this->objectManager->getManager()->persist($existing_holiday);
+                    $this->objectManager->getManager()->flush();
+                    $this->objectManager->getManager()->detach($existing_holiday);
                 }
                 $io->progressAdvance();
             }

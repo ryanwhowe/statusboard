@@ -31,18 +31,21 @@
     <script src="{{ asset('assets/js/WeatherInfo.js') }}"></script>
     <script>
         $(function () {
-            $('.weather').WeatherInfo({baseUrl: "{{ baseUrl }}"});
-            $('body').on('click', '.reset_weather', () => { performReset("{{ baseUrl }}api/weather/reset"); });
+            $('.weather').WeatherInfo({baseUrl: "{{ baseUrl }}", postalCode: "01757"});
+            $('body').on('click', '.reset_weather', () => {
+                performReset("{{ baseUrl }}api/reset/weather");
+            });
         });
-        function performReset(endpoint){
+
+        function performReset(endpoint) {
             $.ajax({
                 url: endpoint,
                 method: 'GET',
-                dataType:'json',
+                dataType: 'json',
                 async: true,
                 cache: false,
-                timeout: 5*1000,
-                success: function(data, status){
+                timeout: 5 * 1000,
+                success: function (data, status) {
                     if(status === 'timeout'){
                         alert('Time out!');
                     }
