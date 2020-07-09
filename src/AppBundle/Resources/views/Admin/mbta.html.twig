@@ -32,17 +32,20 @@
     <script>
         $(function () {
             $('.mbta').Mbta({baseUrl: "{{ baseUrl }}"});
-            $('body').on('click', '.reset_mbta', () => { performReset("{{ baseUrl }}api/mbta/reset"); });
+            $('body').on('click', '.reset_mbta', () => {
+                performReset("{{ baseUrl }}api/reset/mbta");
+            });
         });
-        function performReset(endpoint){
+
+        function performReset(endpoint) {
             $.ajax({
                 url: endpoint,
                 method: 'GET',
-                dataType:'json',
+                dataType: 'json',
                 async: true,
                 cache: false,
-                timeout: 5*1000,
-                success: function(data, status){
+                timeout: 5 * 1000,
+                success: function (data, status) {
                     if(status === 'timeout'){
                         alert('Time out!');
                     }

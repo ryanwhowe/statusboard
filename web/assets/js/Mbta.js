@@ -37,12 +37,12 @@ $.widget("howe.Mbta",{
             dataType: 'json',
             async: true,
             cache: false,
-            timeout: 5*1000,
-            success: function(data, status) {
-                if(status === 'timeout'){
+            timeout: 10 * 1000,
+            success: function (data, status) {
+                if (status === 'timeout') {
                     me.__Error('Ajax Request Timeout');
                 }
-                if(status === 'nocontent'){
+                if (status === 'nocontent') {
                     me.__Error('No Schedule Available')
                 }
                 me.data_response = data;

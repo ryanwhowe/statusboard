@@ -101,30 +101,30 @@ class ApiController extends Controller
     }
 
     /**
-     * @Route("/api/weather")
-     * @param Request $request
+     * @Route("/api/weather/{postal}")
+     * @param Request         $request
      * @param LoggerInterface $logger
+     * @param string          $postal
+     *
      * @return JsonResponse
      * @throws RequestLimitExceededException
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Psr\SimpleCache\InvalidArgumentException
      */
-    public function weather(Request $request, LoggerInterface $logger){
+    public function weather(Request $request, LoggerInterface $logger, string $postal) {
         $cache = new WeatherCache($logger);
 
         if (Environment::isTesting()) {
             $fetcher = new MockFetcher();
             $api_key = '';
-            $postal = '';
             $default_location = '';
         } else {
             $fetcher = new AccuweatherFetcher();
             $api_key = $this->getParameter('accuweather_api_key');
-            $postal = $this->getParameter('postal_code');
             $default_location = $this->getParameter('accuweather_api_location');
         }
 
-        list($json_response, $body) = ApiHelper::getAccuweatherData(
+        [$json_response, $body] = ApiHelper::getAccuweatherData(
             $cache,
             $fetcher,
             $api_key,
@@ -146,8 +146,8 @@ class ApiController extends Controller
     }
 
     /**
-     * @Route("/api/weather/reset")
-     * @param Request $request
+     * @Route("/api/reset/weather")
+     * @param Request         $request
      * @param LoggerInterface $logger
      * @return JsonResponse
      * @throws \Psr\Cache\InvalidArgumentException
@@ -181,7 +181,7 @@ class ApiController extends Controller
             $fetcher = new MbtaFetcher();
         }
 
-        list($schedule, $json_response) = ApiHelper::getMbtaData($cache, $fetcher, $api_key);
+        [$schedule, $json_response] = ApiHelper::getMbtaData($cache, $fetcher, $api_key);
 
         if($json_response === JsonResponse::HTTP_OK) {
             $Response = $this->json(\null, $json_response,
@@ -203,8 +203,8 @@ class ApiController extends Controller
     }
 
     /**
-     * @Route("/api/mbta/reset")
-     * @param Request $request
+     * @Route("/api/reset/mbta")
+     * @param Request         $request
      * @param LoggerInterface $logger
      * @return JsonResponse
      * @throws \Psr\Cache\InvalidArgumentException

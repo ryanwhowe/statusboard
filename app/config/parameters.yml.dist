@@ -26,5 +26,4 @@ parameters:
     calendarific_api_key: ~
     accuweather_api_key: ~
     mbta_api_key: ~
-    postal_code: '01001'
     accuweather_api_location: ~

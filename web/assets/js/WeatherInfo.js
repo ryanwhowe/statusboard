@@ -4,15 +4,16 @@
  */
 
 $.widget("howe.WeatherInfo",{
-    url: 'api/weather',
+    url: 'api/weather/',
     options: {
-        update_interval: 10*60*1000, /* update the weather every 10 minutes unless there is an expires flag present */
+        postalCode: '',
+        update_interval: 10 * 60 * 1000, /* update the weather every 10 minutes unless there is an expires flag present */
         baseUrl: ''
     },
 
     /**
      * The widget create script, this is fired on widget creation
-     * 
+     *
      * @private
      */
     _create: function(){
@@ -31,21 +32,21 @@ $.widget("howe.WeatherInfo",{
     _updateData: function(){
         let me = this;
         $.ajax({
-            url: me.options.baseUrl + me.url,
+            url: me.options.baseUrl + me.url + me.options.postalCode,
             method: 'GET',
             dataType: 'json',
             async: true,
             cache: false,
-            timeout: 5*1000,
-            success: function(data, status) {
-                if(status === 'timeout'){
+            timeout: 10 * 1000,
+            success: function (data, status) {
+                if (status === 'timeout') {
                     me.__Error('Ajax Request Timeout');
                 }
                 me.data_response = data;
                 me.__renderWidget();
             },
-            error: function(xhr, status) {
-                if(status === 'timeout'){
+            error: function (xhr, status) {
+                if (status === 'timeout') {
                     me.__Error('Ajax Request Timeout');
                 }
                 if(status === 'error'){

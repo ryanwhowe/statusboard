@@ -41,7 +41,7 @@ class ApiControllerTest extends WebTestCase {
      * Test that a logged out state will return a 401 HTTP_UNAUTHORIZED error
      */
     public function testWeatherLoggedOut() {
-        $crawler = $this->loggedOutClient->request('GET', '/api/weather');
+        $crawler = $this->loggedOutClient->request('GET', '/api/weather/12345');
 
         $this->assertEquals(Response::HTTP_UNAUTHORIZED, $this->loggedOutClient->getResponse()->getStatusCode(), 'Response Code Error');
     }
@@ -51,7 +51,7 @@ class ApiControllerTest extends WebTestCase {
      */
     public function testWeatherLoggedIn() {
 
-        $crawler = $this->loggedInClient->request('GET', '/api/weather');
+        $crawler = $this->loggedInClient->request('GET', '/api/weather/12345');
 
         $this->assertEquals(Response::HTTP_OK, $this->loggedInClient->getResponse()->getStatusCode(), 'Response Code Error');
         $response = $this->loggedInClient->getResponse();
