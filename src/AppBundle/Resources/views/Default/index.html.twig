@@ -166,10 +166,10 @@
     <script src="{{ asset('assets/js/Mbta.js') }}"></script>
     <script>
         let time_parts = $('#arrival_time').val().split(':');
-        let arrival = new Date(0,0,0,parseInt(time_parts[0],0) ,parseInt(time_parts[1],0),0);
+        let arrival = new Date(0, 0, 0, parseInt(time_parts[0], 0), parseInt(time_parts[1], 0), 0);
         TimeSheet.init(arrival, parseFloat($('#additional_time').val()));
         let base_title = $(document).prop('title');
-
+        let postal_code = '01757';
         let date_data = {{ calendarJson | raw }};
         PersonalCalendar.init(date_data);
         $(function () {
@@ -177,7 +177,7 @@
             setInterval('updateTime()', 1000);
             displayTime();
             setInterval('displayTime()', 1000);
-            $('.weather').WeatherInfo({baseUrl: "{{ baseUrl }}", postalCode: '01757'});
+            $('.weather').WeatherInfo({baseUrl: "{{ baseUrl }}", postalCode: postal_code});
             $('.mbta').Mbta({baseUrl: "{{ baseUrl }}"});
             $('.serverinfo').ServerInfo();
             $(".jquery_ui_datepicker_preview").datepicker({
@@ -195,7 +195,7 @@
                     performReset("{{ baseUrl }}api/reset/mbta");
                 })
                 .on('click', '.reset_weather', () => {
-                    performReset("{{ baseUrl }}api/reset/weather");
+                    performReset("{{ baseUrl }}api/reset/weather/" + postal_code);
                 });
         });
 
@@ -260,28 +260,28 @@
 
         }
 
-        function performReset(endpoint){
+        function performReset(endpoint) {
             $.ajax({
                 url: endpoint,
                 method: 'GET',
-                dataType:'json',
+                dataType: 'json',
                 async: true,
                 cache: false,
-                timeout: 5*1000,
-                success: function(data, status){
-                    if(status === 'timeout'){
+                timeout: 10 * 1000,
+                success: function (data, status) {
+                    if (status === 'timeout') {
                         alert('Time out!');
                     }
-                    if(status === 'nocontent'){
+                    if (status === 'nocontent') {
                         alert('No Content');
                     }
                     alert(data);
                 },
-                error: function(xhr, status){
-                    if(status === 'timeout'){
+                error: function (xhr, status) {
+                    if (status === 'timeout') {
                         alert('Time out!');
                     }
-                    if(status === 'nocontent'){
+                    if (status === 'nocontent') {
                         alert('No Content');
                     }
                     alert('failed to clear cache');

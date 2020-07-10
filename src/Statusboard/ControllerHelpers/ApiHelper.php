@@ -34,7 +34,7 @@ class ApiHelper {
         $request_limit = (int)$cache->getCacheIfSet($cache::CACHE_TYPE_REQUESTLIMIT, (string)Fetcher::MAX_REQUEST_LIMIT);
 
         if ($cache->checkCacheTime($cache::constructCacheType($cache::CACHE_TYPE_LOCATION, $postal))) {
-            $location = (string)$cache->getCache($cache::CACHE_TYPE_LOCATION);
+            $location = (string)$cache->getCache($cache::constructCacheType($cache::CACHE_TYPE_LOCATION, $postal));
         } else {
             try {
                 $location_response = $fetcher::getLocation($api_key, $postal);

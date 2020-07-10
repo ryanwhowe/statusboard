@@ -146,17 +146,19 @@ class ApiController extends Controller
     }
 
     /**
-     * @Route("/api/reset/weather")
+     * @Route("/api/reset/weather/{postal}")
      * @param Request         $request
      * @param LoggerInterface $logger
+     * @param string          $postal
+     *
      * @return JsonResponse
      * @throws \Psr\Cache\InvalidArgumentException
      */
-    public function weather_reset(Request $request, LoggerInterface $logger){
+    public function weather_reset(Request $request, LoggerInterface $logger, string $postal) {
         $cache = new WeatherCache($logger);
-        $cache->deleteCache($cache::CACHE_TYPE_LOCATION);
-        $cache->deleteCache($cache::CACHE_TYPE_WEATHER);
-        $Response = $this->json(['Weather Cache Cleared'], JsonResponse::HTTP_OK,
+        $cache->deleteCache($cache::constructCacheType($cache::CACHE_TYPE_LOCATION, $postal));
+        $cache->deleteCache($cache::constructCacheType($cache::CACHE_TYPE_WEATHER, $postal));
+        $Response = $this->json(['Weather Cache Cleared For "' . $postal . '"'], JsonResponse::HTTP_OK,
             ['Content-Type' => 'text/json', 'Cache-control' => 'must-revalidate']);
         $Response->prepare($request)->setPrivate();
         return $Response;

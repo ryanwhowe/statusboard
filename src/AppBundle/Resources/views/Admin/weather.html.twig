@@ -30,10 +30,11 @@
 {% block javascripts %}
     <script src="{{ asset('assets/js/WeatherInfo.js') }}"></script>
     <script>
+        let postal_code = '01757';
         $(function () {
-            $('.weather').WeatherInfo({baseUrl: "{{ baseUrl }}", postalCode: "01757"});
+            $('.weather').WeatherInfo({baseUrl: "{{ baseUrl }}", postalCode: postal_code});
             $('body').on('click', '.reset_weather', () => {
-                performReset("{{ baseUrl }}api/reset/weather");
+                performReset("{{ baseUrl }}api/reset/weather/" + postal_code);
             });
         });
 
@@ -44,21 +45,21 @@
                 dataType: 'json',
                 async: true,
                 cache: false,
-                timeout: 5 * 1000,
+                timeout: 10 * 1000,
                 success: function (data, status) {
-                    if(status === 'timeout'){
+                    if (status === 'timeout') {
                         alert('Time out!');
                     }
-                    if(status === 'nocontent'){
+                    if (status === 'nocontent') {
                         alert('No Content');
                     }
                     alert(data);
                 },
-                error: function(xhr, status){
-                    if(status === 'timeout'){
+                error: function (xhr, status) {
+                    if (status === 'timeout') {
                         alert('Time out!');
                     }
-                    if(status === 'nocontent'){
+                    if (status === 'nocontent') {
                         alert('No Content');
                     }
                     alert('failed to clear cache');
