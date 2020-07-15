@@ -15,10 +15,16 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class ServerController
+ * @Route("/api/server")
+ *
+ * @package AppBundle\Controller\Api
+ */
 class ServerController extends Controller {
 
     /**
-     * @Route("/api/server")
+     * @Route("", name="api_server_getall")
      * @Method("GET")
      * @param Request $request
      *
@@ -45,7 +51,7 @@ class ServerController extends Controller {
     }
 
     /**
-     * @Route("/api/server")
+     * @Route("", name="api_server_addnew")
      * @Method("POST")
      * @param Request $request
      *
@@ -77,12 +83,12 @@ class ServerController extends Controller {
                 JsonResponse::HTTP_BAD_REQUEST
             );
         }
-        return $this->redirectToRoute('app_api_server_getserverinfo', ['id' => $server->getId()]);
+        return $this->redirectToRoute('api_server_get', ['id' => $server->getId()]);
 
     }
 
     /**
-     * @Route("/api/server/{id}")
+     * @Route("/{id}", name="api_server_get")
      * @Method("GET")
      * @param Request         $request
      * @param                 $id
@@ -122,7 +128,7 @@ class ServerController extends Controller {
     }
 
     /**
-     * @Route("/api/server/{id}")
+     * @Route("/{id}", name="api_server_update")
      * @Method("PUT")
      * @param Request $request
      * @param Server  $server
@@ -149,14 +155,14 @@ class ServerController extends Controller {
                     ServerErrors::response(ServerErrors::SERVER_DUPLICATE_NAME, ['name' => $name], [], [$name]),
                     JsonResponse::HTTP_BAD_REQUEST);
             }
-            return $this->redirectToRoute('app_api_server_getserverinfo', ['id' => $server->getId()]);
+            return $this->redirectToRoute('api_server_get', ['id' => $server->getId()]);
         } catch (\Exception $e) {
             return ResponseHelper::UnknownError($e);
         }
     }
 
     /**
-     * @Route("/api/server/{id}")
+     * @Route("/{id}", name="api_server_delete")
      * @Method("DELETE")
      * @param Request $request
      * @param Server  $server
