@@ -34,11 +34,6 @@ class DefaultController extends Controller
          * @var CalendarRepository $calendarRepository;
          */
         $calendarRepository = $this->getDoctrine()->getRepository(Calendar::class);
-        /**
-         * @var ServerRepository $serverRepository
-         */
-        $serverRepository = $this->getDoctrine()->getRepository(Server::class);
-        $servers = $serverRepository->findAll();
 
         $nextEvents = self::formatNextEvents($calendarRepository);
         //$nextEvents['Pay Day'] = $this->TrueCar_nextPayDate();
@@ -50,7 +45,6 @@ class DefaultController extends Controller
             'calendarJson' => $calendarEvents,
             'arrival_time' => $arrival_time,
             'add_time'     => $add_time,
-            'servers'      => $servers,
             'events'       => $nextEvents,
             'baseUrl'      => $this->container->get('router')->getContext()->getBaseUrl() . "/"
         ]);

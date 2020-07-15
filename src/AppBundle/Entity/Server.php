@@ -89,9 +89,21 @@ class Server
      *
      * @return bool
      */
-    public function getIsDisabled()
-    {
+    public function getIsDisabled() {
         return $this->isDisabled;
+    }
+
+    /**
+     * return the class data in an associative array
+     *
+     * @return array
+     */
+    public function toArray() {
+        return [
+            'id'         => $this->getId(),
+            'name'       => $this->getName(),
+            'isDisabled' => $this->getIsDisabled(),
+        ];
     }
 }
 

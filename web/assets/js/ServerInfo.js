@@ -6,10 +6,11 @@
 /**
  */
 $.widget("howe.ServerInfo", {
-    url: 'api/',
+    url: 'api/server/',
     options: {
         server: null,
         disabled: false,
+        id: null,
         max_age: 31 * 60 * 1000,
         skip_keys: ['time_out'],
         baseUrl: ''
@@ -29,6 +30,7 @@ $.widget("howe.ServerInfo", {
         let create_server = $(e).data('server');
         let disabled = $(e).data('disabled');
         let baseUrl = $(e).data('baseurl');
+        o.id = $(e).data('serverid');
         if (typeof create_server !== 'undefined') {
             o.server = create_server;
         }
@@ -71,17 +73,18 @@ $.widget("howe.ServerInfo", {
             o = this.options;
         $(e).removeClass('btn-danger btn-success').addClass('btn-primary');
         $.ajax({
-            url: o.baseUrl + me.url + 'group/' + o.server,
+            url: o.baseUrl + me.url + o.id,
             method: 'GET',
             dataType: 'json',
             async: true,
             cache: false,
-            timeout: 30*1000,
+            timeout: 30 * 1000,
             success: function (data, status) {
-                if(status === 'timeout'){
+                if (status === 'timeout') {
                     me.__Error('Ajax Request Timeout');
                 }
-                me.data_response = data;
+                me.data_response = data.data;
+                o.disabled = data.isDisabled;
                 me.__formatData();
             },
             error: function (xhr, status) {
@@ -333,4 +336,136 @@ $.widget("howe.ServerInfo", {
         return time;
     },
 
+});
+
+$.widget("howe.ServerGroup", {
+    url: 'api/server',
+    options: {
+        baseUrl: '',
+        rowCount: 3,
+    },
+    /**
+     * The constructor of the widget, this is ran on instantiation of the widget
+     *
+     * @private
+     */
+    _create: function () {
+        let me = this,
+            o = this.options,
+            e = this.element;
+
+        me.data_response = null;
+
+        me.__initUi();
+
+        me.updateStatus();
+    },
+
+    __initUi: function () {
+        let me = this,
+            e = this.element;
+        e.addClass('panel panel-info');
+        me.heading = $([
+            "<div class='panel-heading'>",
+            "<div class='panel-title text-center'>",
+            "<i class='fa fa-server fa-fw'></i> Servers",
+            "<div>",
+            "<div>"
+        ].join("\n"));
+        me.body = $([
+            "<div class='panel-body'>"
+        ].join("\n"));
+        e.append(me.heading).append(me.body);
+    },
+
+    /**
+     * Method for pulling updated data
+     *
+     */
+    updateStatus: function () {
+        let me = this,
+            e = this.element,
+            o = this.options;
+
+        $.ajax({
+            url: o.baseUrl + me.url,
+            method: 'GET',
+            dataType: 'json',
+            async: true,
+            cache: false,
+            timeout: 30 * 1000,
+            success: function (data, status) {
+                if (status === 'timeout') {
+                    me.__Error('Ajax Request Timeout');
+                }
+                me.data_response = data;
+                me.__formatData();
+            },
+            error: function (xhr, status) {
+                if (status === 'timeout') {
+                    me.__Error('Ajax Request Timeout');
+                }
+                let error = JSON.parse(xhr.responseText);
+                let error_text = 'Invalid Server Name: ' + o.server;
+                $.each(error.error, function (index, value) {
+                    if (typeof (value) !== 'object') {
+                        error_text += value + '<br>';
+                    } else {
+                        if (typeof value.args[1] !== 'undefined') {
+                            error_text += value.args[1] + '<br>';
+                        }
+                    }
+                });
+                me.__Error(error_text);
+            }
+        });
+    },
+
+    /**
+     * Format the returned api data and update the display
+     * @private
+     */
+    __formatData: function () {
+        let me = this;
+        let o = this.options;
+        let data = this.data_response;
+
+        if (data === null) {
+            this.__Error('__formatData called on null data set');
+        }
+
+        let update_data = [];
+        let counter = 0;
+        $.each(me.data_response, function (index, server) {
+            if (counter++ === 0) {
+                update_data.push("<div class='row'>");
+            }
+            update_data.push("<div class='col-md-12 col-lg-4'>");
+            update_data.push("<button style='display: none;' type='button' class='btn btn-primary btn-lg btn-block serverinfo' data-serverid='" + server.id + "' data-server='" + server.name + "'>");
+            update_data.push("</div>");
+            if (counter >= o.rowCount) {
+                update_data.push("</div>");
+                counter = 0;
+            }
+        });
+
+        update_data = $(update_data.join('\n'));
+        me.body.append(update_data);
+
+        $('.serverinfo').ServerInfo({baseUrl: o.baseUrl});
+    },
+
+
+    /**
+     * Error handling method for the widget
+     *@private
+     */
+    __Error: function (message) {
+        let me = this;
+        let error_message = me.widgetFullName + ':' + message;
+        let e = this.element;
+        $(me.element_dialog).find('#' + me.my_name + '_table').first().replaceWith('<div class="alert alert-danger"><strong>ALERT: </strong>' + error_message + '</div>');
+        $(e).removeClass('btn-primary btn-success').addClass('btn-danger');
+        clearInterval(me.update_interval);
+    },
 });

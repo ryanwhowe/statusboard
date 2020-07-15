@@ -78,40 +78,6 @@ class ApiControllerTest extends WebTestCase {
     }
 
     /**
-     * Test the group api response for the required response elements
-     */
-    public function testGroup() {
-        $expected_keys = ['external_ip', 'internal_ip', 'heartbeat', 'time_out'];
-        $crawler = $this->loggedInClient->request('GET', '/api/group/vmbox');
-
-        $this->assertEquals(Response::HTTP_OK, $this->loggedInClient->getResponse()->getStatusCode(), 'Response Code Error');
-        $response = $this->loggedInClient->getResponse();
-        $responseData = json_decode($response->getContent(), true);
-        foreach ($responseData as $key => $item) {
-            if (is_array($item)) {
-                $expected_keys = array_diff($expected_keys, [$item['key']]);
-            }
-        }
-        $this->assertEmpty($expected_keys, 'Missing Expected Key values from response');
-    }
-
-
-    /**
-     * Test the ipCheck api response for the required response elements
-     */
-    public function testIpCheck() {
-        $expected_keys = ['external_ip', 'internal_ip', 'heartbeat'];
-        $crawler = $this->loggedInClient->request('GET', '/api/ipCheck/vmbox');
-
-        $this->assertEquals(Response::HTTP_OK, $this->loggedInClient->getResponse()->getStatusCode(), 'Response Code Error');
-        $response = $this->loggedInClient->getResponse();
-        $responseData = json_decode($response->getContent(), true);
-        foreach ($expected_keys as $expected_key) {
-            $this->assertArrayHasKey($expected_key, $responseData, 'Missing \'' . $expected_key . '\' key from response');
-        }
-    }
-
-    /**
      * Test the Mbta api response for the required response elements
      */
     public function testMbta(){

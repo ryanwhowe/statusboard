@@ -9,41 +9,7 @@
     </div>
     <div class="row">
         <div class="col-md-6 col-lg-6">
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    <div class="panel-title text-center">
-                        <i class="fa fa-server fa-fw"></i> Servers
-                    </div>
-                </div>
-                <div class="panel-body">
-                    {% for server in servers %}
-                        {% if loop.index == 1 %}
-                        <div class="row">
-                        {% endif %}
-                            <div class="col-md-12 col-lg-4">
-                                <button
-                                        style="display: none;"
-                                        type="button"
-                                        class="btn btn-primary btn-lg btn-block serverinfo"
-                                        data-server="{{ server.name }}"
-                                        {% if server.isDisabled %} data-disabled="true"{% endif %}
-                                        data-baseurl="{{ baseUrl }}" ></button>
-                            </div>
-                        {% if loop.index is divisible by (3) %}
-                            {% if loop.last %}
-                                </div>
-                            {% else %}
-                                </div><div class="row">
-                            {% endif %}
-                        {% endif %}
-                        {% if loop.last and loop.index is not divisible by (3) %}
-                        </div>
-                        {% endif %}
-                    {% endfor %}
-                </div>
-                <!-- /.panel-body -->
-            </div>
-            <!-- /.panel -->
+            <div class="serverGroup"></div>
         </div>
     </div>
 {% endblock %}
@@ -54,7 +20,7 @@
     <script src="{{ asset('assets/js/ServerInfo.js') }}"></script>
     <script>
         $(function () {
-            $('.serverinfo').ServerInfo();
+            $('.serverGroup').ServerGroup({baseUrl: "{{ baseUrl }}"});
         });
     </script>
 {% endblock %}
