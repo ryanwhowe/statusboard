@@ -38,13 +38,7 @@ class AdminController extends Controller
      */
     public function serverAction(Request $request)
     {
-        /**
-         * @var ServerRepository $serverRepository
-         */
-        $serverRepository = $this->getDoctrine()->getRepository(Server::class);
-        $servers = $serverRepository->findAll();
         return $this->render('AppBundle:Admin:server.html.twig',[
-            'servers' => $servers,
             'baseUrl' => $this->container->get('router')->getContext()->getBaseUrl() . "/"
         ]);
     }
