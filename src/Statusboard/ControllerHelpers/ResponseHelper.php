@@ -17,7 +17,7 @@ class ResponseHelper {
         return new JsonResponse(
             [
                 "message"    => "Unknown Internal Error has occured",
-                "stackTrace" => $e->getTrace(),
+                "stackTrace" => ($e === null) ? null : $e->getTrace(),
             ],
             JsonResponse::HTTP_SERVICE_UNAVAILABLE);
 
