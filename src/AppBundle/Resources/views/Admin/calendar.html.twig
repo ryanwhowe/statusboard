@@ -23,27 +23,7 @@
             <!-- /.panel -->
         </div>
         <div class="col-md-6 col-lg-6">
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    <div class="panel-title text-center">
-                        <i class="fa fa-calendar-check-o fa-fw"></i> Upcoming
-                    </div>
-                </div>
-                <div class="panel-body">
-                    <table class="table table-bordered table-striped table-hover">
-                        <thead>
-                        <tr class="info"><th class="text-center">Event</th><th class="text-center">Days</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>Holiday</td><td{% if events['Holiday'].days %} title="{{ events['Holiday'].date }}">{{ events['Holiday'].days }}{% else %}>None Scheduled{% endif %}</td></tr>
-                            <tr><td>TrueCar Pay Day</td><td{% if events['TrueCar Pay Date'].days %} title="{{ events['TrueCar Pay Date'].date }}">{{ events['TrueCar Pay Date'].days }}{% else %}>None Scheduled{% endif %}</td></tr>
-                            <tr><td>PTO</td><td{% if events['PTO'].days %} title="{{ events['PTO'].date }}">{{ events['PTO'].days }}{% else %}>None Scheduled{% endif %}</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-                <!-- /.panel-body -->
-            </div>
-            <!-- /.panel -->
+            <div class="UpcomingInfo"></div>
         </div>
     </div>
 {% endblock %}
@@ -54,9 +34,11 @@
 {% block javascripts %}
     <script src="{{ asset('assets/js/ClockClass.js') }}"></script>
     <script src="{{ asset('assets/js/PersonalCalendar.js') }}"></script>
+    <script src="{{ asset('assets/js/UpcomingInfo.js') }}"></script>
     <script>
         let date_data = {{ calendarJson | raw }};
         PersonalCalendar.init(date_data);
+        $(".UpcomingInfo").UpcomingInfo({baseUrl: "../"});
         $(function () {
             $(".jquery_ui_datepicker_preview").datepicker({
                 defaultDate: null,
