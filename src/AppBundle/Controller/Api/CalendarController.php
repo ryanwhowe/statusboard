@@ -26,6 +26,7 @@ class CalendarController extends Controller {
      * @Route("/upcoming", name="api_calendar_upcoming")
      * @Method("GET")
      *
+     * @return JsonResponse
      * @throws \Exception
      */
     public function getUpcoming(Request $request) {
