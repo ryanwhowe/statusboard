@@ -3,14 +3,10 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Repository\CalendarRepository;
-use AppBundle\Repository\ServerRepository;
 use \DateTime;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-
 use AppBundle\Entity\Calendar;
-use AppBundle\Entity\Server;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
-use Statusboard\Utility\PayDate;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,9 +31,6 @@ class DefaultController extends Controller
          */
         $calendarRepository = $this->getDoctrine()->getRepository(Calendar::class);
 
-        $nextEvents = self::formatNextEvents($calendarRepository);
-        //$nextEvents['Pay Day'] = $this->TrueCar_nextPayDate();
-
         $calendarEvents = json_encode(self::getCalendarData($this->getDoctrine()->getRepository(Calendar::class)->findAll()));
 
 
@@ -45,7 +38,6 @@ class DefaultController extends Controller
             'calendarJson' => $calendarEvents,
             'arrival_time' => $arrival_time,
             'add_time'     => $add_time,
-            'events'       => $nextEvents,
             'baseUrl'      => $this->container->get('router')->getContext()->getBaseUrl() . "/"
         ]);
     }
@@ -215,43 +207,6 @@ class DefaultController extends Controller
         return $response;
     }
 
-    /**
-     * @param CalendarRepository $calendarRepository
-     * @return array
-     * @throws \Exception
-     */
-    public static function formatNextEvents(CalendarRepository $calendarRepository): array {
-        $eventTypes = [
-            Calendar::TYPE_NATIONAL_HOLIDAY => 'Holiday',
-            Calendar::TYPE_PTO => 'PTO',
-            Calendar::TYPE_PAY_DATE => Calendar::translateTypeDescription(new Calendar(['eventDate' => new DateTime(), 'type' => Calendar::TYPE_PAY_DATE]))
-        ];
-        $return = [];
-        foreach ($eventTypes as $eventType => $eventName) {
-            /**
-             * @var Calendar $calendar
-             */
-            $calendars = $calendarRepository->getNextEvent($eventType);
-
-            foreach ($calendars as $calendar) {
-                $days_until = date_diff(new DateTime('now'),
-                    $calendar->getEventDate());
-
-                $return[$eventName] = [
-                    'date' => $calendar->getEventDate()->format('Y-m-d'),
-                    'days' => $days_until->format('%a') + 1
-                ];
-            }
-            if (!count($calendars)) {
-                $return[$eventName] = [
-                    'date' => null,
-                    'days' => null
-                ];
-            }
-
-        }
-        return $return;
-    }
 
     /**
      * @return array

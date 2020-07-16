@@ -4,6 +4,7 @@
 namespace Statusboard\ControllerHelpers;
 
 
+use Statusboard\Utility\Environment;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ResponseHelper {
@@ -14,10 +15,12 @@ class ResponseHelper {
      * @return JsonResponse
      */
     public static function UnknownError(\Exception $e = null) {
+        $e = (Environment::isDevelopment()) ? $e : null;
+        $e = (Environment::isDevelopment()) ? $e : null;
         return new JsonResponse(
             [
-                "message"    => "Unknown Internal Error has occured",
-                "stackTrace" => ($e === null) ? null : $e->getTrace(),
+                "message"    => "Unknown Internal Error has occurred",
+                "stackTrace" => ($e === null) ? 'unavailable' : $e->getTrace(),
             ],
             JsonResponse::HTTP_SERVICE_UNAVAILABLE);
 

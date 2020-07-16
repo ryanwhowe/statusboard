@@ -68,12 +68,6 @@ class AdminController extends Controller
     public function calendarAction(Request $request){
         $arrival_time = $request->cookies->get('time_sheet_time', '09:00');
         $add_time = $request->cookies->get('time_sheet_add_time', 0);
-        /**
-         * @var CalendarRepository $calendarRepository;
-         */
-        $calendarRepository = $this->getDoctrine()->getRepository(Calendar::class);
-
-        $nextEvents = DefaultController::formatNextEvents($calendarRepository);
 
         $calendarEvents = json_encode(DefaultController::getCalendarData($this->getDoctrine()->getRepository(Calendar::class)->findAll()));
 
@@ -81,7 +75,6 @@ class AdminController extends Controller
             'calendarJson' => $calendarEvents,
             'arrival_time' => $arrival_time,
             'add_time'     => $add_time,
-            'events'       => $nextEvents,
             'baseUrl'      => $this->container->get('router')->getContext()->getBaseUrl() . "/"
         ]);
     }

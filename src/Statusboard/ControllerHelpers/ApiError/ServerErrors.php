@@ -12,7 +12,7 @@ namespace Statusboard\ControllerHelpers\ApiError;
 class ServerErrors extends Errors {
 
     /**
-     * Degine the error group
+     * Define the error group
      *
      * @var string
      */
