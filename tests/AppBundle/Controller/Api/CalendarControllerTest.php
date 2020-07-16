@@ -2,6 +2,7 @@
 
 namespace Tests\AppBundle\Controller\Api;
 
+use Statusboard\ControllerHelpers\CalendarHelper;
 use Statusboard\Utility\Environment;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -42,6 +43,13 @@ class CalendarControllerTest extends WebTestCase {
         $response = $this->loggedInClient->getResponse();
         $body = json_decode($response->getContent(), true);
         $this->assertCount(3, $body);
+        $eventTypes = CalendarHelper::getEventTypes();
+        foreach ($body as $event) {
+            $this->assertTrue(in_array($event['display_name'], $eventTypes), 'Event Display Name');
+            $this->assertArrayHasKey('display_name', $event);
+            $this->assertArrayHasKey('date', $event);
+            $this->assertArrayHasKey('days', $event);
+        }
     }
 
 }

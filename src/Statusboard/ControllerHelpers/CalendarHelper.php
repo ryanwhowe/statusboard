@@ -10,6 +10,15 @@ use DateTime;
 
 class CalendarHelper {
 
+    public static function getEventTypes() {
+        /* the order of the response is the same as the order of this array */
+        return [
+            Calendar::TYPE_NATIONAL_HOLIDAY => 'Holiday',
+            Calendar::TYPE_PAY_DATE         => Calendar::translateTypeDescription(new Calendar(['eventDate' => new DateTime(), 'type' => Calendar::TYPE_PAY_DATE])),
+            Calendar::TYPE_PTO              => 'PTO',
+        ];
+    }
+
     /**
      * @param CalendarRepository $calendarRepository
      *
@@ -17,13 +26,8 @@ class CalendarHelper {
      * @throws \Exception
      */
     public static function getUpcomingEvents(CalendarRepository $calendarRepository): array {
-        $eventTypes = [ /* the order of the response is the same as the order of this array */
-                        Calendar::TYPE_NATIONAL_HOLIDAY => 'Holiday',
-                        Calendar::TYPE_PAY_DATE         => Calendar::translateTypeDescription(new Calendar(['eventDate' => new DateTime(), 'type' => Calendar::TYPE_PAY_DATE])),
-                        Calendar::TYPE_PTO              => 'PTO',
-        ];
         $return = [];
-        foreach ($eventTypes as $eventType => $eventName) {
+        foreach (self::getEventTypes() as $eventType => $eventName) {
             $return [] = self::getUpcomingEvent($calendarRepository, $eventType, $eventName);
         }
         return $return;
