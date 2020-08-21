@@ -26,16 +26,8 @@ class DefaultController extends Controller
     {
         $arrival_time = $request->cookies->get('time_sheet_time', '09:00');
         $add_time = $request->cookies->get('time_sheet_add_time', 0);
-        /**
-         * @var CalendarRepository $calendarRepository;
-         */
-        $calendarRepository = $this->getDoctrine()->getRepository(Calendar::class);
-
-        $calendarEvents = json_encode(self::getCalendarData($this->getDoctrine()->getRepository(Calendar::class)->findAll()));
-
 
         return $this->render('AppBundle:Default:index.html.twig', [
-            'calendarJson' => $calendarEvents,
             'arrival_time' => $arrival_time,
             'add_time'     => $add_time,
             'baseUrl'      => $this->container->get('router')->getContext()->getBaseUrl() . "/"
@@ -53,9 +45,7 @@ class DefaultController extends Controller
     {
         $arrival_time = $request->cookies->get('time_sheet_time', '09:00');
         $add_time = $request->cookies->get('time_sheet_add_time', 0);
-        $calendarEvents = json_encode(self::getCalendarData($this->getDoctrine()->getRepository(Calendar::class)->findAll()));
         return $this->render('AppBundle:Default:calendar.html.twig', [
-            'calendarJson' => $calendarEvents,
             'type' => [
                 'pto' => Calendar::TYPE_PTO,
                 'holiday' => Calendar::TYPE_COMPANY_HOLIDAY,
@@ -205,28 +195,6 @@ class DefaultController extends Controller
         $response->headers->setCookie(new \Symfony\Component\HttpFoundation\Cookie('time_sheet_calendar_wed', $wed, new DateTime('next sunday')));
         $response->headers->setCookie(new \Symfony\Component\HttpFoundation\Cookie('time_sheet_calendar_thu', $thu, new DateTime('next sunday')));
         return $response;
-    }
-
-
-    /**
-     * @return array
-     * @throws \Exception
-     */
-    public static function getCalendarData($calendars){
-        $calendar_data = [];
-
-        /**
-         * @var Calendar $calendar
-         */
-        foreach ($calendars as $calendar) {
-            $event_date = $calendar->getEventDate()->format('Y-m-d');
-            if(isset($calendar_data[$event_date])){
-                $calendar_data[$event_date]['events'][] = ['type' => $calendar->getType(), 'description' => Calendar::translateTypeDescription($calendar)];
-            } else {
-                $calendar_data[$event_date] = ['events' => [['type' => $calendar->getType(), 'description' => Calendar::translateTypeDescription($calendar)]]];
-            }
-        }
-        return $calendar_data;
     }
 
 }

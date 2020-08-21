@@ -27,19 +27,28 @@
         TimeSheet.init(arrival, parseFloat($('#additional_time').val()));
         let base_title = $(document).prop('title');
 
-        let date_data = {{ calendarJson | raw }};
-        PersonalCalendar.init(date_data);
         var current = new Date();
         var currentpos = current.getMonth();
         $(function () {
-            $(".jquery_ui_datepicker").datepicker({
-                defaultDate: null,
-                firstDay: 1, // Set Monday to the first day of the week
-                numberOfMonths: [4, 3], //display a full calendar year
-                showCurrentAtPos: currentpos, // set the current month to the correct position
-                showMonthAfterYear: true,
-                beforeShowDay: function (currentDate) {
-                    return PersonalCalendar.parseDate(currentDate);
+            $.ajax({
+                url: '../api/calendar?format=byDate',
+                method: 'GET',
+                dataType: 'json',
+                async: true,
+                cache: false,
+                timeout: 30 * 1000,
+                success: function (data, status) {
+                    PersonalCalendar.init(data);
+                    $(".jquery_ui_datepicker").datepicker({
+                        defaultDate: null,
+                        firstDay: 1, // Set Monday to the first day of the week
+                        numberOfMonths: [4, 3], //display a full calendar year
+                        showCurrentAtPos: currentpos, // set the current month to the correct position
+                        showMonthAfterYear: true,
+                        beforeShowDay: function (currentDate) {
+                            return PersonalCalendar.parseDate(currentDate);
+                        }
+                    });
                 }
             });
             displayTime();

@@ -23,6 +23,8 @@ class CalendarErrors extends Errors {
      * Error code constants
      */
     const CALENDAR_EVENT_ID_NOT_FOUND = 200;
+    const CALENDAR_MISSING_REQUIRED_PARAMETER = 201;
+    const CALENDAR_DUPLICATE_TYPE_DATE = 202;
 
     /**
      * Define the error messages
@@ -30,6 +32,8 @@ class CalendarErrors extends Errors {
      * @var string[]
      */
     protected static $errors = [
-        self::CALENDAR_EVENT_ID_NOT_FOUND => "The supplied calendar event id:'%s' was not found",
+        self::CALENDAR_EVENT_ID_NOT_FOUND         => "The supplied calendar event id:'%s' was not found",
+        self::CALENDAR_DUPLICATE_TYPE_DATE        => "Event Type for the given date already exists",
+        self::CALENDAR_MISSING_REQUIRED_PARAMETER => "Required parameters are missing",
     ];
 }

@@ -116,8 +116,6 @@ $.widget("howe.UpcomingInfo", {
 
         update_data = $(update_data.join('\n'));
         me.body.append(update_data);
-
-        $('.serverinfo').ServerInfo({baseUrl: o.baseUrl});
     },
 
 
