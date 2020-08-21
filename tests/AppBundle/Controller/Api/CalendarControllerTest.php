@@ -11,9 +11,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CalendarControllerTest extends WebTestCase {
 
-    const ENDPOINT_CALENDAR = '/api/calendar/';
-    const ENDPOINT_EVENT = self::ENDPOINT_CALENDAR . "event";
-    const ENDPOINT_UPCOMING = self::ENDPOINT_CALENDAR . "upcoming";
+    const ENDPOINT_CALENDAR = '/api/calendar';
+    const ENDPOINT_EVENT = self::ENDPOINT_CALENDAR . "/event";
+    const ENDPOINT_UPCOMING = self::ENDPOINT_CALENDAR . "/upcoming";
 
     const CONTENT_TYPE_JSON = ['CONTENT_TYPE' => 'application/json'];
 
@@ -57,6 +57,39 @@ class CalendarControllerTest extends WebTestCase {
             $this->assertArrayHasKey('display_name', $event);
             $this->assertArrayHasKey('date', $event);
             $this->assertArrayHasKey('days', $event);
+        }
+    }
+
+    /**
+     * @test
+     */
+    public function getAllCalendarEvents() {
+        // there are two different types of get all event pulls, this is the one used by the UI
+        $crawler = $this->loggedInClient->request("GET", self::ENDPOINT_CALENDAR . "?format=byDate");
+        $response = $this->loggedInClient->getResponse();
+        $body = json_decode($response->getContent(), true);
+        foreach ($body as $date => $events) {
+            $this->assertRegExp('/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/', $date, 'Invalid date returned "' . $date . '"');
+            $this->assertIsArray($events);
+            foreach ($events['events'] as $event) {
+                $this->assertArrayHasKey('id', $event);
+                $this->assertArrayHasKey('type_id', $event);
+                $this->assertArrayHasKey('description', $event);
+                $this->assertArrayHasKey('description_raw', $event);
+                $this->assertArrayHasKey('date', $event);
+            }
+        }
+        // there are two different types of get all event pulls, this is the one is the per event
+        $crawler = $this->loggedInClient->request("GET", self::ENDPOINT_CALENDAR);
+        $response = $this->loggedInClient->getResponse();
+        $body = json_decode($response->getContent(), true);
+        foreach ($body as $id => $event) {
+            $this->assertEquals($id, $event['id']);
+            $this->assertArrayHasKey('id', $event);
+            $this->assertArrayHasKey('type_id', $event);
+            $this->assertArrayHasKey('description', $event);
+            $this->assertArrayHasKey('description_raw', $event);
+            $this->assertArrayHasKey('date', $event);
         }
     }
 

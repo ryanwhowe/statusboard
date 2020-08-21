@@ -67,7 +67,7 @@ class CalendarController extends ApiController {
                     $result = [];
                     /** @var Calendar $calendar */
                     foreach ($calendarEvents as $calendar) {
-                        $result[] = $calendar->toArray();
+                        $result[$calendar->getId()] = $calendar->toArray();
                     }
                     return $this->json($result, JsonResponse::HTTP_OK);
                     break;
