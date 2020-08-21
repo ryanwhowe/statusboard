@@ -133,7 +133,7 @@
             $('.UpcomingInfo').UpcomingInfo({baseUrl: "{{ baseUrl }}"});
             $('.serverGroup').ServerGroup({baseUrl: "{{ baseUrl }}"});
             $.ajax({
-                url: '../api/calendar?format=byDate',
+                url: 'api/calendar?format=byDate',
                 method: 'GET',
                 dataType: 'json',
                 async: true,
