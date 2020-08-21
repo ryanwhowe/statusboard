@@ -104,10 +104,11 @@ class Calendar
     }
 
     /**
-     * @param string $description
+     * @param string|null $description
+     *
      * @return Calendar
      */
-    public function setDescription(string $description) {
+    public function setDescription($description) {
         $this->description = $description;
 
         return $this;
@@ -166,9 +167,24 @@ class Calendar
      *
      * @return \DateTime
      */
-    public function getEventDate()
-    {
+    public function getEventDate() {
         return $this->eventDate;
+    }
+
+    /**
+     * Serialize the calendar object to an array
+     *
+     * @return array
+     * @throws \Exception
+     */
+    public function toArray() {
+        return [
+            'id'              => $this->getId(),
+            'type_id'         => $this->getType(),
+            'description'     => self::translateTypeDescription($this),
+            'description_raw' => $this->description,
+            'date'            => $this->getEventDate()->format('Y-m-d'),
+        ];
     }
 }
 

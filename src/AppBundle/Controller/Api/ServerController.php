@@ -10,7 +10,6 @@ use AppBundle\Repository\ServerRepository;
 use AppBundle\Entity\Server;
 use Statusboard\ControllerHelpers\ResponseHelper;
 use Statusboard\ControllerHelpers\ApiError\ServerErrors;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,7 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @package AppBundle\Controller\Api
  */
-class ServerController extends Controller {
+class ServerController extends ApiController {
 
     /**
      * @Route("", name="api_server_getall")
@@ -51,16 +50,17 @@ class ServerController extends Controller {
     }
 
     /**
-     * @Route("", name="api_server_addnew")
+     * @Route("", name="api_server_create")
      * @Method("POST")
      * @param Request $request
      *
      * @return JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \Exception
      */
-    public function addNewServer(Request $request) {
-        $name = $request->request->get('name');
-        $isDisabled = $request->request->getBoolean('isDisabled');
+    public function createServer(Request $request) {
+        $post = $this->parseJsonContent($request);
+        $name = $post->get('name');
+        $isDisabled = $post->getBoolean('isDisabled');
 
         // todo: expand this to validation rules when more datapoints are added
         if ($name !== null && $name !== '' && $isDisabled !== null) {
@@ -136,9 +136,10 @@ class ServerController extends Controller {
      * @return Response|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function updateServerInfo(Request $request, Server $server) {
+        $put = $this->parseJsonContent($request);
         try {
-            $name = $request->request->get('name');
-            $isDisabled = $request->request->getBoolean('isDisabled');
+            $name = $put->get('name');
+            $isDisabled = $put->getBoolean('isDisabled');
             // todo: expand this to validation rules when more datapoints are added
             if ($name !== null && $name !== '' && $isDisabled !== null) {
                 $server->setName($name);

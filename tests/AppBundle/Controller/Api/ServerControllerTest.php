@@ -57,7 +57,7 @@ class ServerControllerTest extends WebTestCase {
             'name'       => 'test',
             'isDisabled' => false,
         ];
-        $crawler = $this->loggedInClient->request("POST", "/api/server", $test);
+        $crawler = $this->loggedInClient->request("POST", "/api/server", [], [], ['CONTENT_TYPE' => 'application/json'], json_encode($test));
         $crawler = $this->loggedInClient->followRedirect();
         $this->assertEquals(Response::HTTP_OK, $this->loggedInClient->getResponse()->getStatusCode(), 'Response Code Error');
         $response = $this->loggedInClient->getResponse();
@@ -87,7 +87,7 @@ class ServerControllerTest extends WebTestCase {
 
         $original_name = $body['name'];
         $original_status = $body['isDisabled'];
-        $crawler = $this->loggedInClient->request("PUT", "/api/server/1", $update_data);
+        $crawler = $this->loggedInClient->request("PUT", "/api/server/1", [], [], ['CONTENT_TYPE' => 'application/json'], json_encode($update_data));
         $crawler = $this->loggedInClient->followRedirect();
 
         $response = $this->loggedInClient->getResponse();
@@ -96,7 +96,7 @@ class ServerControllerTest extends WebTestCase {
         $this->assertEquals($update_data['name'], $body['name']);
         $this->assertEquals($update_data['isDisabled'], $body['isDisabled']);
 
-        $crawler = $this->loggedInClient->request("PUT", "/api/server/1", ['name' => $original_name, 'isDisabled' => $original_status]);
+        $crawler = $this->loggedInClient->request("PUT", "/api/server/1", [], [], ['CONTENT_TYPE' => 'application/json'], json_encode(['name' => $original_name, 'isDisabled' => $original_status]));
         $crawler = $this->loggedInClient->followRedirect();
 
         $response = $this->loggedInClient->getResponse();

@@ -47,17 +47,6 @@ class DefaultControllerTest extends WebTestCase
     }
 
     /**
-     * Test the logged in calendar page header
-     */
-    public function testCalendarLoggedIn(){
-        $crawler = $this->loggedInClient->request('GET', '/calendar');
-
-        $this->assertEquals(Response::HTTP_OK, $this->loggedInClient->getResponse()->getStatusCode(),'Response Code Error');
-        $this->assertContains('Calendar', $crawler->filter('.page-header')->text());
-        $this->assertEquals(1, $crawler->filter('.jquery_ui_datepicker')->count());
-    }
-
-    /**
      * Test the logged in time sheet page header
      */
     public function testTimeSheetLoggedIn(){

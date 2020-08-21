@@ -123,8 +123,6 @@
         TimeSheet.init(arrival, parseFloat($('#additional_time').val()));
         let base_title = $(document).prop('title');
         let postal_code = '01757';
-        let date_data = {{ calendarJson | raw }};
-        PersonalCalendar.init(date_data);
         $(function () {
             updateTime();
             setInterval('updateTime()', 1000);
@@ -134,14 +132,25 @@
             $('.mbta').Mbta({baseUrl: "{{ baseUrl }}"});
             $('.UpcomingInfo').UpcomingInfo({baseUrl: "{{ baseUrl }}"});
             $('.serverGroup').ServerGroup({baseUrl: "{{ baseUrl }}"});
-            $(".jquery_ui_datepicker_preview").datepicker({
-                defaultDate: null,
-                firstDay: 1, // Set Monday to the first day of the week
-                numberOfMonths: [1, 2], //display a full calendar year
-                showCurrentAtPos: 0, // set the current month to the center position
-                showMonthAfterYear: true,
-                beforeShowDay: function (currentDate) {
-                    return PersonalCalendar.parseDate(currentDate);
+            $.ajax({
+                url: '../api/calendar?format=byDate',
+                method: 'GET',
+                dataType: 'json',
+                async: true,
+                cache: false,
+                timeout: 30 * 1000,
+                success: function (data, status) {
+                    PersonalCalendar.init(data);
+                    $(".jquery_ui_datepicker_preview").datepicker({
+                        defaultDate: null,
+                        firstDay: 1, // Set Monday to the first day of the week
+                        numberOfMonths: [1, 2], //display a full calendar year
+                        showCurrentAtPos: 0, // set the current month to the center position
+                        showMonthAfterYear: true,
+                        beforeShowDay: function (currentDate) {
+                            return PersonalCalendar.parseDate(currentDate);
+                        }
+                    });
                 }
             });
             $('body')

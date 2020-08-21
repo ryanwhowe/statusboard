@@ -69,10 +69,7 @@ class AdminController extends Controller
         $arrival_time = $request->cookies->get('time_sheet_time', '09:00');
         $add_time = $request->cookies->get('time_sheet_add_time', 0);
 
-        $calendarEvents = json_encode(DefaultController::getCalendarData($this->getDoctrine()->getRepository(Calendar::class)->findAll()));
-
         return $this->render('AppBundle:Admin:calendar.html.twig', [
-            'calendarJson' => $calendarEvents,
             'arrival_time' => $arrival_time,
             'add_time'     => $add_time,
             'baseUrl'      => $this->container->get('router')->getContext()->getBaseUrl() . "/"
