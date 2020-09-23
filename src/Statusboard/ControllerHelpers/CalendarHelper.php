@@ -13,9 +13,9 @@ class CalendarHelper {
     public static function getEventTypes() {
         /* the order of the response is the same as the order of this array */
         return [
-            Calendar::TYPE_NATIONAL_HOLIDAY => 'Holiday',
-            Calendar::TYPE_PAY_DATE         => Calendar::translateTypeDescription(new Calendar(['eventDate' => new DateTime(), 'type' => Calendar::TYPE_PAY_DATE])),
-            Calendar::TYPE_PTO              => 'PTO',
+            Calendar::TYPE_COMPANY_HOLIDAY => 'Company Holiday',
+            Calendar::TYPE_PAY_DATE        => Calendar::translateTypeDescription(new Calendar(['eventDate' => new DateTime(), 'type' => Calendar::TYPE_PAY_DATE])),
+            Calendar::TYPE_PTO             => 'PTO',
         ];
     }
 
@@ -63,6 +63,7 @@ class CalendarHelper {
                 'days'         => null,
             ];
         }
+        return [];
     }
 
     /**
