@@ -34,7 +34,7 @@
         $(function () {
             $('.weather').WeatherInfo({baseUrl: "{{ baseUrl }}", postalCode: postal_code});
             $('body').on('click', '.reset_weather', () => {
-                performReset("{{ baseUrl }}api/reset/weather/" + postal_code);
+                performReset("{{ baseUrl }}api/weather/" + postal_code + "/reset");
             });
         });
 

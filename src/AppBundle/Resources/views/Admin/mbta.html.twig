@@ -33,7 +33,7 @@
         $(function () {
             $('.mbta').Mbta({baseUrl: "{{ baseUrl }}"});
             $('body').on('click', '.reset_mbta', () => {
-                performReset("{{ baseUrl }}api/reset/mbta");
+                performReset("{{ baseUrl }}api/mbta/reset");
             });
         });
 
