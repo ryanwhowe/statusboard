@@ -155,10 +155,10 @@
             });
             $('body')
                 .on('click', '.reset_mbta', () => {
-                    performReset("{{ baseUrl }}api/reset/mbta");
+                    performReset("{{ baseUrl }}api/mbta/reset");
                 })
                 .on('click', '.reset_weather', () => {
-                    performReset("{{ baseUrl }}api/reset/weather/" + postal_code);
+                    performReset("{{ baseUrl }}api/weather/" + postal_code + "/reset");
                 });
         });
 
