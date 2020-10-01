@@ -37,7 +37,7 @@ jobs:
       run: |
         chmod -R 777 var
 
-  -   name: Setup SSH Keys and known_hosts
+    - name: Setup SSH Keys and known_hosts
       env:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
       run: |
