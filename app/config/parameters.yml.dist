@@ -19,11 +19,11 @@ parameters:
     secret: ThisTokenIsNotSoSecretChangeIt
     container.autowiring.strict_mode: true
 
-    api_token: ~
-    api_url: ~
-    admin_password: ~
+    api_token: fake_token
+    api_url: http://test.test.com/
+    admin_password: fake_password
     test_password: $2y$12$mlZRszXKwFPoUUA8TH4UAOvYY8rxC/k9XICn9G1ahJbODlJjULkmm
-    calendarific_api_key: ~
-    accuweather_api_key: ~
-    mbta_api_key: ~
-    accuweather_api_location: ~
+    calendarific_api_key: fake_key
+    accuweather_api_key: fake_key
+    mbta_api_key: fake_key
+    accuweather_api_location: fake_key

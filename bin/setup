@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+cp app/config/parameters.yml.dist app/config/parameters.yml
+
 php bin/console doctrine:schema:drop --force
 php bin/console doctrine:schema:create
 php bin/console doctrine:schema:update
