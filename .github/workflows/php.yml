@@ -36,6 +36,8 @@ jobs:
     - name: Update var permissions
       run: |
         chmod -R 777 var
+        mkdir -p var/data
+        touch var/data/data.sqlite
 
     - name: Run test suite
       run: composer run-script tests

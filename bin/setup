@@ -2,7 +2,7 @@
 
 cp app/config/parameters.yml.dist app/config/parameters.yml
 
-php bin/console doctrine:schema:drop --force
-php bin/console doctrine:schema:create
-php bin/console doctrine:schema:update
-php bin/console doctrine:fixtures:load --purge-with-truncate --no-interaction
+php bin/console doctrine:schema:drop --force || exit 1
+php bin/console doctrine:schema:create || exit 1
+php bin/console doctrine:schema:update || exit 1
+php bin/console doctrine:fixtures:load --purge-with-truncate --no-interaction || exit 1
