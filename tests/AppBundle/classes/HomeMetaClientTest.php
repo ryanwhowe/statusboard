@@ -8,7 +8,10 @@ use AppBundle\theAxeRant\Client;
 
 class ClientTest extends WebTestCase
 {
-    public function testGrouping()
+    /**
+     *
+     */
+    public function grouping()
     {
         $grouping = 'test';
         $client = static::createClient();
@@ -18,7 +21,17 @@ class ClientTest extends WebTestCase
         $this->assertEquals($grouping, $metaClient->getGrouping(),'Grouping Name Check');
     }
 
-    public function testApi()
+    /**
+     * @test
+     */
+    public function silenceWarning(){
+        $this->assertTrue(true);
+    }
+
+    /**
+     *
+     */
+    public function api()
     {
         $client = static::createClient();
         $token = $client->getKernel()->getContainer()->getParameter('api_token');

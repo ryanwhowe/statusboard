@@ -10,6 +10,7 @@ use AppBundle\Repository\ServerRepository;
 use AppBundle\Entity\Server;
 use Statusboard\ControllerHelpers\ResponseHelper;
 use Statusboard\ControllerHelpers\ApiError\ServerErrors;
+use Statusboard\Utility\Environment;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -107,12 +108,21 @@ class ServerController extends ApiController {
             $server = $serverRepository->findOneBy(['id' => $id]);
 
             if ($server) {
-                $server_data = ApiService::getServerGroupData(
-                    $server->getName(),
-                    $this->getParameter('api_url'),
-                    $this->getParameter('api_token'),
-                    $logger
-                );
+                # todo: this should be pushed out to the service level on refactor
+                if(Environment::isTesting()){
+                    $filename = __dir__ . '/../../../../data/mocks/server/server.json';
+                    if (!file_exists($filename) && !is_readable($filename)) {
+                        throw new \Exception("File Not Found");
+                    }
+                    $server_data = json_decode(file_get_contents($filename));
+                } else {
+                    $server_data = ApiService::getServerGroupData(
+                        $server->getName(),
+                        $this->getParameter('api_url'),
+                        $this->getParameter('api_token'),
+                        $logger
+                    );
+                }
                 $result = $server->toArray();
                 $result['data'] = $server_data;
 
