@@ -5,5 +5,18 @@ php:
 before_script:
   - apt-get install nvm
 
-composer install
-nvm run asset-install
+before_install:
+  - cp app/config/parameters.yml.dist app/config/parameters.yml
+
+install:
+  # install the packages for the project
+  - travis_retry composer install --no-interaction --no-scripts
+
+  # warm the test cache to fun the test quicker
+  - php bin/console cache:warm --env=test
+  # install front end asssets to verify they exists
+  - nvm run asset-install
+
+script:
+  # run the testing suite
+  - composer setup

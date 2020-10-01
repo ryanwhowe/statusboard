@@ -27,8 +27,7 @@
         "symfony/monolog-bundle": "^3.1.0",
         "symfony/polyfill-apcu": "^1.0",
         "symfony/swiftmailer-bundle": "^2.3.10",
-        "symfony/symfony": "~3.4",
-        "twig/twig": "^1.0||^2.0"
+        "symfony/symfony": "~3.4"
     },
     "require-dev": {
         "phpunit/phpunit": "^7.",
@@ -50,6 +49,16 @@
         ],
         "post-update-cmd": [
             "@symfony-scripts"
+        ],
+        "setup": [
+            "bin/setup"
+        ],
+        "tests": [
+            "bin/setup",
+            "vendor/bin/phpunit"
+        ],
+        "testing": [
+            "vendor/bin/phpunit"
         ]
     },
     "config": {

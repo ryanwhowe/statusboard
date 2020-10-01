@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+scp statusboard@www.theaxerant.com:/home/statusboard/data/Current_Statusboard.zip .
+
+unzip Current_Statusboard.zip
+
+cp parameters.yml app/config/parameters.yml
+
+php ./bin/console app:buildDatabase calendar.csv server.csv
+rm parameters.yml
+rm calendar.csv
+rm server.csv
+rm Current_Statusboard.zip
+rm data.sqlite
