@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3afc20f12b8b9870ab9f2cf223be2a94",
+    "content-hash": "3e61369d7724e12cd8067127e75b83ce",
     "packages": [
         {
             "name": "calendarific/php-calendarific",
