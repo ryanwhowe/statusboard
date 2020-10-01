@@ -43,4 +43,4 @@ jobs:
         ssh-add - <<< "${{ secrets.DATA_SSH_KEY }}"
 
     - name: Run test suite
-      run: composer run-script test
+      run: composer run-script tests
