@@ -33,20 +33,9 @@ jobs:
       # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
       # Docs: https://getcomposer.org/doc/articles/scripts.md
 
-  setup:
     - name: Update var permissions
       run: |
         chmod -R 777 var
 
-    - name: Setup SSH Keys and known_hosts
-      env:
-          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-      run: |
-          mkdir -p ~/.ssh
-          ssh-keyscan theaxerant.com >> ~/.ssh/known_hosts
-          ssh-agent -a $SSH_AUTH_SOCK > /dev/null
-          ssh-add - <<< "${{ secrets.DATA_SSH_KEY }}"
-
-  tests:
     - name: Run test suite
       run: composer run-script tests
