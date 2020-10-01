@@ -33,14 +33,12 @@ jobs:
       # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
       # Docs: https://getcomposer.org/doc/articles/scripts.md
 
-    - name: Setup SSH Keys and known_hosts
-      env:
-        SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+        - name: Update var permissions
       run: |
-        mkdir -p ~/.ssh
-        ssh-keyscan theaxerant.com >> ~/.ssh/known_hosts
-        ssh-agent -a $SSH_AUTH_SOCK > /dev/null
-        ssh-add - <<< "${{ secrets.DATA_SSH_KEY }}"
+        chmod -R 777 var
 
     - name: Run test suite
+        - uses: webfactory/ssh-agent@v0.4.0
+            with:
+              ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
       run: composer run-script tests

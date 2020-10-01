@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 
-scp statusboard@www.theaxerant.com:/home/statusboard/data/Current_Statusboard.zip .
+scp statusboard@www.theaxerant.com:/home/statusboard/data/Current_Statusboard.zip . || exit 1
 
-unzip Current_Statusboard.zip
+unzip Current_Statusboard.zip || exit 1
 
-cp parameters.yml app/config/parameters.yml
+cp parameters.yml app/config/parameters.yml || exit 1
 
-php ./bin/console app:buildDatabase calendar.csv server.csv
+php ./bin/console app:buildDatabase calendar.csv server.csv || exit 1
+
 rm parameters.yml
 rm calendar.csv
 rm server.csv
