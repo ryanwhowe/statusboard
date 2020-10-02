@@ -28,13 +28,12 @@ docker-compose up -d --build
 Build the dependencies for the project
 ```shell script
 docker-compose exec php composer i
-docker-compose exec php npm run asset-install
 ```
-Build the local sqlite database, and optionally seed the database from csv pump files. 
+Build the local sqlite database and seed the data using the fixtures. 
 
 **<span style="color:red">WARNING:</span>** This command will drop and recreate the database if there is already a database file present.
 ```shell script
-docker-compose exec php bin/console app:buildDatabase [calendarfile.csv] [serverfile.csv]
+docker-compose exec php bin/setup
 ```
 
 ##Security

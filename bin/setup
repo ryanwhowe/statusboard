@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-cp app/config/parameters.yml.dist app/config/parameters.yml
+if [ ! -e app/config/parameters.yml ]; then
+  cp app/config/parameters.yml.dist app/config/parameters.yml
+fi
 
 php bin/console doctrine:schema:drop --force || exit 1
 php bin/console doctrine:schema:create || exit 1
