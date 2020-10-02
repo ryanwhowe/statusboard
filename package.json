@@ -5,12 +5,7 @@
   "repository": "git@bitbucket.org:AxeMan199/statusboard.git",
   "author": "Ryan W. Howe <ryanwhowe@gmail.com>",
   "license": "MIT",
-  "dependencies": {
-    "font-awesome": "4.7.x",
-    "jquery": "3.5.x",
-    "moment": "2.19.x",
-    "weathericons": "2.0.x"
-  },
+  "dependencies": {},
   "scripts": {
     "asset-install": "npm ci && cp -r node_modules/* web/bundles/"
   }
