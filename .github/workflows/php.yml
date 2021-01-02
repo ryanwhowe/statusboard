@@ -11,7 +11,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    - name: Setup PHP with PECL extension
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '7.2'
+        extensions: mbstring, intl
+        tools: composer:v1
 
     - name: Validate composer.json and composer.lock
       run: composer validate
@@ -20,6 +28,7 @@ jobs:
       id: composer-cache
       uses: actions/cache@v2
       with:
+        php-version: '7.2'
         path: vendor
         key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
         restore-keys: |
