@@ -1,0 +1,6 @@
+{
+    sh 'git clone git@github.com:ryanwhowe/statusboard.git'
+    sh 'cp docker-compose.override.yml.example docker-compose.override.yml'
+    
+}
+
