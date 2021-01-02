@@ -45,13 +45,12 @@ class MbtaController extends ApiController {
         [$schedule, $json_response] = ApiHelper::getMbtaData($cache, $fetcher, $api_key);
 
         if ($json_response === JsonResponse::HTTP_OK) {
-            $Response = $this->json(\null, $json_response,
-                ['Content-Type' => 'text/json', 'Cache-control' => 'must-revalidate']);
+            $Response = $this->json(\null, $json_response);
             $output = Mbta::responseProcessor($schedule);
             $Response->setContent(json_encode($output));
+            $Response->headers->add(["Access-Control-Allow-Origin" => "*"]);
         } elseif ($json_response === JsonResponse::HTTP_NO_CONTENT) {
-            $Response = $this->json(\null, $json_response,
-                ['Content-Type' => 'text/json', 'Cache-control' => 'must-revalidate']);
+            $Response = $this->json(\null, $json_response);
             $Response->setContent(json_encode([]));
         } else {
             $Response = $this->json(\null, $json_response,
@@ -75,7 +74,7 @@ class MbtaController extends ApiController {
         $cache = new MbtaCache($logger);
         $cache->deleteCache($cache::CACHE_TYPE_SCHEDULE);
         $Response = $this->json(['MBTA Cache Cleared'], JsonResponse::HTTP_OK,
-            ['Content-Type' => 'text/json', 'Cache-control' => 'must-revalidate']);
+            ['Cache-control' => 'must-revalidate']);
         $Response->prepare($request)->setPrivate();
         return $Response;
     }

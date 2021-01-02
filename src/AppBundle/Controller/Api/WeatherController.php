@@ -56,8 +56,7 @@ class WeatherController extends ApiController {
             $default_location
         );
 
-        $Response = $this->json(\null, $json_response,
-            ['Content-Type' => 'text/json', 'Cache-control' => 'must-revalidate']);
+        $Response = $this->json(\null, $json_response);
 
         if ($json_response === JsonResponse::HTTP_OK) {
             $output = Accuweather::responseProcessor($body);
@@ -82,8 +81,7 @@ class WeatherController extends ApiController {
         $cache = new WeatherCache($logger);
         $cache->deleteCache($cache::constructCacheType($cache::CACHE_TYPE_LOCATION, $postal));
         $cache->deleteCache($cache::constructCacheType($cache::CACHE_TYPE_WEATHER, $postal));
-        $Response = $this->json(['Weather Cache Cleared For "' . $postal . '"'], JsonResponse::HTTP_OK,
-            ['Content-Type' => 'text/json', 'Cache-control' => 'must-revalidate']);
+        $Response = $this->json(['Weather Cache Cleared For "' . $postal . '"'], JsonResponse::HTTP_OK);
         $Response->prepare($request)->setPrivate();
         return $Response;
     }

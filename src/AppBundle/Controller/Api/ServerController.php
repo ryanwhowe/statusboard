@@ -47,7 +47,7 @@ class ServerController extends ApiController {
         foreach ($servers as $server) {
             $response[] = $server->toArray();
         }
-        return $this->json($response, JsonResponse::HTTP_OK);
+        return $this->json($response, JsonResponse::HTTP_OK,["Access-Control-Allow-Origin" => "*"]);
     }
 
     /**
@@ -126,11 +126,11 @@ class ServerController extends ApiController {
                 $result = $server->toArray();
                 $result['data'] = $server_data;
 
-                return new JsonResponse($result, JsonResponse::HTTP_OK);
+                return new JsonResponse($result, JsonResponse::HTTP_OK,["Access-Control-Allow-Origin" => "*"]);
             } else {
-                return $this->json(
+                return $this->returnResponse($this->json(
                     ServerErrors::response(ServerErrors::SERVER_ID_NOT_FOUND, [], ['id' => $id], [$id]),
-                    JsonResponse::HTTP_NOT_FOUND);
+                    JsonResponse::HTTP_NOT_FOUND,["Access-Control-Allow-Origin" => "*"]));
             }
         } catch (\Exception $e) {
             return ResponseHelper::UnknownError();
