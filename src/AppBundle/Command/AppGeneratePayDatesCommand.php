@@ -58,9 +58,9 @@ class AppGeneratePayDatesCommand extends ContainerAwareCommand
 
             $io->title("Processing Year ${year}");
 
-            $all_holidays = $this->objectManager->getRepository(Calendar::class)->findBy(['type' => [Calendar::TYPE_NATIONAL_HOLIDAY, Calendar::TYPE_COMPANY_HOLIDAY]]);
+            $national_holidays = $this->objectManager->getRepository(Calendar::class)->findBy(['type' => [Calendar::TYPE_NATIONAL_HOLIDAY]]);
 
-            $holidays = ArrayUtility::formatArray($all_holidays, function($v){
+            $holidays = ArrayUtility::formatArray($national_holidays, function($v){
                 return $v->getEventDate()->format('Y-m-d');
             });
             $holidays = array_values(array_unique($holidays));

@@ -22,7 +22,9 @@ class CalendarType extends AbstractType
                 ['choices' => [
                     'Company Holiday' => Calendar::TYPE_COMPANY_HOLIDAY,
                     'PTO' => Calendar::TYPE_PTO,
-                    'Sick' => Calendar::TYPE_SICK
+                    'Sick' => Calendar::TYPE_SICK,
+                    'Pay Date' => Calendar::TYPE_PAY_DATE,
+                    'National Holiday' => Calendar::TYPE_NATIONAL_HOLIDAY
                     ]
                 ]
             )
