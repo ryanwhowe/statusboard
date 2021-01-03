@@ -14,7 +14,7 @@ class ResponseHelper {
      *
      * @return JsonResponse
      */
-    public static function UnknownError(\Exception $e = null) {
+    public static function UnknownError(\Exception $e = null): JsonResponse {
         $e = (Environment::isDevelopment()) ? $e : null;
         $e = (Environment::isDevelopment()) ? $e : null;
         return new JsonResponse(
