@@ -107,7 +107,6 @@ class ApiService
 
         if ($has_cache && $cache->get($time_token) >= $this->getCacheTimeout()) {
             $result = $cache->get($data_token);
-            $result[] = ['key' => 'time_out','value' => $this->getCacheTimeout(), 'lastUpdate' => strtotime('now')];
             $this->logger->info('Cache result', $result);
             $this->logger->info('Cache Time', ['timestamp' => $cache->get($time_token)]);
         } else {
