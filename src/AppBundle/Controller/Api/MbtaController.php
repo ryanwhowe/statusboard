@@ -52,10 +52,12 @@ class MbtaController extends ApiController {
         } elseif ($json_response === JsonResponse::HTTP_NO_CONTENT) {
             $Response = $this->json(\null, $json_response);
             $Response->setContent(json_encode([]));
+            $Response->headers->add(["Access-Control-Allow-Origin" => "*"]);
         } else {
             $Response = $this->json(\null, $json_response,
                 ['Content-Type' => 'text/html', 'Cache-control' => 'must-revalidate']);
             $Response->setContent("<h3>There was an internal error retrieving the schedule from the MBTA server</h3>");
+            $Response->headers->add(["Access-Control-Allow-Origin" => "*"]);
         }
 
         $Response->prepare($request)->setPrivate();
