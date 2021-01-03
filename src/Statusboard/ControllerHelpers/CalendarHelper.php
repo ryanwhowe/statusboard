@@ -94,7 +94,7 @@ class CalendarHelper {
      */
     public static function getPto(CalendarRepository $calendarRepository, DateTime $dateTime){
         $searchYear = $dateTime->format('Y');
-        $events = $calendarRepository->getAllEventsInYear(Calendar::TYPE_PAY_DATE, $searchYear);
+        $events = $calendarRepository->getAllEventsInYear(Calendar::TYPE_PTO, $searchYear);
         $return = ['taken'=>0, 'scheduled'=>0];
         $last = $base = new DateTime('first day of January ' . $searchYear);
 

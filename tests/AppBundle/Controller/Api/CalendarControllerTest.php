@@ -147,9 +147,9 @@ class CalendarControllerTest extends ApiBase {
         $response = $this->loggedInClient->getResponse();
         $body = json_decode($response->getContent(), true);
         $this->assertEquals([
-            "daysTaken"=>12,
-            "daysScheduled"=>12,
-            "lastPtoDate"=>"2020-12-30",
+            "daysTaken"=>8,
+            "daysScheduled"=>8,
+            "lastPtoDate"=>"2020-09-25",
             "requestedDate"=>"2020-07-01"
         ], $body);
     }

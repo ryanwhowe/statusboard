@@ -1,12 +1,11 @@
 <?php
 
-namespace Tests\AppBundle\Controller;
+namespace Tests\AppBundle\classes;
 
-use AppBundle\Controller\ApiController;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use AppBundle\theAxeRant\Client;
 
-class ClientTest extends WebTestCase
+class HomeMetaClientTest extends WebTestCase
 {
     /**
      *
