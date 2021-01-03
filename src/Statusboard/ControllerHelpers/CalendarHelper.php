@@ -96,7 +96,7 @@ class CalendarHelper {
         $searchYear = $dateTime->format('Y');
         $events = $calendarRepository->getAllEventsInYear(Calendar::TYPE_PAY_DATE, $searchYear);
         $return = ['taken'=>0, 'scheduled'=>0];
-        $last = new DateTime('first day of January ' . $searchYear);
+        $last = $base = new DateTime('first day of January ' . $searchYear);
 
         /** @var Calendar $calendar */
         foreach($events as $calendar){
@@ -109,7 +109,7 @@ class CalendarHelper {
                 $last = $calendar->getEventDate();
             }
         }
-        $return['last'] = $last->format('Y-m-d');
+        $return['last'] = ($last === $base) ? null : $last->format('Y-m-d');
         return $return;
     }
 }
