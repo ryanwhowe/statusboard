@@ -13,6 +13,7 @@ use Statusboard\ControllerHelpers\ResponseHelper;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use DateTime;
 
 /**
  * Class CalendarController
@@ -22,6 +23,37 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class CalendarController extends ApiController {
 
+    /**
+     *
+     * @Route("/pto", name="api_calendar_pto")
+     * @Method("GET")
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function getPto(Request $request) {
+        try {
+            /** @var CalendarRepository $calendarRepository */
+            $calendarRepository = $this->getDoctrine()->getRepository(Calendar::class);
+            $request_date = $request->get('date', null);
+            if($request_date === null){
+                $date = new DateTime();
+            } else {
+                $date = DateTime::createFromFormat('Y-m-d', $request_date);
+            }
+            $ptoEvents = CalendarHelper::getPto($calendarRepository, $date);
+            $data = [
+                'daysTaken' => $ptoEvents['taken'],
+                'daysScheduled' => $ptoEvents['scheduled'],
+                'lastPtoDate' => $ptoEvents['last'],
+                'requestedDate' => $date->format('Y-m-d')
+            ];
+            return $this->json($data, JsonResponse::HTTP_OK);
+        } catch (\Exception $e) {
+            return ResponseHelper::UnknownError($e);
+        }
+    }
     /**
      *
      * @Route("/upcoming", name="api_calendar_upcoming")

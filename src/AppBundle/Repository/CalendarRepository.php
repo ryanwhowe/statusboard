@@ -93,4 +93,28 @@ class CalendarRepository extends \Doctrine\ORM\EntityRepository
         $return = $query->execute();
         return ['min' => new DateTime($return[0]['minEventDate']), 'max' => new DateTime($return[0]['maxEventDate'])];
     }
+
+    /**
+     * Get all the events of a given type for the year requested
+     *
+     * @param $eventType
+     * @param $year
+     *
+     * @return Calendar[]
+     */
+    public function getAllEventsInYear($eventType, $year){
+        $query = $this->getEntityManager()->createQuery(
+            '
+            SELECT c
+            FROM AppBundle\Entity\Calendar c
+            WHERE c.eventDate >= :start AND c.eventDate <= :end
+            AND c.type = :type
+            '
+        )->setParameters([
+            'type' => $eventType,
+            'start' => $year.'-01-01',
+            'end' => $year.'-12-31'
+            ]);
+        return $query->execute();
+    }
 }
