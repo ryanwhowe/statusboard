@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Statusboard\ControllerHelpers;
-
 
 use AppBundle\Entity\Calendar;
 use AppBundle\Repository\CalendarRepository;
@@ -83,5 +81,35 @@ class CalendarHelper {
             }
         }
         return $calendar_data;
+    }
+
+    /**
+     * Get the PTO data relative to the passed DateTime for the current calendar year.
+     *
+     * @param CalendarRepository $calendarRepository
+     * @param DateTime           $dateTime
+     *
+     * @return int[]
+     * @throws \Exception
+     */
+    public static function getPto(CalendarRepository $calendarRepository, DateTime $dateTime){
+        $searchYear = $dateTime->format('Y');
+        $events = $calendarRepository->getAllEventsInYear(Calendar::TYPE_PAY_DATE, $searchYear);
+        $return = ['taken'=>0, 'scheduled'=>0];
+        $last = new DateTime('first day of January ' . $searchYear);
+
+        /** @var Calendar $calendar */
+        foreach($events as $calendar){
+            if($calendar->getEventDate() <= $dateTime){
+                $return['taken'] += 1;
+            } else {
+                $return['scheduled'] += 1;
+            }
+            if($calendar->getEventDate() > $last){
+                $last = $calendar->getEventDate();
+            }
+        }
+        $return['last'] = $last->format('Y-m-d');
+        return $return;
     }
 }

@@ -11,6 +11,7 @@ class CalendarControllerTest extends ApiBase {
     const ENDPOINT_CALENDAR = '/api/calendar';
     const ENDPOINT_EVENT = self::ENDPOINT_CALENDAR . "/event";
     const ENDPOINT_UPCOMING = self::ENDPOINT_CALENDAR . "/upcoming";
+    const ENDPOINT_PTO = self::ENDPOINT_CALENDAR . "/pto";
 
     const CONTENT_TYPE_JSON = ['CONTENT_TYPE' => 'application/json'];
 
@@ -135,5 +136,21 @@ class CalendarControllerTest extends ApiBase {
         $body = $response->getContent();
         $this->assertEquals("\"Calendar Event: ${id} removed\"", $body, "Delete response message");
 
+    }
+
+    /**
+     * @test
+     */
+    public function getPtoData(){
+        $crawler = $this->loggedInClient->request("GET", self::ENDPOINT_PTO . '?date=2020-07-01');
+        $this->assertEquals(Response::HTTP_OK, $this->loggedInClient->getResponse()->getStatusCode(), 'Response Code Error');
+        $response = $this->loggedInClient->getResponse();
+        $body = json_decode($response->getContent(), true);
+        $this->assertEquals([
+            "daysTaken"=>12,
+            "daysScheduled"=>12,
+            "lastPtoDate"=>"2020-12-30",
+            "requestedDate"=>"2020-07-01"
+        ], $body);
     }
 }
