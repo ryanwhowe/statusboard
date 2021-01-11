@@ -29,7 +29,7 @@ class TransformTest extends TestCase {
         $filter_time = 1583519246; // this is an appropriate epoch time for when the test data was delivered 2020-03-06 @ 1:27:26 PM
         $stops = Transform::filterStops($this->getScheduleData(), [Transform::STATION_FILTER_SOUTHSTATION, Transform::STATION_FILTER_FORGEPARK]);
         $trips = Transform::parseTripData($stops);
-        list($expires, $filtered_trips) = Transform::filterTripsByTime($trips, $filter_time);
+        [$expires, $filtered_trips] = Transform::filterTripsByTime($trips, $filter_time);
         $next_train_time = 1589800800;
         $this->assertEquals($next_train_time, $expires, 'Expiration time should be next train departure time');
 
@@ -50,6 +50,24 @@ class TransformTest extends TestCase {
      * @test
      */
     public function filterStops() {
+        $filtered = Transform::filterStops($this->getScheduleData(), [Transform::STATION_FILTER_SOUTHSTATION]);
+        $this->assertCount(10, $filtered);
+        $this->assertArrayHasKey(0, $filtered);
+        $this->assertArrayHasKey(14, $filtered);
+        $this->assertArrayHasKey(28, $filtered);
+        $this->assertArrayHasKey(42, $filtered);
+        $this->assertArrayHasKey(56, $filtered);
+        $this->assertArrayHasKey(70, $filtered);
+        $this->assertArrayHasKey(84, $filtered);
+        $this->assertArrayHasKey(98, $filtered);
+        $this->assertArrayHasKey(112, $filtered);
+        $this->assertArrayHasKey(126, $filtered);
+    }
+
+    /**
+     * @test
+     */
+    public function filterStopsByStopId(){
         $filtered = Transform::filterStops($this->getScheduleData(), [Transform::STATION_FILTER_SOUTHSTATION]);
         $this->assertCount(10, $filtered);
         $this->assertArrayHasKey(0, $filtered);

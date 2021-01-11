@@ -28,6 +28,9 @@ class Transform extends AbstractTransform {
     const STATION_FILTER_SOUTHSTATION = 'South Station';
     const STATION_FILTER_FORGEPARK = 'Forge Park / 495';
 
+    const STATION_STOP_ID_FORGEPARK = 'FB-0303-S';
+    const STATION_STOP_ID_SOUTHSTATION = 'NEC-2287';
+
     const TRIPS_RETURNED = 6;
     const EXPIRATION_BUFFER = Cache::TIMEOUT_BUFFER + 60; //seconds
 
@@ -42,10 +45,10 @@ class Transform extends AbstractTransform {
         if (empty($source_data)) {
             throw new \InvalidArgumentException('No Schedule Data provided');
         }
-        $stops = self::filterStops($source_data, [self::STATION_FILTER_FORGEPARK, self::STATION_FILTER_SOUTHSTATION]);
+        $stops = self::filterStopsByStopId($source_data, [self::STATION_STOP_ID_FORGEPARK, self::STATION_STOP_ID_SOUTHSTATION]);
         $trips = self::parseTripData($stops);
 
-        list($lowest_trip_time, $results) = self::filterTripsByTime($trips, time());
+        [$lowest_trip_time, $results] = self::filterTripsByTime($trips, time());
 
         $output = [
             'expires' => $lowest_trip_time + self::EXPIRATION_BUFFER,
@@ -66,6 +69,23 @@ class Transform extends AbstractTransform {
         return array_filter($schedule['data'], function ($value) use ($stops) {
             foreach ($stops as $stop) {
                 if (stristr($value['id'], $stop)) return true;
+            }
+            return false;
+        });
+    }
+
+    /**
+     * Filter the stops by the returned stop id
+     *
+     * @param array $schedule
+     * @param array $stops
+     *
+     * @return array
+     */
+    public static function filterStopsByStopId(array $schedule, array $stops): array {
+        return array_filter($schedule['data'], function ($value) use ($stops) {
+            foreach ($stops as $stop) {
+                if (stristr($value['relationships']['stop']['data']['id'], $stop)) return true;
             }
             return false;
         });
@@ -121,9 +141,9 @@ class Transform extends AbstractTransform {
      */
     public static function getExpirationTime(ResponseInterface $schedule_response, $filter_time = 0): int {
         $schedule = self::getArrayResponseBody($schedule_response);
-        $stops = self::filterStops($schedule, [self::STATION_FILTER_FORGEPARK, self::STATION_FILTER_SOUTHSTATION]);
+        $stops = self::filterStopsByStopId($schedule, [self::STATION_STOP_ID_FORGEPARK, self::STATION_STOP_ID_SOUTHSTATION]);
         $trips = self::parseTripData($stops);
-        list($expiration, $filtered_trips) = self::filterTripsByTime($trips, $filter_time);
+        [$expiration, $filtered_trips] = self::filterTripsByTime($trips, $filter_time);
         $expiration = min($expiration, strtotime('+1 hour'));
         return $expiration;
     }
