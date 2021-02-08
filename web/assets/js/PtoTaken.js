@@ -91,12 +91,9 @@ $.widget("howe.PtoTaken", {
         let daysScheduled = +me.data_response.daysScheduled;
         let lastPtoDate = me.data_response.lastPtoDate;
         let totalDays = daysTaken + daysScheduled;
+        me.requestDate = new Date(me.data_response.requestedDate);
         if(lastPtoDate === null){
-            me.lastPtoDate = new Date(me.data_response.requestedDate);
-        } else {
-            let last = new Date(lastPtoDate);
-            let request = new Date(me.data_response.requestedDate);
-            me.lastPtoDate = (last < request) ? request : last;
+            lastPtoDate = 'None';
         }
         const expected = Math.floor(this.__calculateExpectedDays()*10)/10;
         const style = me.__generateStyle(totalDays, expected);
@@ -106,7 +103,6 @@ $.widget("howe.PtoTaken", {
         let $body = $([
             "<table class='table table-striped table-bordered table-hover'>",
             "<thead><tr class='" + tr_style + "'>",
-            "<thead><tr class='info'>",
             "<th class='text-center'>Taken</th><th class='text-center'>Scheduled</th><th class='text-center'>Total</th>",
             "</thead></tr>",
             "<tbody><tr>",
@@ -131,7 +127,7 @@ $.widget("howe.PtoTaken", {
      * @private
      */
     __calculateExpectedDays(){
-        return (this.lastPtoDate.getMonth() + 1 + this.__monthPercent()) * this.options.ptoRate;
+        return (this.requestDate.getMonth() + 1 + this.__monthPercent()) * this.options.ptoRate;
     },
 
     /**
@@ -165,8 +161,8 @@ $.widget("howe.PtoTaken", {
 
     __monthPercent: function () {
         //Determine the Month Values
-        let currentDayOfMonth = this.lastPtoDate;
-        let lastDayOfMonth = new Date(this.lastPtoDate.getFullYear(), this.lastPtoDate.getMonth()+1, 0);
+        let currentDayOfMonth = this.requestDate;
+        let lastDayOfMonth = new Date(this.requestDate.getFullYear(), this.requestDate.getMonth()+1, 0);
         let workedMonthDays = currentDayOfMonth.getDate();
         let workingMonthDays = lastDayOfMonth.getDate();
         //console.log({'workedMonthDays': workedMonthDays, 'workingMonthDays': workingMonthDays})
