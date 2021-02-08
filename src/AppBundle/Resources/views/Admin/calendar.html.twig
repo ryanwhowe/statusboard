@@ -26,6 +26,11 @@
             <div class="UpcomingInfo"></div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-6 col-lg-6">
+            <div class="PtoTaken"></div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block style %}
@@ -35,9 +40,11 @@
     <script src="{{ asset('assets/js/ClockClass.js') }}"></script>
     <script src="{{ asset('assets/js/PersonalCalendar.js') }}"></script>
     <script src="{{ asset('assets/js/UpcomingInfo.js') }}"></script>
+    <script src="{{ asset('assets/js/PtoTaken.js') }}"></script>
     <script>
 
         $(".UpcomingInfo").UpcomingInfo({baseUrl: "../"});
+        $(".PtoTaken").PtoTaken({baseUrl: "../"});
         $(function () {
             $.ajax({
                 url: '../api/calendar?format=byDate',

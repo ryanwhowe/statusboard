@@ -91,6 +91,11 @@
             <!-- /.panel -->
         </div>
         <div class="col-md-6 col-lg-6">
+            <div class="PtoTaken"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-lg-6">
             <div class="panel panel-info">
                 <div class="panel-heading">
                     <div class="panel-title text-center">
@@ -117,6 +122,7 @@
     <script src="{{ asset('assets/js/WeatherInfo.js') }}"></script>
     <script src="{{ asset('assets/js/Mbta.js') }}"></script>
     <script src="{{ asset('assets/js/UpcomingInfo.js') }}"></script>
+    <script src="{{ asset('assets/js/PtoTaken.js') }}"></script>
     <script>
         let time_parts = $('#arrival_time').val().split(':');
         let arrival = new Date(0, 0, 0, parseInt(time_parts[0], 0), parseInt(time_parts[1], 0), 0);
@@ -131,6 +137,7 @@
             $('.weather').WeatherInfo({baseUrl: "{{ baseUrl }}", postalCode: postal_code});
             $('.mbta').Mbta({baseUrl: "{{ baseUrl }}"});
             $('.UpcomingInfo').UpcomingInfo({baseUrl: "{{ baseUrl }}"});
+            $(".PtoTaken").PtoTaken({baseUrl: "{{ baseUrl }}"});
             $('.serverGroup').ServerGroup({baseUrl: "{{ baseUrl }}"});
             $.ajax({
                 url: 'api/calendar?format=byDate',
