@@ -17,13 +17,15 @@ $.widget("howe.PtoTaken", {
             e = this.element;
         me.my_name = this.eventNamespace.replace('.', '');
         me.data_response = null;
-        me.__initUi(me);
         me._updateData();
     },
 
-    __initUi: function (me) {
+    __initUi: function (style) {
+        let me = this;
         let e = me.element;
-        e.addClass('panel panel-info');
+        let panel_style = ' panel-' + style;
+        if(style === 'success'){ style = ''; panel_style = '' }
+        e.addClass('panel panel-info' + panel_style);
         me.heading = $([
             "<div class='panel-heading'>",
             "<div class='panel-title text-center'>",
@@ -98,9 +100,11 @@ $.widget("howe.PtoTaken", {
         const expected = Math.floor(this.__calculateExpectedDays()*10)/10;
         const style = me.__generateStyle(totalDays, expected);
 
+        me.__initUi(style);
+        const tr_style = (style === 'success') ? 'info' : style;
         let $body = $([
             "<table class='table table-striped table-bordered table-hover'>",
-            "<thead><tr class='info'>",
+            "<thead><tr class='" + tr_style + "'>",
             "<th class='text-center'>Taken</th><th class='text-center'>Scheduled</th><th class='text-center'>Total</th>",
             "</thead></tr>",
             "<tbody><tr>",
@@ -108,7 +112,7 @@ $.widget("howe.PtoTaken", {
             "<td class='text-center'>" + daysScheduled + "</td>",
             "<td class='text-center " + style + "'>" + totalDays + "</td>",
             "</tr>",
-            "<tr><td colspan='3' class='bg-info'></td></tr>",
+            "<tr class='" + tr_style + "'><td colspan='3'></td></tr>",
             "<tr><td colspan='2' class='text-right'>Expected Days Scheduled</td><td class='text-center'>" + expected + "</td></tr>",
             "<tr><td colspan='2' class='text-right'>Last PTO date Scheduled</td><td class='text-center'>" + lastPtoDate + "</td></tr>",
             "</tbody>",
