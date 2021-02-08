@@ -2,9 +2,9 @@
 $.widget("howe.PtoTaken", {
     url:'api/calendar/pto',
     levels : {
-        'good': 'bg-primary',
-        'warning': 'bg-warning',
-        'danger': 'bg-danger'
+        'good': 'success',
+        'warning': 'warning',
+        'danger': 'danger'
     },
     options: {
         baseUrl:'',
@@ -27,7 +27,7 @@ $.widget("howe.PtoTaken", {
         me.heading = $([
             "<div class='panel-heading'>",
             "<div class='panel-title text-center'>",
-            "<i class='fa fa-calendar-check-o fa-fw'></i> PTO Taken",
+            "<i class='fa fa-motorcycle fa-fw'></i> PTO Taken",
             "<div>",
             "<div>"
         ].join("\n"));
@@ -91,6 +91,7 @@ $.widget("howe.PtoTaken", {
         let totalDays = daysTaken + daysScheduled;
         if(lastPtoDate === null){
             me.lastPtoDate = new Date(me.data_response.requestedDate);
+            lastPtoDate = 'None';
         } else {
             me.lastPtoDate = new Date(lastPtoDate);
         }
@@ -98,16 +99,20 @@ $.widget("howe.PtoTaken", {
         const style = me.__generateStyle(totalDays, expected);
 
         let $body = $([
-            "<div class='row'><table class='table table-striped'>",
-            "<thead><tr>",
+            "<table class='table table-striped table-bordered table-hover'>",
+            "<thead><tr class='info'>",
             "<th class='text-center'>Taken</th><th class='text-center'>Scheduled</th><th class='text-center'>Total</th>",
             "</thead></tr>",
+            "<tbody><tr>",
             "<td class='text-center'>" + daysTaken + "</td>",
             "<td class='text-center'>" + daysScheduled + "</td>",
-            "<td class='text-center " + style + "' title='Expected:" + expected + " days'>" + totalDays + "</td>",
-            "<tbody><tr>",
-            "</tr></tbody>",
-            "</table></div>"
+            "<td class='text-center " + style + "'>" + totalDays + "</td>",
+            "</tr>",
+            "<tr><td colspan='3' class='bg-info'></td></tr>",
+            "<tr><td colspan='2' class='text-right'>Expected Days Scheduled</td><td class='text-center'>" + expected + "</td></tr>",
+            "<tr><td colspan='2' class='text-right'>Last PTO date Scheduled</td><td class='text-center'>" + lastPtoDate + "</td></tr>",
+            "</tbody>",
+            "</table>"
         ].join("\n"));
         me.body.append($body);
     },
