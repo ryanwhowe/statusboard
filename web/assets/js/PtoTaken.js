@@ -94,22 +94,31 @@ $.widget("howe.PtoTaken", {
         if(lastPtoDate === null){
             me.lastPtoDate = new Date(me.data_response.requestedDate);
         } else {
-            me.lastPtoDate = new Date(lastPtoDate);
+            let last = new Date(lastPtoDate);
+            let request = new Date(me.data_response.requestedDate);
+            me.lastPtoDate = (last < request) ? request : last;
         }
         const expected = Math.floor(this.__calculateExpectedDays()*10)/10;
         const style = me.__generateStyle(totalDays, expected);
 
+        me.__initUi(style);
+        const tr_style = (style === 'success') ? 'info' : style;
         let $body = $([
-            "<div class='row'><table class='table table-striped'>",
-            "<thead><tr>",
+            "<table class='table table-striped table-bordered table-hover'>",
+            "<thead><tr class='" + tr_style + "'>",
+            "<thead><tr class='info'>",
             "<th class='text-center'>Taken</th><th class='text-center'>Scheduled</th><th class='text-center'>Total</th>",
             "</thead></tr>",
+            "<tbody><tr>",
             "<td class='text-center'>" + daysTaken + "</td>",
             "<td class='text-center'>" + daysScheduled + "</td>",
-            "<td class='text-center " + style + "' title='Expected:" + expected + " days'>" + totalDays + "</td>",
-            "<tbody><tr>",
-            "</tr></tbody>",
-            "</table></div>"
+            "<td class='text-center " + style + "'>" + totalDays + "</td>",
+            "</tr>",
+            "<tr class='" + tr_style + "'><td colspan='3'></td></tr>",
+            "<tr><td colspan='2' class='text-right'>Expected Days Scheduled</td><td class='text-center'>" + expected + "</td></tr>",
+            "<tr><td colspan='2' class='text-right'>Last PTO date Scheduled</td><td class='text-center'>" + lastPtoDate + "</td></tr>",
+            "</tbody>",
+            "</table>"
         ].join("\n"));
         me.body.append($body);
     },
