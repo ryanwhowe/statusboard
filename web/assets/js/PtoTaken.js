@@ -127,7 +127,7 @@ $.widget("howe.PtoTaken", {
      * @private
      */
     __calculateExpectedDays(){
-        return (this.requestDate.getMonth() + 1 + this.__monthPercent()) * this.options.ptoRate;
+        return (this.requestDate.getMonth() + this.__monthPercent()) * this.options.ptoRate;
     },
 
     /**
