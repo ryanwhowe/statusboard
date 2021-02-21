@@ -17,6 +17,7 @@ services:
       dockerfile: Dockerfile-php
     environment:
       APP_ENV: dev
+      RUN_ENVIRONMENT: docker-dev
       XDEBUG_CONFIG: remote_host=host.docker.internal remote_port=9003 remote_connect_back=0
     volumes:
       - ./symfony/:/var/www/symfony/
@@ -30,7 +31,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
     volumes:
-      - dev-db-api:/var/lib/mysql
+      - dev_db:/var/lib/mysql
 
 volumes:
-  dev-db-api:
+  dev_db:
