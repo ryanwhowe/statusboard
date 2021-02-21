@@ -1,0 +1,33 @@
+FROM php:7.3-fpm-buster
+
+RUN apt-get update && apt-get install -y
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    git \
+    unzip \
+    zlib1g-dev \
+    libxml2-dev \
+    libzip-dev \
+  && docker-php-ext-install \
+    zip \
+    intl \
+    mysqli \
+    pdo pdo_mysql \
+    opcache
+
+RUN yes | pecl install xdebug \
+    && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo "xdebug.discover_client_host=1" >> /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo "xdebug.remote_autostart=off" >> /usr/local/etc/php/conf.d/xdebug.ini
+
+RUN pecl install apcu && docker-php-ext-enable apcu \
+    && echo "apc.enable_cli=1" >> /usr/local/etc/php/php.ini \
+    && echo "apc.enable=1" >> /usr/local/etc/php/php.ini
+
+RUN curl -sS https://get.symfony.com/cli/installer | bash
+RUN mv /root/.symfony/bin/symfony /usr/local/bin/symfony
+
+RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer
+COPY symfony/ /var/www/symfony
+WORKDIR /var/www/symfony/
