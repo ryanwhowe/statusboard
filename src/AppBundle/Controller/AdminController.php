@@ -39,7 +39,8 @@ class AdminController extends Controller
     public function serverAction(Request $request)
     {
         return $this->render('AppBundle:Admin:server.html.twig',[
-            'baseUrl' => $this->container->get('router')->getContext()->getBaseUrl() . "/"
+            'baseUrl' => $this->getParameter('api_basepath'),
+            'authToken' => $this->getParameter('theaxerant_api_token')
         ]);
     }
 
@@ -57,7 +58,8 @@ class AdminController extends Controller
      */
     public function weatherAction(Request $request){
         return $this->render('AppBundle:Admin:weather.html.twig',[
-            'baseUrl' => $this->container->get('router')->getContext()->getBaseUrl() . "/"
+            'baseUrl' => $this->getParameter('api_basepath'),
+            'authToken' => $this->getParameter('theaxerant_api_token')
         ]);
     }
 
@@ -72,7 +74,8 @@ class AdminController extends Controller
         return $this->render('AppBundle:Admin:calendar.html.twig', [
             'arrival_time' => $arrival_time,
             'add_time'     => $add_time,
-            'baseUrl'      => $this->container->get('router')->getContext()->getBaseUrl() . "/"
+            'baseUrl' => $this->getParameter('api_basepath'),
+            'authToken' => $this->getParameter('theaxerant_api_token')
         ]);
     }
 

@@ -6,13 +6,13 @@
 /**
  */
 $.widget("howe.ServerInfo", {
-    url: 'api/server/',
+    url: 'server/',
     options: {
         server: null,
         disabled: false,
         id: null,
         max_age: 31 * 60 * 1000,
-        skip_keys: ['time_out'],
+        skip_keys: ['time_out','keyNames'],
         baseUrl: ''
     },
 
@@ -30,6 +30,7 @@ $.widget("howe.ServerInfo", {
         let create_server = $(e).data('server');
         let disabled = $(e).data('disabled');
         let baseUrl = $(e).data('baseurl');
+        o.authToken = $(e).data('token');
         o.id = $(e).data('serverid');
         if (typeof create_server !== 'undefined') {
             o.server = create_server;
@@ -78,6 +79,7 @@ $.widget("howe.ServerInfo", {
             dataType: 'json',
             async: true,
             cache: false,
+            headers: { 'X-AUTH-TOKEN': o.authToken },
             timeout: 30 * 1000,
             success: function (data, status) {
                 if (status === 'timeout') {
@@ -141,7 +143,7 @@ $.widget("howe.ServerInfo", {
         let me = this;
         switch (key) {
             case 'heartbeat':
-                return me.__convertTimestamp(value);
+                return value;
             case 'freespace_root':
             case 'freespace_HDD':
             case 'freespace_HDD1':
@@ -241,13 +243,13 @@ $.widget("howe.ServerInfo", {
 
         let update_data = [];
         $.each(me.data_response, function (index, datapoint) {
-            if (datapoint.key === 'heartbeat') {
-                me.data_heartbeat = new Date(datapoint.value * 1000);
-                update_data.unshift("<tr><td style='font-weight: bold;text-align: right'>" + me.__textFormat(datapoint.key) + " : </td><td style='padding-left: 1em;text-align: left' title='" + me.__convertTimestamp(datapoint.last_update) + "'>" + me.__formatter(datapoint.key, datapoint.value) + "</td></tr>");
-            } else if(o.skip_keys.includes(datapoint.key)){
+            if (datapoint.keyName === 'heartbeat') {
+                me.data_heartbeat = new Date(datapoint.lastUpdateEpoch * 1000);
+                update_data.unshift("<tr><td style='font-weight: bold;text-align: right'>" + me.__textFormat(datapoint.keyName) + " : </td><td style='padding-left: 1em;text-align: left' title='" + me.__convertTimestamp(+datapoint.lastUpdateEpoch) + "'>" + me.__formatter(datapoint.keyName, datapoint.keyValue) + "</td></tr>");
+            } else if(o.skip_keys.includes(index)){
               return true;
             } else {
-                update_data.push("<tr><td style='font-weight: bold;text-align: right'>" + me.__textFormat(datapoint.key) + " : </td><td style='padding-left: 1em;text-align: left' title='" + me.__convertTimestamp(datapoint.last_update) + "'>" + me.__formatter(datapoint.key, datapoint.value) + "</td></tr>");
+                update_data.push("<tr><td style='font-weight: bold;text-align: right'>" + me.__textFormat(datapoint.keyName) + " : </td><td style='padding-left: 1em;text-align: left' title='" + me.__convertTimestamp(+datapoint.lastUpdateEpoch) + "'>" + me.__formatter(datapoint.keyName, datapoint.keyValue) + "</td></tr>");
             }
         });
 
@@ -259,7 +261,7 @@ $.widget("howe.ServerInfo", {
 
         let current_age = (current_date.getTime() - me.data_heartbeat);
 
-        if (current_age > o.max_age) {
+        if ( isNaN(current_age) || typeof(current_age) != "undefined" || current_age > o.max_age) {
             if(o.disabled){
                 $(e).removeClass('btn-danger btn-success').addClass('btn-warning');
             } else {
@@ -339,7 +341,7 @@ $.widget("howe.ServerInfo", {
 });
 
 $.widget("howe.ServerGroup", {
-    url: 'api/server',
+    url: 'server',
     options: {
         baseUrl: '',
         rowCount: 3,
@@ -353,6 +355,8 @@ $.widget("howe.ServerGroup", {
         let me = this,
             o = this.options,
             e = this.element;
+
+        o.authToken = $(e).data('token');
 
         me.data_response = null;
 
@@ -393,6 +397,7 @@ $.widget("howe.ServerGroup", {
             dataType: 'json',
             async: true,
             cache: false,
+            headers: { 'X-AUTH-TOKEN': o.authToken },
             timeout: 30 * 1000,
             success: function (data, status) {
                 if (status === 'timeout') {
@@ -436,12 +441,12 @@ $.widget("howe.ServerGroup", {
 
         let update_data = [];
         let counter = 0;
-        $.each(me.data_response, function (index, server) {
+        $.each(me.data_response.servers, function (index, server) {
             if (counter++ === 0) {
                 update_data.push("<div class='row'>");
             }
             update_data.push("<div class='col-md-12 col-lg-4'>");
-            update_data.push("<button style='display: none;' type='button' class='btn btn-primary btn-lg btn-block serverinfo' data-serverid='" + server.id + "' data-server='" + server.name + "'>");
+            update_data.push("<button style='display: none;' type='button' class='btn btn-primary btn-lg btn-block serverinfo' data-token='" + o.authToken + "' data-serverid='" + server.id + "' data-server='" + server.displayName + "'>");
             update_data.push("</div>");
             if (counter >= o.rowCount) {
                 update_data.push("</div>");

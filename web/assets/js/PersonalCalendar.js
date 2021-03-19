@@ -44,17 +44,17 @@ let PersonalCalendar = {
         let css_class = '';
         let company_holiday = false;
         let css_selector = function(calendarItem){
-            if (calendarItem['type_id'] === 1) return 'companyholiday';
-            if (calendarItem['type_id'] === 2) return 'pto';
-            if (calendarItem['type_id'] === 3) return 'sick';
-            if (calendarItem['type_id'] === 4) return 'nationalholiday';
-            if (calendarItem['type_id'] === 99) return 'payday';
+            if (calendarItem['type'] === 1) return 'companyholiday';
+            if (calendarItem['type'] === 2) return 'pto';
+            if (calendarItem['type'] === 3) return 'sick';
+            if (calendarItem['type'] === 4) return 'nationalholiday';
+            if (calendarItem['type'] === 99) return 'payday';
         };
         if(parsed_date in this.date_data){
             let event = this.date_data[parsed_date];
             tooltips = [];
             $.each(event.events, function(index, item){
-                selectable = selectable ? !(item['type_id'] === 1) : selectable;
+                selectable = selectable ? !(item['type'] === 1) : selectable;
 
                 css_class = css_selector(item);
                 if(css_class === 'companyholiday'){

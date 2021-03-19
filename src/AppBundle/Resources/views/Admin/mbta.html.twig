@@ -16,7 +16,7 @@
                     </div>
                 </div>
                 <div class="panel-body">
-                    <div class="mbta"></div>
+                    <div class="mbta"><h2 class="text-center bg-warning">DISABLED</h2></div>
                 </div>
                 <!-- /.panel-body -->
             </div>
@@ -31,10 +31,10 @@
     <script src="{{ asset('assets/js/Mbta.js') }}"></script>
     <script>
         $(function () {
-            $('.mbta').Mbta({baseUrl: "{{ baseUrl }}"});
-            $('body').on('click', '.reset_mbta', () => {
-                performReset("{{ baseUrl }}api/mbta/reset");
-            });
+            //$('.mbta').Mbta({baseUrl: "{{ baseUrl }}"});
+            //$('body').on('click', '.reset_mbta', () => {
+            //    performReset("{{ baseUrl }}api/mbta/reset");
+            //});
         });
 
         function performReset(endpoint) {

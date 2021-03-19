@@ -20,7 +20,9 @@ parameters:
     container.autowiring.strict_mode: true
 
     api_token: fake_token
+    theaxerant_api_token: fake_token
     api_url: http://test.test.com/
+    api_basepath: http://test.test.com/
     admin_password: fake_password
     test_password: $2y$12$mlZRszXKwFPoUUA8TH4UAOvYY8rxC/k9XICn9G1ahJbODlJjULkmm
     calendarific_api_key: fake_key
