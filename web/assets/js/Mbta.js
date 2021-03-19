@@ -4,8 +4,7 @@
  */
 
 $.widget("howe.Mbta",{
-    url: 'api/mbta',
-    //url: 'http://127.0.0.1:3100/mbta',
+    url: 'mbta',
     options: {
         update_interval: 30*60*1000, /* update the mbta every 30 minutes unless there is an expires flag present */
         baseUrl: ''
