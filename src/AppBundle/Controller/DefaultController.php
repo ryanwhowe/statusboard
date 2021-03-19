@@ -54,7 +54,8 @@ class DefaultController extends Controller
                 'sick' => Calendar::TYPE_SICK,
             ],
             'arrival_time' => $arrival_time,
-            'add_time' => $add_time
+            'add_time' => $add_time,
+            'baseUrl'      => $this->getParameter('api_basepath')
         ]);
     }
 

@@ -31,7 +31,7 @@
         var currentpos = current.getMonth();
         $(function () {
             $.ajax({
-                url: 'api/calendar?format=byDate',
+                url: '{{ baseUrl }}calendar?format=byDate',
                 method: 'GET',
                 dataType: 'json',
                 async: true,

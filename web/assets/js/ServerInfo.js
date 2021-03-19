@@ -120,12 +120,13 @@ $.widget("howe.ServerInfo", {
         let now = new Date();
         let next = new Date();
         let result;
-        next.setMinutes(Math.ceil(next.getMinutes() / refreshInterval) * refreshInterval);
-
+        let minuteSet = Math.ceil(next.getMinutes() / refreshInterval) * refreshInterval;
+        if (minuteSet === next.getMinutes()){ minuteSet += refreshInterval; }
+        next.setMinutes(minuteSet);
         result = next - now;
 
-        /* between 0 and 1 minutes */
-        result += this.__randomTime(0, 60 * 1000);
+        /* between 5 seconds and 60 seconds */
+        result += this.__randomTime(5 * 1000, 60 * 1000);
         return result;
 
     },
@@ -261,7 +262,7 @@ $.widget("howe.ServerInfo", {
 
         let current_age = (current_date.getTime() - me.data_heartbeat);
 
-        if ( isNaN(current_age) || typeof(current_age) != "undefined" || current_age > o.max_age) {
+        if ( isNaN(current_age) || typeof(current_age) === "undefined" || current_age > o.max_age) {
             if(o.disabled){
                 $(e).removeClass('btn-danger btn-success').addClass('btn-warning');
             } else {
