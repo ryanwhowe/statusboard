@@ -261,7 +261,7 @@ $.widget("howe.ServerInfo", {
 
         let current_age = (current_date.getTime() - me.data_heartbeat);
 
-        if ( isNaN(current_age) || typeof(current_age) != "undefined" || current_age > o.max_age) {
+        if ( isNaN(current_age) || typeof(current_age) === "undefined" || current_age > o.max_age) {
             if(o.disabled){
                 $(e).removeClass('btn-danger btn-success').addClass('btn-warning');
             } else {
