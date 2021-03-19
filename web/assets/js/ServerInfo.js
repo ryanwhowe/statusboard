@@ -120,12 +120,13 @@ $.widget("howe.ServerInfo", {
         let now = new Date();
         let next = new Date();
         let result;
-        next.setMinutes(Math.ceil(next.getMinutes() / refreshInterval) * refreshInterval);
-
+        let minuteSet = Math.ceil(next.getMinutes() / refreshInterval) * refreshInterval;
+        if (minuteSet === next.getMinutes()){ minuteSet += refreshInterval; }
+        next.setMinutes(minuteSet);
         result = next - now;
 
-        /* between 0 and 1 minutes */
-        result += this.__randomTime(0, 60 * 1000);
+        /* between 5 seconds and 60 seconds */
+        result += this.__randomTime(5 * 1000, 60 * 1000);
         return result;
 
     },
