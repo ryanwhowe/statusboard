@@ -9,7 +9,7 @@
     </div>
     <div class="row">
         <div class="col-md-6 col-lg-6">
-            <div class="serverGroup"></div>
+            <div class="serverGroup" data-token="{{ authToken }}"></div>
             <!-- /.panel -->
         </div>
         <div class="col-md-6 col-lg-6">
@@ -84,7 +84,7 @@
                     </div>
                 </div>
                 <div class="panel-body">
-                    <div class="weather"></div>
+                    <div class="weather" data-token="{{ authToken }}"></div>
                 </div>
                 <!-- /.panel-body -->
             </div>
@@ -103,7 +103,7 @@
                     </div>
                 </div>
                 <div class="panel-body">
-                    <div class="mbta"></div>
+                    <div class="mbta"><h2 class="text-center bg-warning">DISABLED</h2></div>
                 </div>
                 <!-- /.panel-body -->
             </div>
@@ -135,12 +135,12 @@
             displayTime();
             setInterval('displayTime()', 1000);
             $('.weather').WeatherInfo({baseUrl: "{{ baseUrl }}", postalCode: postal_code});
-            $('.mbta').Mbta({baseUrl: "{{ baseUrl }}"});
+            //$('.mbta').Mbta({baseUrl: "{{ baseUrl }}"});
             $('.UpcomingInfo').UpcomingInfo({baseUrl: "{{ baseUrl }}"});
             $(".PtoTaken").PtoTaken({baseUrl: "{{ baseUrl }}"});
             $('.serverGroup').ServerGroup({baseUrl: "{{ baseUrl }}"});
             $.ajax({
-                url: 'api/calendar?format=byDate',
+                url: '{{ baseUrl }}calendar?format=byDate',
                 method: 'GET',
                 dataType: 'json',
                 async: true,
@@ -160,13 +160,13 @@
                     });
                 }
             });
-            $('body')
-                .on('click', '.reset_mbta', () => {
-                    performReset("{{ baseUrl }}api/mbta/reset");
-                })
-                .on('click', '.reset_weather', () => {
-                    performReset("{{ baseUrl }}api/weather/" + postal_code + "/reset");
-                });
+            //$('body')
+                //.on('click', '.reset_mbta', () => {
+                //    performReset("{{ baseUrl }}api/mbta/reset");
+                //})
+                //.on('click', '.reset_weather', () => {
+                //    performReset("{{ baseUrl }}api/weather/" + postal_code + "/reset");
+                //});
         });
 
         /**

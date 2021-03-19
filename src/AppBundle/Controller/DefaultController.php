@@ -30,7 +30,9 @@ class DefaultController extends Controller
         return $this->render('AppBundle:Default:index.html.twig', [
             'arrival_time' => $arrival_time,
             'add_time'     => $add_time,
-            'baseUrl'      => $this->container->get('router')->getContext()->getBaseUrl() . "/"
+            //'baseUrl'      => $this->container->get('router')->getContext()->getBaseUrl() . "/"
+            'baseUrl'      => $this->getParameter('api_basepath'),
+            'authToken' => $this->getParameter('theaxerant_api_token')
         ]);
     }
 

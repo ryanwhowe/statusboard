@@ -43,11 +43,11 @@
     <script src="{{ asset('assets/js/PtoTaken.js') }}"></script>
     <script>
 
-        $(".UpcomingInfo").UpcomingInfo({baseUrl: "../"});
-        $(".PtoTaken").PtoTaken({baseUrl: "../"});
         $(function () {
+            $(".UpcomingInfo").UpcomingInfo({baseUrl: '{{ baseUrl }}'});
+            $(".PtoTaken").PtoTaken({baseUrl: '{{ baseUrl }}'});
             $.ajax({
-                url: '../api/calendar?format=byDate',
+                url: '{{ baseUrl }}' + 'calendar?format=byDate',
                 method: 'GET',
                 dataType: 'json',
                 async: true,

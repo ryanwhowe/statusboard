@@ -4,7 +4,7 @@
  */
 
 $.widget("howe.UpcomingInfo", {
-    url: 'api/calendar/upcoming',
+    url: 'calendar/upcoming',
     options: {
         baseUrl: ''
     },

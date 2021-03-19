@@ -4,7 +4,7 @@
  */
 
 $.widget("howe.WeatherInfo",{
-    url: 'api/weather/',
+    url: 'weather/',
     options: {
         postalCode: '',
         update_interval: 10 * 60 * 1000, /* update the weather every 10 minutes unless there is an expires flag present */
@@ -21,6 +21,7 @@ $.widget("howe.WeatherInfo",{
             e = this.element;
         me.my_name = this.eventNamespace.replace('.', '');
         me.data_response = null;
+        me.options.authToken = $(e).data('token');
         me._updateData();
     },
 
@@ -37,6 +38,7 @@ $.widget("howe.WeatherInfo",{
             dataType: 'json',
             async: true,
             cache: false,
+            headers: { 'X-AUTH-TOKEN': me.options.authToken },
             timeout: 10 * 1000,
             success: function (data, status) {
                 if (status === 'timeout') {

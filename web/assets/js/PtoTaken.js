@@ -1,6 +1,6 @@
 
 $.widget("howe.PtoTaken", {
-    url:'api/calendar/pto',
+    url:'calendar/pto',
     levels : {
         'good': 'success',
         'warning': 'warning',
