@@ -49,7 +49,8 @@ class AdminController extends Controller
      */
     public function mbtaAction(Request $request){
         return $this->render('AppBundle:Admin:mbta.html.twig',[
-            'baseUrl' => $this->container->get('router')->getContext()->getBaseUrl() . "/"
+            'baseUrl' => $this->getParameter('api_basepath'),
+            'authToken' => $this->getParameter('theaxerant_api_token')
         ]);
     }
 

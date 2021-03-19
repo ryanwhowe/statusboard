@@ -103,7 +103,7 @@
                     </div>
                 </div>
                 <div class="panel-body">
-                    <div class="mbta"><h2 class="text-center bg-warning">DISABLED</h2></div>
+                    <div class="mbta"></div>
                 </div>
                 <!-- /.panel-body -->
             </div>
@@ -135,7 +135,7 @@
             displayTime();
             setInterval('displayTime()', 1000);
             $('.weather').WeatherInfo({baseUrl: "{{ baseUrl }}", postalCode: postal_code});
-            //$('.mbta').Mbta({baseUrl: "{{ baseUrl }}"});
+            $('.mbta').Mbta({baseUrl: "{{ baseUrl }}"});
             $('.UpcomingInfo').UpcomingInfo({baseUrl: "{{ baseUrl }}"});
             $(".PtoTaken").PtoTaken({baseUrl: "{{ baseUrl }}"});
             $('.serverGroup').ServerGroup({baseUrl: "{{ baseUrl }}"});
@@ -160,13 +160,6 @@
                     });
                 }
             });
-            //$('body')
-                //.on('click', '.reset_mbta', () => {
-                //    performReset("{{ baseUrl }}api/mbta/reset");
-                //})
-                //.on('click', '.reset_weather', () => {
-                //    performReset("{{ baseUrl }}api/weather/" + postal_code + "/reset");
-                //});
         });
 
         /**
@@ -229,35 +222,5 @@
             }
 
         }
-
-        function performReset(endpoint) {
-            $.ajax({
-                url: endpoint,
-                method: 'GET',
-                dataType: 'json',
-                async: true,
-                cache: false,
-                timeout: 10 * 1000,
-                success: function (data, status) {
-                    if (status === 'timeout') {
-                        alert('Time out!');
-                    }
-                    if (status === 'nocontent') {
-                        alert('No Content');
-                    }
-                    alert(data);
-                },
-                error: function (xhr, status) {
-                    if (status === 'timeout') {
-                        alert('Time out!');
-                    }
-                    if (status === 'nocontent') {
-                        alert('No Content');
-                    }
-                    alert('failed to clear cache');
-                }
-            });
-        }
-
     </script>
 {% endblock %}
