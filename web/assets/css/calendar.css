@@ -1,4 +1,12 @@
+/* The un-selectable turns the a tag to a span tag */
 .ui-datepicker td.companyholiday span {
+    background: #5e7e92;
+    color: #000000;
+    font-weight: bold;
+    pointer-events: all;
+}
+
+.ui-datepicker td.companyholiday a {
     background: #5e7e92;
     color: #000000;
     font-weight: bold;
@@ -13,7 +21,7 @@
 }
 
 .ui-datepicker td.sick a {
-    background: #14bf15;
+    background: #bc7126;
     color: #000000;
     font-weight: bold;
 }
@@ -24,10 +32,16 @@
     font-weight: bold;
 }
 
-.ui-datepicker td.payday a {
-    background: #FF3300;
-    color: #000000;
-    font-weight: bold;
+.ui-datepicker td.paydate a {
+    border-right-color: #14bf15;
+    border-right-style: solid;
+    border-right-width: medium;
+}
+
+.ui-datepicker td.fimeeting a {
+    border-top-color: #d60000;
+    border-top-style: solid;
+    border-top-width: medium;
 }
 
 .ui-datepicker td.ui-datepicker-today a {
