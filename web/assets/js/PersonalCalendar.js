@@ -32,6 +32,44 @@ let PersonalCalendar = {
         }
     },
 
+    dateProcessor: function(events) {
+        let selectable = events.reduce(function(val, event,) { return (val ? (event.type !== 1) : val);}, true);
+        let css = events.reduce(this.getStackableCss, events.reduce(this.getPrimaryCss,''));
+        let tooltips = events.reduce(this.collectTooltips, [])
+        return {selectable: selectable, css: css.trim(), tooltips: tooltips.filter((el) => el != null).join(', ')};
+    },
+
+    getPrimaryCss: function(css, event) {
+        if(css === 'pto') return css;
+        if(event.type === 2) return 'pto'
+        if(event.type === 3) return 'sick'
+        if(css === 'sick') return css;
+        if(event.type === 1) return 'companyholiday'
+        if(css === 'companyholiday') return css;
+        if(event.type === 94) return 'nationalholiday'
+        return css;
+    },
+
+    getStackableCss: function(css, event) {
+        if(event.type === 99) return css + ' paydate';
+        if(event.type === 95) return css + ' fimeeting';
+        return css
+    },
+
+    collectTooltips: function(tooltips, event) {
+        let mapTypeToPriority = function(type) {
+            if(type === 94) return 1;
+            if(type === 1) return 2;
+            if(type === 2) return 3;
+            if(type === 3) return 4;
+            if(type === 95) return 5;
+            if(type === 99) return 6;
+        };
+        let priority = mapTypeToPriority(event.type);
+        tooltips[priority] = event.description;
+        return tooltips;
+    },
+
     /**
      * check the date
      * @param parsed_date
@@ -39,34 +77,13 @@ let PersonalCalendar = {
      */
     checkDate: function (parsed_date) {
         let selectable = true;
-        var tooltips='';
+        let tooltips='';
         let css = '';
-        let css_class = '';
-        let company_holiday = false;
-        let css_selector = function(calendarItem){
-            if (calendarItem['type'] === 1) return 'companyholiday';
-            if (calendarItem['type'] === 2) return 'pto';
-            if (calendarItem['type'] === 3) return 'sick';
-            if (calendarItem['type'] === 4) return 'nationalholiday';
-            if (calendarItem['type'] === 99) return 'payday';
-        };
         if(parsed_date in this.date_data){
-            let event = this.date_data[parsed_date];
-            tooltips = [];
-            $.each(event.events, function(index, item){
-                selectable = selectable ? !(item['type'] === 1) : selectable;
-
-                css_class = css_selector(item);
-                if(css_class === 'companyholiday'){
-                    company_holiday = true;
-                    css = css_class;
-                }
-                if(!company_holiday) {
-                    css = css_class;
-                }
-                tooltips.push(item['description']);
-            });
-            tooltips = tooltips.join(', ');
+            let result = this.dateProcessor(this.date_data[parsed_date].events);
+            selectable = result.selectable;
+            css = result.css;
+            tooltips = result.tooltips;
         }
         return [selectable, css, tooltips];
     }
