@@ -1,48 +1,54 @@
 /* The un-selectable turns the a tag to a span tag */
-.ui-datepicker td.companyholiday span {
+.ui-datepicker td.companyholiday span,.ui-datepicker td.companyholiday a {
     background: #5e7e92;
     color: #000000;
     font-weight: bold;
     pointer-events: all;
 }
 
-.ui-datepicker td.companyholiday a {
-    background: #5e7e92;
-    color: #000000;
-    font-weight: bold;
-    pointer-events: all;
-}
-
-.ui-datepicker td.nationalholiday a {
+.ui-datepicker td.nationalholiday a,.ui-datepicker td.nationalholiday span {
     background: #7ba7bc;
     color: #000000;
     font-weight: bold;
     pointer-events: all;
 }
 
-.ui-datepicker td.sick a {
+.ui-datepicker td.sick a,.ui-datepicker td.sick span {
     background: #bc7126;
     color: #000000;
     font-weight: bold;
 }
 
-.ui-datepicker td.pto a {
+.ui-datepicker td.pto a,.ui-datepicker td.pto span {
     background: #FF9933;
     color: #000000;
     font-weight: bold;
 }
 
-.ui-datepicker td.paydate a {
+.ui-datepicker td.paydate a,.ui-datepicker td.paydate span {
     border-right-color: #14bf15;
     border-right-style: solid;
     border-right-width: medium;
 }
 
-.ui-datepicker td.fimeeting a {
+.ui-datepicker td.fimeeting a,.ui-datepicker td.fimeeting span {
     border-top-color: #d60000;
     border-top-style: solid;
     border-top-width: medium;
 }
+
+.ui-datepicker td.sprint a,.ui-datepicker td.sprint span {
+    border-left-color: #814dd9;
+    border-left-style: solid;
+    border-left-width: medium;
+}
+
+.ui-datepicker td.recycling a,.ui-datepicker td.recycling span {
+    border-bottom-color: #14bf15;
+    border-bottom-style: solid;
+    border-bottom-width: medium;
+}
+
 
 .ui-datepicker td.ui-datepicker-today a {
     background: yellow;
