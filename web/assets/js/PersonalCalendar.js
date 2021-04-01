@@ -53,6 +53,8 @@ let PersonalCalendar = {
     getStackableCss: function(css, event) {
         if(event.type === 99) return css + ' paydate';
         if(event.type === 95) return css + ' fimeeting';
+        if(event.type === 96) return css + ' sprint';
+        if(event.type === 97) return css + ' recycling';
         return css
     },
 
@@ -64,6 +66,8 @@ let PersonalCalendar = {
             if(type === 3) return 4;
             if(type === 95) return 5;
             if(type === 99) return 6;
+            if(type === 96) return 7;
+            if(type === 97) return 8;
         };
         let priority = mapTypeToPriority(event.type);
         tooltips[priority] = event.description;
