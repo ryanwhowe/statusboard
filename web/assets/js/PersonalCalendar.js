@@ -23,12 +23,11 @@ let PersonalCalendar = {
      */
     parseDate: function (currentDate) {
         let parsedDate = currentDate.toISOString().slice(0, 10);
-        let result = this.checkDate(parsedDate);
         let noWeekend = $.datepicker.noWeekends(currentDate);
         if (noWeekend[0] === false) {
             return noWeekend;
         } else {
-            return result;
+            return this.checkDate(parsedDate);
         }
     },
 
@@ -55,6 +54,7 @@ let PersonalCalendar = {
         if(event.type === 95) return css + ' fimeeting';
         if(event.type === 96) return css + ' sprint';
         if(event.type === 97) return css + ' recycling';
+        if(event.type === 98) return css + ' moon' + event.description.replace(".","");
         return css
     },
 
@@ -69,8 +69,10 @@ let PersonalCalendar = {
             if(type === 96) return 7;
             if(type === 97) return 8;
         };
-        let priority = mapTypeToPriority(event.type);
-        tooltips[priority] = event.description;
+        if(event.type !== 98) {
+            let priority = mapTypeToPriority(event.type);
+            tooltips[priority] = event.description;
+        }
         return tooltips;
     },
 
