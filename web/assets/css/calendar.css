@@ -49,6 +49,18 @@
     border-bottom-width: medium;
 }
 
+.ui-datepicker td.moon0 a:before,.ui-datepicker td.moon0 span:before {
+    content: "🌑 ";
+}
+.ui-datepicker td.moon025 a:before,.ui-datepicker td.moon025 span:before {
+    content: "🌓 ";
+}
+.ui-datepicker td.moon05 a:before,.ui-datepicker td.moon05 span:before {
+    content: "🌕 ";
+}
+.ui-datepicker td.moon075 a:before,.ui-datepicker td.moon075 span:before {
+    content: "🌗 ";
+}
 
 .ui-datepicker td.ui-datepicker-today a {
     background: yellow;
