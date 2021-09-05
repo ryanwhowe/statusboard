@@ -95,8 +95,10 @@ $.widget("howe.PtoTaken", {
         if(lastPtoDate === null){
             lastPtoDate = 'None';
         }
-        const expected = Math.floor(this.__calculateExpectedDays()*10)/10;
-        const style = me.__generateStyle(totalDays, expected);
+        const expectedCurrent = Math.floor(this.__expectedAmount(me.requestDate)*10)/10;
+        const expectedScheduled = Math.floor(this.__expectedAmount(new Date(lastPtoDate))*10)/10;
+        const delta = Math.min(Math.abs(daysTaken - expectedCurrent), Math.abs(totalDays - expectedScheduled));
+        const style = me.__generateStyle(delta);
 
         me.__initUi(style);
         const tr_style = (style === 'success') ? 'info' : style;
@@ -111,7 +113,7 @@ $.widget("howe.PtoTaken", {
             "<td class='text-center " + style + "'>" + totalDays + "</td>",
             "</tr>",
             "<tr class='" + tr_style + "'><td colspan='3'></td></tr>",
-            "<tr><td colspan='2' class='text-right'>Expected Days Scheduled</td><td class='text-center'>" + expected + "</td></tr>",
+            "<tr><td colspan='2' class='text-right'>Expected Days Scheduled</td><td class='text-center'>" + expectedCurrent + "</td></tr>",
             "<tr><td colspan='2' class='text-right'>Last PTO date Scheduled</td><td class='text-center'>" + lastPtoDate + "</td></tr>",
             "</tbody>",
             "</table>"
@@ -126,25 +128,22 @@ $.widget("howe.PtoTaken", {
      * @returns {number}
      * @private
      */
-    __calculateExpectedDays(){
-        return (this.requestDate.getMonth() + this.__monthPercent()) * this.options.ptoRate;
+    __expectedAmount(theDate){
+        return (theDate.getMonth() + this.__monthPercent(theDate)) * this.options.ptoRate;
     },
 
     /**
      * Generate the warning style level based off the time scheduled vs what
      * is expected to be scheduled
      *
-     * @param totalDays
-     * @param expected
+     * @param diff
      * @returns {string}
      * @private
      */
-    __generateStyle: function(totalDays, expected) {
-        // get the total percentage of year completed
-        const diff = totalDays - expected;
-        if(diff >= -1) return this.levels.good;
-        if(diff >= -5) return this.levels.warning;
-        return this.levels.danger;
+    __generateStyle: function(diff) {
+        if(diff >= 5) return this.levels.danger;
+        if(diff >= 1) return this.levels.warning;
+        return this.levels.good;
     },
 
     /**
@@ -159,10 +158,10 @@ $.widget("howe.PtoTaken", {
         clearInterval(me.update_interval);
     },
 
-    __monthPercent: function () {
+    __monthPercent: function (theDate) {
         //Determine the Month Values
-        let currentDayOfMonth = this.requestDate;
-        let lastDayOfMonth = new Date(this.requestDate.getFullYear(), this.requestDate.getMonth()+1, 0);
+        let currentDayOfMonth = theDate;
+        let lastDayOfMonth = new Date(theDate.getFullYear(), theDate.getMonth()+1, 0);
         let workedMonthDays = currentDayOfMonth.getDate();
         let workingMonthDays = lastDayOfMonth.getDate();
         //console.log({'workedMonthDays': workedMonthDays, 'workingMonthDays': workingMonthDays})

@@ -29,12 +29,6 @@ class DefaultControllerTest extends WebTestCase
 
     /**
      * @test
-     */
-    public function skipWarning() {
-        $this->assertTrue(true);
-    }
-
-    /**
      * Test that a logged out state will return a 401 HTTP_UNAUTHORIZED error
      */
     public function indexLoggedOut() {
@@ -44,6 +38,7 @@ class DefaultControllerTest extends WebTestCase
     }
 
     /**
+     * @test
      * Test the logged in state as well as that the expected content is rendered
      */
     public function indexLoggedIn() {
@@ -54,6 +49,7 @@ class DefaultControllerTest extends WebTestCase
     }
 
     /**
+     * @test
      * Test the logged in time sheet page header
      */
     public function timeSheetLoggedIn() {
