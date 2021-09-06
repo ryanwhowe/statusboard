@@ -65,6 +65,19 @@ class AdminController extends Controller
     }
 
     /**
+     * @Route("/weather/history", name="admin_test_weather_history")
+     * @param Request $request
+     *
+     * @return Response|null
+     */
+    public function weatherHistoryAction(Request $request){
+        return $this->render('AppBundle:Admin:weatherhistory.html.twig',[
+            'baseUrl' => $this->getParameter('api_basepath'),
+            'authToken' => $this->getParameter('theaxerant_api_token')
+        ]);
+    }
+
+    /**
      * @Route("/testcalendar", name="admin_test_calendar")
      * @throws \Exception
      */

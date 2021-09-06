@@ -43,33 +43,14 @@
                         <a href="{{ path('calendar') }}"><i class="fa fa-calendar fa-fw"></i> Calendar</a>
                     </li>
                     <li>
+                        <a href="{{ path('weather_history') }}"><i class="fa fa-cloud fa-fw"></i> Weather History</a>
+                    </li>
+                    <li>
                         <a href="{{ path('timeSheet') }}"><i class="fa fa-clock-o fa-fw"></i> Time Sheet</a>
                     </li>
                     <li>
                         <a href="{{ path('admin') }}"><i class="fa fa-cogs fa-fw"></i> Settings<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse">
-{#                            <li>#}
-{#                                <a href="#"><i class="fa fa-server fa-fw"></i> Servers <span class="fa arrow"></span></a>#}
-{#                                <ul class="nav nav-third-level collapse">#}
-{#                                    <li>#}
-{#                                        <a href="{{ path('admin_server_index') }}">List Servers</a>#}
-{#                                    </li>#}
-{#                                    <li>#}
-{#                                        <a href="{{ path('admin_server_new') }}">Create New Server</a>#}
-{#                                    </li>#}
-{#                                </ul>#}
-{#                            </li>#}
-{#                            <li>#}
-{#                                <a href="#"><i class="fa fa-calendar fa-fw"></i> Calendar Events <span class="fa arrow"></span></a>#}
-{#                                <ul class="nav nav-third-level collapse">#}
-{#                                    <li>#}
-{#                                        <a href="{{ path('admin_calendar_index') }}">List Events</a>#}
-{#                                    </li>#}
-{#                                    <li>#}
-{#                                        <a href="{{ path('admin_calendar_new') }}">Create New Event</a>#}
-{#                                    </li>#}
-{#                                </ul>#}
-{#                            </li>#}
                             <li>
                                 <a href="#"><i class="fa fa-cubes fa-fw"></i> Test Pages <span class="fa arrow"></span></a>
                                 <ul class="nav nav-third-level collapse">
@@ -84,6 +65,9 @@
                                     </li>
                                     <li>
                                         <a href="{{ path('admin_test_weather') }}"><i class="fa fa-cloud fa-fw"></i> Weather</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ path('admin_test_weather_history') }}"><i class="fa fa-cloud fa-fw"></i> Weather History</a>
                                     </li>
                                     <li>
                                         <a href="{{ path('admin_test_mbta') }}"><i class="fa fa-train fa-fw"></i> MBTA</a>

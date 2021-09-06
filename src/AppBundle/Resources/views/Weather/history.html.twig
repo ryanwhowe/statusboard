@@ -1,0 +1,152 @@
+{% extends "::base.html.twig" %}
+{% block title %}Howe - Weather History{% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Weather History</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-lg-6">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="panel-title text-center">
+                        <i class="fa fa-calendar fa-fw"></i> Calendar
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="jquery_ui_datepicker_preview"></div>
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <div class="col-md-6 col-lg-6">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="panel-title text-center">
+                        <i class="fa fa-cloud fa-fw"></i> Weather History
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="weatherhist" data-token="{{ authToken }}">select a date to view the history</div>
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-lg-6">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="panel-title text-center">
+                        <i class="fa fa-cloud fa-fw reset_weather"></i> Current Weather
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="weather" data-token="{{ authToken }}"></div>
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block style %}
+    <style>
+        .ui-datepicker td.sick a,.ui-datepicker td.sick span {
+            background: #ce7d36;
+            color: #000000;
+            font-weight: bold;
+        }
+    </style>
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('assets/js/WeatherInfo.js') }}"></script>
+    <script>
+        let postal_code = '01757';
+        let auth_token = '{{ authToken }}';
+        $(function () {
+            $('.weather').WeatherInfo({baseUrl: "{{ baseUrl }}", postalCode: postal_code});
+            $('.weatherhist').WeatherHistory({baseUrl: "{{ baseUrl }}", postalCode: postal_code});
+            $('body').on('click', '.reset_weather', () => {
+                performReset("{{ baseUrl }}api/weather/" + postal_code + "/reset");
+            });
+            $.ajax({
+                url: '{{ baseUrl }}weather/history/' + postal_code + "?single=1",
+                headers: { 'X-AUTH-TOKEN': auth_token },
+                method: 'GET',
+                dataType: 'json',
+                async: true,
+                cache: false,
+                timeout: 30 * 1000,
+                success: function (data, status) {
+                    let returnDates = data.dates;
+                    let datedata = [];
+                    for(const date in returnDates){
+                        datedata[date] = returnDates[date][0].id;
+                    }
+                    $(".jquery_ui_datepicker_preview").datepicker({
+                        defaultDate: null,
+                        firstDay: 1, // Set Monday to the first day of the week
+                        numberOfMonths: 2,
+                        showCurrentAtPos: 0,
+                        showMonthAfterYear: true,
+                        beforeShowDay: function (currentDate) {
+                            let parsed_date = currentDate.toISOString().slice(0, 10);
+                            let selectable = true;
+                            let tooltips='';
+                            let css = '';
+                            if (parsed_date in datedata) {
+                                selectable = true;
+                                css = 'sick';
+                                tooltips = 'History Available';
+                            }
+                            return [selectable, css, tooltips];
+                        },
+                        onSelect: function (selectedDate) {
+                            let date_parts = selectedDate.split('/');
+                            let parsed_date = date_parts[2] + '-' + date_parts[0] + '-' + date_parts[1];
+                            if (parsed_date in datedata) {
+                                $('.weatherhist').WeatherHistory("UpdateId", datedata[parsed_date]);
+                            }
+                        }
+                    });
+                }
+            });
+        });
+
+        function performReset(endpoint) {
+            $.ajax({
+                url: endpoint,
+                method: 'GET',
+                dataType: 'json',
+                async: true,
+                cache: false,
+                timeout: 10 * 1000,
+                success: function (data, status) {
+                    if (status === 'timeout') {
+                        alert('Time out!');
+                    }
+                    if (status === 'nocontent') {
+                        alert('No Content');
+                    }
+                    alert(data);
+                },
+                error: function (xhr, status) {
+                    if (status === 'timeout') {
+                        alert('Time out!');
+                    }
+                    if (status === 'nocontent') {
+                        alert('No Content');
+                    }
+                    alert('failed to clear cache');
+                }
+            });
+        }
+    </script>
+{% endblock %}
