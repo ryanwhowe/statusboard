@@ -12,9 +12,7 @@ $.widget("howe.PtoTaken", {
     },
 
     _create: function() {
-        let me = this,
-            o = this.options,
-            e = this.element;
+        let me = this;
         me.my_name = this.eventNamespace.replace('.', '');
         me.data_response = null;
         me._updateData();
@@ -24,8 +22,9 @@ $.widget("howe.PtoTaken", {
         let me = this;
         let e = me.element;
         let panel_style = ' panel-' + style;
-        if(style === 'success'){ style = ''; panel_style = '' }
-        e.addClass('panel panel-info' + panel_style);
+        if(style === 'success'){ panel_style = 'panel-info' }
+        if(style === 'secondary'){ panel_style = 'panel-default' }
+        e.addClass('panel ' + panel_style);
         me.heading = $([
             "<div class='panel-heading'>",
             "<div class='panel-title text-center'>",
@@ -41,7 +40,6 @@ $.widget("howe.PtoTaken", {
 
     _updateData: function() {
         let me = this,
-            e = this.element,
             o = this.options;
         $.ajax({
             url: o.baseUrl + me.url,
@@ -91,14 +89,20 @@ $.widget("howe.PtoTaken", {
         let daysScheduled = +me.data_response.daysScheduled;
         let lastPtoDate = me.data_response.lastPtoDate;
         let totalDays = daysTaken + daysScheduled;
+        let plannedBurn = 0;
         me.requestDate = new Date(me.data_response.requestedDate);
         if(lastPtoDate === null){
             lastPtoDate = 'None';
+        } else {
+            plannedBurn = this.__slope(totalDays, new Date(lastPtoDate));
         }
-        const expectedCurrent = Math.floor(this.__expectedAmount(me.requestDate)*10)/10;
-        const expectedScheduled = Math.floor(this.__expectedAmount(new Date(lastPtoDate))*10)/10;
-        const delta = Math.min(Math.abs(daysTaken - expectedCurrent), Math.abs(totalDays - expectedScheduled));
-        const style = me.__generateStyle(delta);
+        const expected = Math.floor(this.__expectedAmount(me.requestDate)*10)/10;
+        const currentBurn = this.__slope(daysTaken, new Date());
+
+        const status = this.__status(currentBurn, plannedBurn, me.options.ptoRate);
+
+        let style = me.__generateStyle(status);
+        if(me.requestDate.getMonth() === 0 || totalDays === 0) style = 'secondary';
 
         me.__initUi(style);
         const tr_style = (style === 'success') ? 'info' : style;
@@ -113,7 +117,7 @@ $.widget("howe.PtoTaken", {
             "<td class='text-center " + style + "'>" + totalDays + "</td>",
             "</tr>",
             "<tr class='" + tr_style + "'><td colspan='3'></td></tr>",
-            "<tr><td colspan='2' class='text-right'>Expected Days Scheduled</td><td class='text-center'>" + expectedCurrent + "</td></tr>",
+            "<tr><td colspan='2' class='text-right'>Expected Days Scheduled</td><td class='text-center'>" + expected + "</td></tr>",
             "<tr><td colspan='2' class='text-right'>Last PTO date Scheduled</td><td class='text-center'>" + lastPtoDate + "</td></tr>",
             "</tbody>",
             "</table>"
@@ -136,13 +140,13 @@ $.widget("howe.PtoTaken", {
      * Generate the warning style level based off the time scheduled vs what
      * is expected to be scheduled
      *
-     * @param diff
+     * @param status
      * @returns {string}
      * @private
      */
-    __generateStyle: function(diff) {
-        if(diff >= 5) return this.levels.danger;
-        if(diff >= 1) return this.levels.warning;
+    __generateStyle: function(status) {
+        if(status === 2) return this.levels.danger;
+        if(status === 1) return this.levels.warning;
         return this.levels.good;
     },
 
@@ -168,6 +172,39 @@ $.widget("howe.PtoTaken", {
         const percentage = ( workedMonthDays / workingMonthDays );
         //console.log({'monthPercentage':percentage});
         return percentage;
+    },
+
+    __months: function(theDate) {
+        return (theDate.getMonth() + this.__monthPercent(theDate));
+    },
+
+    __status: function(currentBurn, plannedBurn, idealBurn){
+        let currentDelta = this.__delta(currentBurn, idealBurn)
+        let plannedDelta = this.__delta(plannedBurn, idealBurn);
+        let theDelta = this.__useDelta(currentDelta, plannedDelta);
+        if(theDelta.over){ /// we are OVER the burn rate
+            if(theDelta.delta < 0.1) return 0;
+            if(theDelta.delta < 0.2) return 1;
+            return 2;
+        } else { // we are under the burn rate
+            if(theDelta.delta < 0.2) return 0;
+            if(theDelta.delta < 0.4) return 1;
+            return 2;
+        }
+    },
+
+    __slope: function(taken, theDate) {
+          return taken / this.__months(theDate);
+    },
+
+    __delta: function (slope, ideal) {
+        return {'delta': Math.abs(slope - ideal), 'over': 0 < (slope - ideal)};
+    },
+
+    __useDelta: function(current, planned) {
+        if(planned.over) return planned;
+        if(current.delta < planned.delta) return current;
+        return planned;
     },
 
 });
