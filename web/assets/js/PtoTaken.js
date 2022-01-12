@@ -12,9 +12,7 @@ $.widget("howe.PtoTaken", {
     },
 
     _create: function() {
-        let me = this,
-            o = this.options,
-            e = this.element;
+        let me = this;
         me.my_name = this.eventNamespace.replace('.', '');
         me.data_response = null;
         me._updateData();
@@ -42,7 +40,6 @@ $.widget("howe.PtoTaken", {
 
     _updateData: function() {
         let me = this,
-            e = this.element,
             o = this.options;
         $.ajax({
             url: o.baseUrl + me.url,
