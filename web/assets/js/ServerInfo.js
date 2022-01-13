@@ -131,6 +131,11 @@ $.widget("howe.ServerInfo", {
 
     },
 
+
+    __dateFormatter: function (theDate){
+        return theDate.toLocaleDateString() + ' ' + theDate.toLocaleTimeString();
+    },
+
     /**
      * This is a formatter that will conditionally format the passed value differently for specific keys.  If there is
      * no custom formatter for a passed key the value is just returned.
@@ -144,7 +149,8 @@ $.widget("howe.ServerInfo", {
         let me = this;
         switch (key) {
             case 'heartbeat':
-                return value;
+                let heartbeat = new Date(value);
+                return me.__dateFormatter(heartbeat);
             case 'freespace_root':
             case 'freespace_HDD':
             case 'freespace_HDD1':
@@ -389,7 +395,6 @@ $.widget("howe.ServerGroup", {
      */
     updateStatus: function () {
         let me = this,
-            e = this.element,
             o = this.options;
 
         $.ajax({
