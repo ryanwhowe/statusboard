@@ -37,6 +37,7 @@ function convertTimestamp(timestamp) {
  *
  */
 function renderWeatherWidget(data) {
+    let expires = new Date(data['expires']);
     return $([
         "<div class='row'>",
         "<div class='col-lg-3 col-md-3 col-sm-12'><div class='panel panel-warning'><div class='panel-heading text-center'>",
@@ -44,7 +45,7 @@ function renderWeatherWidget(data) {
         "<a target='_blank' href='" + data['current']['link'] + "'>",
         "<i class='wi " + data['current']['weather-icon'] + "' style='color:#401718; font-size:2em; padding-top: 8px;'></i></a><br>",
         "</div></div></div>",
-        "<div class='col-lg-9 col-md-9 col-sm-12' title='updated: " + convertTimestamp(Math.floor(new Date().getTime()/1000.0)) + ", expires: " + convertTimestamp(data['expires']) + "'><div class='panel panel-success'><div class='panel-heading text-center'>" + data['headline'] + "</div></div></div>",
+        "<div class='col-lg-9 col-md-9 col-sm-12' title='updated: " + convertTimestamp(Math.floor(new Date().getTime()/1000.0)) + ", expires: " + convertTimestamp(expires.getTime()/1000) + "'><div class='panel panel-success'><div class='panel-heading text-center'>" + data['headline'] + "</div></div></div>",
         "</div>",
         "<div class='row'>",
         "<div class='col-lg-3 col-md-6 col-sm-6'>",
