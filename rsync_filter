@@ -1,0 +1,13 @@
+exclude /.git
+exclude /.gitignore
+exclude /.dockerignore
+exclude /.github
+exclude /.travis.yml
+
+exclude *.md
+exclude package.json
+exclude web/bundles/*/src*
+
+exclude tests/*
+
+exclude node_modules/*
