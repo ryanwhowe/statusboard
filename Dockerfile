@@ -1,7 +1,7 @@
 FROM php:7.3-fpm
 RUN docker-php-ext-install pdo_mysql
 RUN pecl install apcu
-RUN pecl install xdebug
+RUN pecl install xdebug-3.1.6
 RUN apt-get update -yq && apt-get install -yq zlib1g-dev unzip gnupg vim libzip-dev \
     && curl -sL https://deb.nodesource.com/setup_12.x | bash \
     && apt-get install nodejs -yq
