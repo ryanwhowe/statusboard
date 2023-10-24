@@ -68,8 +68,7 @@
         "platform": {
             "php": "7.1.5"
         },
-        "sort-packages": true,
-        "process-timeout": 600
+        "sort-packages": true
     },
     "extra": {
         "symfony-app-dir": "app",
