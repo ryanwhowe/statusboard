@@ -10,7 +10,7 @@ RUN docker-php-ext-install opcache
 RUN docker-php-ext-install zip
 RUN docker-php-ext-enable xdebug
 RUN docker-php-ext-enable apcu
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --1
 ENV COMPOSER_MEMORY_LIMIT=-1
 ENV COMPOSER_CACHE_DIR=/tmp
 
